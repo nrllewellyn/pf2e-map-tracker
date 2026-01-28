@@ -1,4 +1,5 @@
 import json
+
 from pyvis.network import Network
 
 
