@@ -22,13 +22,14 @@ NOTE: The file `/src/test/resources/testData.json` is available for testing any 
 
 ## `connections`
 
-| Key      | Type   | Required? | Description / Purpose                                  | Example value            |
-|----------|--------|-----------|--------------------------------------------------------|--------------------------|
-| `from`   | string | **Yes**   | Name of the source room (must match a room `name`)     | `"Hallway"`              |
-| `to`     | string | **Yes**   | Name of the destination room                           | `"Armory"`               |
-| `status` | string | **Yes**   | References a status name from `connectionStatus`       | `"locked"`               |
-| `name`   | string | No        | Optional short label/name for this specific connection | `"Heavy iron door"`      |
-| `notes`  | string | No        | Extra info shown in edge tooltip                       | `"Requires red keycard"` |
+| Key         | Type   | Required? | Description / Purpose                                                                                 | Example value            |
+|-------------|--------|-----------|-------------------------------------------------------------------------------------------------------|--------------------------|
+| `from`      | string | **Yes**   | Name of the source room (must match a room `name`)                                                    | `"Hallway"`              |
+| `to`        | string | **Yes**   | Name of the destination room                                                                          | `"Armory"`               |
+| `status`    | string | **Yes**   | References a status name from `connectionStatus`                                                      | `"locked"`               |
+| `direction` | string | No        | Connection description. If present, must be `"bidirectional"`, `"forward_only"`, or `"backward_only"` | `"bidirectional"`        |
+| `name`      | string | No        | Optional short label/name for this specific connection                                                | `"Heavy iron door"`      |
+| `notes`     | string | No        | Extra info shown in edge tooltip                                                                      | `"Requires red keycard"` |
 
 ## `connectionStatus`
 
