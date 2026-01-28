@@ -1,0 +1,38 @@
+# Description
+
+A basic map tracker for a PF2e TTRPG game.
+
+# Updating:
+
+- Update `/src/main/resources/roomData.json`
+- Run `main.py`
+- Updated HTML will be stored in `/target`
+
+# Room Data JSON Format
+
+## `rooms`
+
+| Key     | Type   | Required? | Description / Purpose                          | Example value              |
+|---------|--------|-----------|------------------------------------------------|----------------------------|
+| `name`  | string | **Yes**   | Unique identifier and displayed label          | `"Kitchen"`                |
+| `color` | string | No        | Background color of the node (CSS color)       | `"#ffcc00"` or `"yellow"`  |
+| `notes` | string | No        | Additional text shown in node tooltip on hover | `"Smells funny after 8pm"` |
+
+## `connections`
+
+| Key      | Type   | Required? | Description / Purpose                                  | Example value            |
+|----------|--------|-----------|--------------------------------------------------------|--------------------------|
+| `from`   | string | **Yes**   | Name of the source room (must match a room `name`)     | `"Hallway"`              |
+| `to`     | string | **Yes**   | Name of the destination room                           | `"Armory"`               |
+| `status` | string | **Yes**   | References a status name from `connectionStatus`       | `"locked"`               |
+| `name`   | string | No        | Optional short label/name for this specific connection | `"Heavy iron door"`      |
+| `notes`  | string | No        | Extra info shown in edge tooltip                       | `"Requires red keycard"` |
+
+## `connectionStatus`
+
+| Key             | Type   | Required? | Description / Purpose                              | Example value                    |
+|-----------------|--------|-----------|----------------------------------------------------|----------------------------------|
+| `name`          | string | **Yes**   | Unique identifier — referenced in connections      | `"locked"`                       |
+| `description`   | string | **Yes**   | Human-readable explanation (shown in edge tooltip) | `"Requires key or code to pass"` |
+| `display_color` | string | No        | Color of the edge/arrow (CSS color)                | `"#ff4444"` or `"red"`           |
+| `line_style`    | string | No        | Must be either `"solid"` or `"dashed"`             | `solid`                          |                          
