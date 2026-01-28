@@ -1,0 +1,35 @@
+{
+  "rooms": [
+    {"name": "Teleporter Room", "color": "#4CAF50", "notes": "Arrival area"},
+    {"name": "Main Corridor", "color": "#757575", "notes": "Corridor that appears to run the length of the ship"},
+    {"name": "Workshop", "notes": "Well-equipped workshop"},
+    {"name": "Forest", "notes": "Massive forest area. Contains many strange plants and animals, some of which may be edible."}
+  ],
+
+  "connections": [
+    {"from": "Teleporter Room", "to": "Main Corridor", "status": "open", "name": "Airtight Door"},
+    {"from": "Main Corridor", "to": "Workshop", "status": "locked", "name": "Airtight Door", "notes": "Locked due to security lockdown"},
+    {"from": "Main Corridor", "to": "Forest", "status": "open", "name": "Airtight Door"}
+  ],
+
+  "connectionStatus": [
+    {
+      "name": "open",
+      "display_color": "#4CAF50",
+      "line_style": "solid",
+      "description": "✔ Traversable"
+    },
+    {
+      "name": "locked",
+      "display_color": "#F44336",
+      "line_style": "dashed",
+      "description": "🔒 Locked"
+    },
+    {
+      "name": "blocked",
+      "display_color": "#9E9E9E",
+      "line_style": "dashed",
+      "description": "🚫 Blocked"
+    }
+  ]
+}
