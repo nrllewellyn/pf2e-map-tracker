@@ -2,13 +2,15 @@
 
 A basic map tracker for a PF2e TTRPG game.
 
-# Updating:
+# Updating
 
 - Update `/src/main/resources/roomData.json`
 - Run `main.py`
 - Updated HTML will be stored in `/target`
 
 # Room Data JSON Format
+
+NOTE: The file `/src/test/resources/testData.json` is available for testing any code changes.
 
 ## `rooms`
 
