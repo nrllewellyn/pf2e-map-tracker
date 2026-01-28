@@ -1,0 +1,61 @@
+{
+  "rooms": [
+    {"name": "Entrance", "color": "#4CAF50", "notes": "Main entry point"},
+    {"name": "Kitchen", "color": "#FF9800", "notes": "Heart of the home with large island"},
+    {"name": "Upstairs Hall", "color": "#27F5F2", "notes": "Central hallway upstairs"},
+    {"name": "Master Bedroom", "color": "#9C27B0", "notes": "Private sleeping area with en-suite bathroom"},
+    {"name": "Guest Bedroom", "color": "#E91E63"},
+    {"name": "Living Room", "color": "#2196F3", "notes": "Main family gathering space"},
+    {"name": "Dining Room", "color": "#607D8B", "notes": "Formal dining area"},
+    {"name": "Family Room", "color": "#3F51B5", "notes": "Casual TV and relaxation space"},
+    {"name": "Bathroom (Main)", "color": "#00BCD4", "notes": "Upstairs full bathroom"},
+    {"name": "Master Bathroom", "color": "#009688", "notes": "En-suite with double vanity"},
+    {"name": "Basement Hall", "color": "#795548", "notes": "Lower level hall"},
+    {"name": "Basement Rec Room", "color": "#607D8B", "notes": "Game room and media area"},
+    {"name": "Laundry Room", "color": "#8BC34A", "notes": "Utility and washing area"},
+    {"name": "Home Office", "color": "#FF5722", "notes": "Quiet workspace"},
+    {"name": "Garage", "color": "#757575", "notes": "Two-car garage"}
+  ],
+
+  "connections": [
+    {"from": "Entrance", "to": "Kitchen", "status": "open", "name": "Hallway"},
+    {"from": "Entrance", "to": "Upstairs Hall", "status": "open", "name": "↗ Stairs", "notes": "Stairs squeak loudly"},
+    {"from": "Entrance", "to": "Living Room", "status": "open", "name": "Wide archway"},
+    {"from": "Entrance", "to": "Basement Hall", "status": "open", "name": "↘ Basement Stairs"},
+    {"from": "Kitchen", "to": "Dining Room", "status": "open", "name": "Open doorway"},
+    {"from": "Kitchen", "to": "Laundry Room", "status": "open", "name": "Side door"},
+    {"from": "Kitchen", "to": "Garage", "status": "open", "name": "Garage entry"},
+    {"from": "Living Room", "to": "Dining Room", "status": "open", "name": "Open plan"},
+    {"from": "Living Room", "to": "Family Room", "status": "open", "name": "Sliding doors"},
+    {"from": "Upstairs Hall", "to": "Guest Bedroom", "status": "blocked", "notes": "Under renovation"},
+    {"from": "Upstairs Hall", "to": "Master Bedroom", "status": "locked", "notes": "Requires key after 10pm"},
+    {"from": "Upstairs Hall", "to": "Bathroom (Main)", "status": "open", "name": "Hall bathroom"},
+    {"from": "Master Bedroom", "to": "Master Bathroom", "status": "open", "name": "En-suite door"},
+    {"from": "Basement Hall", "to": "Basement Rec Room", "status": "open", "name": "First hall door"},
+    {"from": "Basement Hall", "to": "Home Office", "status": "open", "name": "Second hall door"},
+    {"from": "Basement Rec Room", "to": "Laundry Room", "status": "open", "name": "Utility corridor"},
+
+    {"from": "Laundry Room", "to": "Garage", "status": "open", "name": "Back access"}
+  ],
+
+  "connectionStatus": [
+    {
+      "name": "open",
+      "display_color": "#4CAF50",
+      "line_style": "solid",
+      "description": "✔ Traversable"
+    },
+    {
+      "name": "locked",
+      "display_color": "#F44336",
+      "line_style": "dashed",
+      "description": "🔒 Locked"
+    },
+    {
+      "name": "blocked",
+      "display_color": "#9E9E9E",
+      "line_style": "dashed",
+      "description": "🚫 Blocked"
+    }
+  ]
+}
