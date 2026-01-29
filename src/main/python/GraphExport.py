@@ -36,6 +36,9 @@ The 'scaleFactor' controls arrow head size (smaller value = less prominent arrow
 Default direction: 'bidirectional'.
 """
 
+DEFAULT_ROOM_COLOR = "#97c2fc"
+DEFAULT_CONNECTION_COLOR = "#aaaaaa"
+
 
 def create_room_graph(json_file_path: str, output_html: str = "room_graph.html") -> None:
     """
@@ -91,9 +94,12 @@ def _add_nodes(net: Network, rooms: List[dict]) -> None:
 
 def _add_single_node(net: Network, room: dict) -> None:
     """Add a single room node with formatted HTML tooltip."""
-    name = room.get("name", "Unnamed")
-    color = room.get("color", "#97c2fc")
+    name = room.get("name")
+    color = room.get("color", DEFAULT_ROOM_COLOR)
     notes = room.get("notes", "")
+
+    if not name:
+        raise ValueError("Missing room name")
 
     tooltip_parts = [f"<b>{name}</b>"]
 
@@ -170,7 +176,7 @@ def _add_single_edge(net: Network, connection: dict, status_config: Dict[str, di
 
     # Edge appearance
     is_dashed = status.get("line_style", "solid") == "dashed"
-    color = status.get("display_color", "#aaaaaa")
+    color = status.get("display_color", DEFAULT_CONNECTION_COLOR)
 
     net.add_edge(
         from_room,
@@ -185,58 +191,59 @@ def _add_single_edge(net: Network, connection: dict, status_config: Dict[str, di
 
 def _configure_physics_and_style(net: Network) -> None:
     """Apply physics simulation and global styling overrides."""
-    net.set_options("""
-    {
-      "layout": {
-        "randomSeed": 42
-      },
-      "interaction": {
-        "zoomView": true,
-        "dragView": true,
-        "keyboard": true,
-        "hover": true,
-        "tooltipDelay": 999999,
-        "hideEdgesOnDrag": false,
-        "hideNodesOnDrag": false
-      },
-      "physics": {
-        "enabled": true,
-        "barnesHut": {
-          "gravitationalConstant": -5000,
-          "centralGravity": 0.15,
-          "springLength": 140,
-          "springConstant": 0.08,
-          "damping": 0.55,
-          "avoidOverlap": 0.7
+
+    options_dict = {
+        "layout": {
+            "randomSeed": 42
         },
-        "minVelocity": 0.05,
-        "solver": "barnesHut",
-        "stabilization": {
-          "enabled": true,
-          "iterations": 3000,
-          "updateInterval": 25,
-          "onlyDynamicEdges": false
-        }
-      },
-      "nodes": {
-        "shape": "box",
-        "margin": 12,
-        "scaling": {
-          "min": 25,
-          "max": 50
-        }
-      },
-      "edges": {
-        "arrows": {
-          "to":   {"scaleFactor": 0.6},
-          "from": {"scaleFactor": 0.6}
+        "interaction": {
+            "zoomView": True,
+            "dragView": True,
+            "keyboard": True,
+            "hover": True,
+            "hideEdgesOnDrag": False,
+            "hideNodesOnDrag": False,
+            "tooltipDelay": 999999, # Extremely long delay to disable built-in tooltips (since we are using custom ones)
         },
-        "smooth": {
-          "type": "continuous"
+        "physics": {
+            "enabled": True,
+            "barnesHut": {
+                "gravitationalConstant": -5000,
+                "centralGravity": 0.15,
+                "springLength": 140,
+                "springConstant": 0.08,
+                "damping": 0.55,
+                "avoidOverlap": 0.7
+            },
+            "minVelocity": 0.05,
+            "solver": "barnesHut",
+            "stabilization": {
+                "enabled": True,
+                "iterations": 3000,
+                "updateInterval": 25,
+                "onlyDynamicEdges": False
+            }
+        },
+        "nodes": {
+            "shape": "box",
+            "margin": 12,
+            "scaling": {
+                "min": 25,
+                "max": 50
+            }
+        },
+        "edges": {
+            "arrows": {
+                "to": {"scaleFactor": 0.6},
+                "from": {"scaleFactor": 0.6}
+            },
+            "smooth": {
+                "type": "continuous"
+            }
         }
-      }
     }
-    """)
+
+    net.set_options(json.dumps(options_dict))
 
 
 def _enable_html_tooltips(html_file_path: str) -> None:
