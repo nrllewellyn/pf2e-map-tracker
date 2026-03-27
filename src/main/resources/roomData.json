@@ -1,35 +1,44 @@
 {
-  "rooms": [
-    {"name": "Teleporter Room", "color": "#4CAF50", "notes": "Arrival area"},
-    {"name": "Main Corridor", "color": "#757575", "notes": "Corridor that appears to run the length of the ship"},
-    {"name": "Workshop", "notes": "Well-equipped workshop"},
-    {"name": "Forest", "notes": "Massive forest area. Contains many strange plants and animals, some of which may be edible."}
-  ],
+    "rooms": [
+        {"name": "Teleporter Room", "color": "#4CAF50", "notes": "Arrival area"},
+        {"name": "Main Corridor", "color": "#757575", "notes": "Corridor that appears to run the length of the ship"},
+        {"name": "Workshop", "notes": "Well-equipped workshop"},
+        {"name": "Forest", "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>" },
+        {"name": "????"},
+        {"name": "Small Hallway", "color": "#757575", "notes": "A small east/west hallway" },
+        {"name": "The Memory Theater", "notes": "Theater that reads the audience's memories and displays them on a screen." },
+        {"name": "Orrery", "notes": "An orrery of a strange, alien solar system." }
+    ],
 
-  "connections": [
-    {"from": "Teleporter Room", "to": "Main Corridor", "status": "open", "name": "Airtight Door"},
-    {"from": "Main Corridor", "to": "Workshop", "status": "locked", "name": "Airtight Door", "notes": "Locked due to security lockdown"},
-    {"from": "Main Corridor", "to": "Forest", "status": "open", "name": "Airtight Door"}
-  ],
+    "connections": [
+        {"from": "Teleporter Room", "to": "Main Corridor", "status": "open", "name": "Airtight Door"},
+        {"from": "Main Corridor", "to": "Workshop", "status": "locked", "name": "Airtight Door", "notes": "Locked due to security lockdown"},
+        {"from": "Main Corridor", "to": "Forest", "status": "open", "name": "Airtight Door"},
+        {"from": "Forest", "to": "????", "status": "locked", "notes": "Heavy metal door, barred from the other side", "name": "Heavy metal door" },
+        {"from": "Forest", "to": "Small Hallway", "status": "open", "name": "Airtight Door" },
+        {"from": "Small Hallway", "to": "The Memory Theater", "status": "open", "name": "Airtight Door" },
+        {"from": "Small Hallway", "to": "Orrery", "status": "locked", "notes": "A spiral staircase down, behind a plexiglass door", "name": "Plexiglass Door" },
+        {"from": "The Memory Theater", "to": "Orrery", "status": "open", "direction": "forward_only", "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall", "name": "Spiral hallway" }
+    ],
 
-  "connectionStatus": [
-    {
-      "name": "open",
-      "display_color": "#4CAF50",
-      "line_style": "solid",
-      "description": "✔ Traversable"
-    },
-    {
-      "name": "locked",
-      "display_color": "#F44336",
-      "line_style": "dashed",
-      "description": "🔒 Locked"
-    },
-    {
-      "name": "blocked",
-      "display_color": "#9E9E9E",
-      "line_style": "dashed",
-      "description": "🚫 Blocked"
-    }
-  ]
+    "connectionStatus": [
+        {
+            "name": "open",
+            "display_color": "#4CAF50",
+            "line_style": "solid",
+            "description": "✔ Traversable"
+        },
+        {
+            "name": "locked",
+            "display_color": "#F44336",
+            "line_style": "dashed",
+            "description": "🔒 Locked"
+        },
+        {
+            "name": "blocked",
+            "display_color": "#9E9E9E",
+            "line_style": "dashed",
+            "description": "🚫 Blocked"
+        }
+    ]
 }

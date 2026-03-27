@@ -36,7 +36,7 @@ The 'scaleFactor' controls arrow head size (smaller value = less prominent arrow
 Default direction: 'bidirectional'.
 """
 
-DEFAULT_ROOM_COLOR = "#97c2fc"
+DEFAULT_ROOM_COLOR = "#3175cf"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
 
 
@@ -74,7 +74,7 @@ def _load_json(file_path: str) -> dict:
 def _create_network_instance() -> Network:
     """Create a PyVis Network instance with default visual settings."""
     return Network(
-        height="750px",
+        height="90vh",
         width="100%",
         directed=True,
         bgcolor="#222222",
@@ -215,7 +215,7 @@ def _configure_physics_and_style(net: Network) -> None:
                 "damping": 0.55,
                 "avoidOverlap": 0.7
             },
-            "minVelocity": 0.05,
+            "minVelocity": 1.00,
             "solver": "barnesHut",
             "stabilization": {
                 "enabled": True,
