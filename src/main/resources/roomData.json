@@ -10,7 +10,8 @@
         {"name": "Orrery", "notes": "An orrery of a strange, alien solar system." },
         {"name": "Small Hallway above Orrery", "color":  "#757575", "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway." },
         {"name": "Restoration Engine", "notes":  "A massive arcane device submerged in a pool of liquid."},
-        {"name": "Hanging Registry", "notes":  "???" },
+        {"name": "Hanging Registry", "notes":  "Memories of those left behind" },
+        {"name":  "Porcelain Passageways", "notes":  "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."},
         {"name": "???? (2)"}
     ],
 
@@ -26,7 +27,8 @@
         {"from": "Orrery", "to":  "Small Hallway above Orrery", "status":  "open", "notes":  "A spiral staircase up, ending behind a plexiglass door", "name":  "Spiral Staircase" },
         {"from": "Small Hallway above Orrery", "to": "Restoration Engine", "status": "open" },
         {"from": "Small Hallway above Orrery", "to": "Hanging Registry", "status": "open" },
-        {"from": "Small Hallway above Orrery", "to": "???? (2)", "status": "locked", "notes":  "Heavy metal door, sealed due to security lockdown", "name":  "Heavy metal door" }
+        {"from": "Small Hallway above Orrery", "to": "???? (2)", "status": "locked", "notes":  "Heavy metal door, sealed due to security lockdown", "name":  "Heavy metal door" },
+        {"from": "Hanging Registry", "to": "Porcelain Passageways", "status": "open" }
     ],
 
     "connectionStatus": [
