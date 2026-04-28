@@ -4,22 +4,26 @@
         {"name": "Main Corridor", "color": "#757575", "notes": "Corridor that appears to run the length of the ship"},
         {"name": "Workshop", "notes": "Well-equipped workshop"},
         {"name": "Forest", "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>" },
-        {"name": "???? (1)"},
+        {"name": "Small Greenhouse", "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here." },
         {"name": "Small Hallway behind Forest", "color": "#757575", "notes": "A small east/west hallway" },
         {"name": "Memory Theater", "notes": "Theater that reads the audience's memories and displays them on a screen." },
         {"name": "Orrery", "notes": "An orrery of a strange, alien solar system." },
         {"name": "Small Hallway above Orrery", "color":  "#757575", "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway." },
         {"name": "Restoration Engine", "notes":  "A massive arcane device submerged in a pool of liquid."},
         {"name": "Hanging Registry", "notes":  "Memories of those left behind" },
-        {"name":  "Porcelain Passageways", "notes":  "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."},
-        {"name": "???? (2)"}
+        {"name": "Porcelain Passageways", "notes":  "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."},
+        {"name": "Quartermaster's Bazaar", "notes":  "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."},
+        {"name": "???? (1)"},
+        {"name": "???? (2)"},
+        {"name": "???? (3)"},
+        {"name": "???? (4)"}
     ],
 
     "connections": [
         {"from": "Teleporter Room", "to": "Main Corridor", "status": "open", "name": "Airtight Door"},
         {"from": "Main Corridor", "to": "Workshop", "status": "locked", "name": "Airtight Door", "notes": "Locked due to security lockdown"},
         {"from": "Main Corridor", "to": "Forest", "status": "open", "name": "Airtight Door"},
-        {"from": "Forest", "to": "???? (1)", "status": "locked", "notes": "Heavy metal door, barred from the other side", "name": "Heavy metal door" },
+        {"from": "Forest", "to": "Porcelain Passageways", "status": "open", "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways", "name": "Heavy metal door" },
         {"from": "Forest", "to": "Small Hallway behind Forest", "status": "open", "name": "Airtight Door" },
         {"from": "Small Hallway behind Forest", "to": "Memory Theater", "status": "open", "name": "Airtight Door" },
         {"from": "Small Hallway behind Forest", "to": "Orrery", "status": "open", "notes": "A spiral staircase down, behind a plexiglass door", "name": "Plexiglass Door" },
@@ -27,8 +31,13 @@
         {"from": "Orrery", "to":  "Small Hallway above Orrery", "status":  "open", "notes":  "A spiral staircase up, ending behind a plexiglass door", "name":  "Spiral Staircase" },
         {"from": "Small Hallway above Orrery", "to": "Restoration Engine", "status": "open" },
         {"from": "Small Hallway above Orrery", "to": "Hanging Registry", "status": "open" },
-        {"from": "Small Hallway above Orrery", "to": "???? (2)", "status": "locked", "notes":  "Heavy metal door, sealed due to security lockdown", "name":  "Heavy metal door" },
-        {"from": "Hanging Registry", "to": "Porcelain Passageways", "status": "open" }
+        {"from": "Small Hallway above Orrery", "to": "???? (1)", "status": "locked", "notes":  "Heavy metal door, sealed due to security lockdown", "name":  "Heavy metal door" },
+        {"from":  "Restoration Engine", "to":  "???? (2)", "status": "locked", "name":  "Underwater door"},
+        {"from": "Hanging Registry", "to": "Porcelain Passageways", "status": "open" },
+        {"from": "Porcelain Passageways", "to": "Small Greenhouse", "status": "open", "name": "Metal door with wood veneer" },
+        {"from": "Porcelain Passageways", "to": "Quartermaster's Bazaar", "status": "open" },
+        {"from": "Quartermaster's Bazaar", "to": "???? (3)", "status": "locked", "name": "Secret door with pentagonal keyhole" },
+        {"from": "Quartermaster's Bazaar", "to": "???? (4)", "status": "locked", "name": "Secret door with pentagonal keyhole" }
     ],
 
     "connectionStatus": [
