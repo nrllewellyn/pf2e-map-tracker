@@ -14,8 +14,9 @@ from pf2e_map_tracker.models import (
     Room,
 )
 
-PRODUCTION_DATA = Path("data/room_data.json")
-TEST_DATA = Path("tests/fixtures/test_data.json")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+PRODUCTION_DATA = REPOSITORY_ROOT / "data/room_data.json"
+TEST_DATA = REPOSITORY_ROOT / "tests/fixtures/test_data.json"
 
 
 @pytest.mark.parametrize("path", [PRODUCTION_DATA, TEST_DATA])

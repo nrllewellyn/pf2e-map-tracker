@@ -14,7 +14,7 @@ from pf2e_map_tracker.io import load_map_data
 from pf2e_map_tracker.models import Character, MapData, Room
 from pf2e_map_tracker.tooltips import character_tooltip, room_tooltips
 
-TEST_DATA = Path("tests/fixtures/test_data.json")
+TEST_DATA = Path(__file__).resolve().parent / "fixtures/test_data.json"
 
 
 def test_build_network_contains_all_nodes_and_edges() -> None:

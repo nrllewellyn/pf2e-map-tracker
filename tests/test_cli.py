@@ -4,7 +4,8 @@ from pathlib import Path
 from pf2e_map_tracker.cli import main
 from pf2e_map_tracker.models import GraphOptions, MapData
 
-TEST_DATA = Path("tests/fixtures/test_data.json")
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+TEST_DATA = REPOSITORY_ROOT / "tests/fixtures/test_data.json"
 
 
 def test_validate_command(capsys) -> None:
@@ -35,6 +36,6 @@ def test_exported_schemas_match_models(tmp_path: Path) -> None:
     }
     for filename, expected in expected_schemas.items():
         exported = json.loads((tmp_path / filename).read_text(encoding="utf-8"))
-        committed = json.loads((Path("schemas") / filename).read_text(encoding="utf-8"))
+        committed = json.loads((REPOSITORY_ROOT / "schemas" / filename).read_text(encoding="utf-8"))
         assert exported == expected
         assert committed == expected
