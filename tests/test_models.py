@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from pf2e_map_tracker.io import load_graph_options, load_map_data
-from pf2e_map_tracker.models import MapData
+from pf2e_map_tracker.models import Character, CharacterGroup, MapData, NodeShape, Room
 
 PRODUCTION_DATA = Path("data/room_data.json")
 TEST_DATA = Path("tests/fixtures/test_data.json")
@@ -72,6 +72,21 @@ def test_json_schema_uses_existing_wire_names() -> None:
     assert "connectionStatus" in schema
     assert '"from"' in schema
     assert '"class"' in schema
+
+
+def test_node_shapes_have_existing_defaults() -> None:
+    assert Room(name="Room").shape == NodeShape.BOX
+    assert CharacterGroup(name="Group", location="Room").shape == NodeShape.CIRCLE
+    assert Character(name="Character", ancestry="Human", location="Room").shape == NodeShape.ELLIPSE
+
+
+@pytest.mark.parametrize("shape", ["image", "circularImage", "icon", "pentagon"])
+def test_unsupported_node_shape_fails_validation(shape: str) -> None:
+    data = _minimal_data()
+    data["rooms"][0]["shape"] = shape
+
+    with pytest.raises(ValidationError, match="shape"):
+        MapData.model_validate(data)
 
 
 def _minimal_data() -> dict:

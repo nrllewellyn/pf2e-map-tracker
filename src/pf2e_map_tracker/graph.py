@@ -41,7 +41,7 @@ def generate_graph(input_path: Path, output_path: Path) -> Path:
     data = load_map_data(input_path)
     network = build_network(data)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    network.write_html(str(output_path), notebook=False)
+    output_path.write_text(network.generate_html(notebook=False), encoding="utf-8")
     inject_enhancements(output_path)
     return output_path
 
@@ -58,6 +58,10 @@ def build_network(data: MapData) -> Network:
         filter_menu=False,
         cdn_resources="remote",
     )
+    network.templateEnv.policies["json.dumps_kwargs"] = {
+        **network.templateEnv.policies["json.dumps_kwargs"],
+        "ensure_ascii": False,
+    }
     _add_rooms(network, data)
     _add_character_groups(network, data)
     _add_characters(network, data)
@@ -94,7 +98,7 @@ def _add_rooms(network: Network, data: MapData) -> None:
             label=room.name,
             title=base,
             color=room.color or DEFAULT_ROOM_COLOR,
-            shape="box",
+            shape=room.shape,
             font={"size": 16},
             node_type="room",
             tooltip_hidden=hidden,
@@ -116,7 +120,7 @@ def _add_character_groups(network: Network, data: MapData) -> None:
             label=group.name,
             title=base,
             color=group.color or DEFAULT_CHARACTER_GROUP_COLOR,
-            shape="circle",
+            shape=group.shape,
             font={"size": 16},
             node_type="character_group",
             tooltip_hidden=base,
@@ -132,7 +136,7 @@ def _add_characters(network: Network, data: MapData) -> None:
             label=character.name,
             title=character_tooltip(character),
             color=character.color or DEFAULT_CHARACTER_COLOR,
-            shape="ellipse",
+            shape=character.shape,
             font={"size": 16},
             node_type="character",
         )

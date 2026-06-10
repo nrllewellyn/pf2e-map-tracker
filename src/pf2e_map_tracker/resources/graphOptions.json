@@ -16,7 +16,7 @@
     "barnesHut": {
       "gravitationalConstant": -8000,
       "centralGravity": 0.15,
-      "springLength": 200,
+      "springLength": 120,
       "springConstant": 0.08,
       "damping": 0.55,
       "avoidOverlap": 0.7

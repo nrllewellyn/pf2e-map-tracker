@@ -70,55 +70,60 @@ Display strings in map data are treated as trusted HTML so notes can contain mar
 All object fields are validated strictly. Unknown fields are rejected so spelling mistakes are
 reported instead of silently ignored.
 
+All string fields support emojis and other Unicode characters.
+
 ### Rooms
 
-| Field | Required | Description |
-|---|---|---|
-| `name` | Yes | Unique node name and displayed label. |
-| `anchor` | No | Invisibly connects anchor rooms for layout stability. Defaults to `false`. |
-| `color` | No | CSS node color. |
-| `notes` | No | Trusted HTML shown in the room tooltip. |
+| Field    | Required | Description                                                                                                                                               |
+|----------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`   | Yes      | Unique node name and displayed label.                                                                                                                     |
+| `anchor` | No       | Invisibly connects anchor rooms for layout stability. Defaults to `false`.                                                                                |
+| `color`  | No       | CSS node color.                                                                                                                                           |
+| `shape`  | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `box`. |
+| `notes`  | No       | Trusted HTML shown in the room tooltip.                                                                                                                   |
 
 Two anchors are connected as a pair. Three or more anchors form a ring.
 
 ### Characters
 
-| Field | Required | Description |
-|---|---|---|
-| `name` | Yes | Unique node name and displayed label. |
-| `ancestry` | Yes | Ancestry shown in the tooltip. |
-| `class` | No | Class shown in the tooltip. |
-| `physical_description` | No | Trusted HTML shown in the tooltip. |
-| `personality` | No | Trusted HTML shown in the tooltip. |
-| `other_details` | No | Trusted HTML shown in the tooltip. |
-| `location` | Conditional | Existing room name. Exactly one of `location` or `group` is required. |
-| `group` | Conditional | Existing character-group name. Exactly one of `location` or `group` is required. |
-| `color` | No | CSS node color. |
+| Field                  | Required    | Description                                                                                                                                                   |
+|------------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                 | Yes         | Unique node name and displayed label.                                                                                                                         |
+| `ancestry`             | Yes         | Ancestry shown in the tooltip.                                                                                                                                |
+| `class`                | No          | Class shown in the tooltip.                                                                                                                                   |
+| `physical_description` | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
+| `personality`          | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
+| `other_details`        | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
+| `location`             | Conditional | Existing room name. Exactly one of `location` or `group` is required.                                                                                         |
+| `group`                | Conditional | Existing character-group name. Exactly one of `location` or `group` is required.                                                                              |
+| `color`                | No          | CSS node color.                                                                                                                                               |
+| `shape`                | No          | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `ellipse`. |
 
 ### Character Groups
 
-| Field | Required | Description |
-|---|---|---|
-| `name` | Yes | Unique node name and displayed label. |
-| `location` | Yes | Existing room name. |
-| `color` | No | CSS node color. |
+| Field      | Required | Description                                                                                                                                                  |
+|------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`     | Yes      | Unique node name and displayed label.                                                                                                                        |
+| `location` | Yes      | Existing room name.                                                                                                                                          |
+| `color`    | No       | CSS node color.                                                                                                                                              |
+| `shape`    | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`.~~~~ Defaults to `circle`. |
 
 ### Connections
 
-| Field | Required | Description |
-|---|---|---|
-| `from` | Yes | Existing source room name. |
-| `to` | Yes | Existing destination room name. |
-| `status` | Yes | Existing `connectionStatus` name. |
-| `direction` | No | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
-| `name` | No | Connection label shown in the tooltip. |
-| `notes` | No | Trusted HTML shown in the tooltip. |
+| Field       | Required | Description                                                                       |
+|-------------|----------|-----------------------------------------------------------------------------------|
+| `from`      | Yes      | Existing source room name.                                                        |
+| `to`        | Yes      | Existing destination room name.                                                   |
+| `status`    | Yes      | Existing `connectionStatus` name.                                                 |
+| `direction` | No       | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
+| `name`      | No       | Connection label shown in the tooltip.                                            |
+| `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
 
 ### Connection Statuses
 
-| Field | Required | Description |
-|---|---|---|
-| `name` | Yes | Unique status name referenced by connections. |
-| `description` | Yes | Human-readable tooltip description. |
-| `display_color` | No | CSS edge color. |
-| `line_style` | No | `solid` or `dashed`. Defaults to `solid`. |
+| Field           | Required | Description                                   |
+|-----------------|----------|-----------------------------------------------|
+| `name`          | Yes      | Unique status name referenced by connections. |
+| `description`   | Yes      | Human-readable tooltip description.           |
+| `display_color` | No       | CSS edge color.                               |
+| `line_style`    | No       | `solid` or `dashed`. Defaults to `solid`.     |

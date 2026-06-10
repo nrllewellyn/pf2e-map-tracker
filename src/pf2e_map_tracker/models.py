@@ -18,10 +18,25 @@ class ConnectionDirection(StrEnum):
     BIDIRECTIONAL = "bidirectional"
 
 
+class NodeShape(StrEnum):
+    ELLIPSE = "ellipse"
+    CIRCLE = "circle"
+    DATABASE = "database"
+    BOX = "box"
+    TEXT = "text"
+    DIAMOND = "diamond"
+    DOT = "dot"
+    STAR = "star"
+    TRIANGLE = "triangle"
+    TRIANGLE_DOWN = "triangleDown"
+    SQUARE = "square"
+
+
 class Room(StrictModel):
     name: NonEmptyString
     anchor: bool = False
     color: str | None = None
+    shape: NodeShape = NodeShape.BOX
     notes: str = ""
 
 
@@ -29,6 +44,7 @@ class CharacterGroup(StrictModel):
     name: NonEmptyString
     location: NonEmptyString
     color: str | None = None
+    shape: NodeShape = NodeShape.CIRCLE
 
 
 class Character(StrictModel):
@@ -41,6 +57,7 @@ class Character(StrictModel):
     location: NonEmptyString | None = None
     group: NonEmptyString | None = None
     color: str | None = None
+    shape: NodeShape = NodeShape.ELLIPSE
 
     @model_validator(mode="after")
     def validate_placement(self) -> "Character":

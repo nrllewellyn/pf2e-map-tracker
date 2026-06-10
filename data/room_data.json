@@ -88,11 +88,11 @@
       "name": "???? (5)"
     },
     {
-      "name": "Orthos",
+      "name": "🌍 Orthos 🌍",
       "anchor": true
     },
     {
-      "name": "Current Location Unknown",
+      "name": "❓ Current Location Unknown ❓",
       "anchor": true
     }
   ],
@@ -264,7 +264,7 @@
       "physical_description": "Tall and imposing, partially draconic with gleaming scales integrated into custom-forged plate armor.",
       "personality": "Honorable to a fault and protective almost to excess; struggles between draconic pride and knightly humility.",
       "other_details": "Serves the god Kasjsharux.",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     },
     {
       "name": "Britt Underfoot",
@@ -272,7 +272,7 @@
       "class": "Rogue",
       "physical_description": "Small and nimble, with quick fingers and bright green eyes; wears light leather armor and a utility belt full of tools.",
       "personality": "Curious, cheerful, and slightly mischievous; always the first to explore a new ruin or tunnel.",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     },
     {
       "name": "Fennick Glimmerfoot",
@@ -289,7 +289,7 @@
       "class": "Oracle",
       "physical_description": "Luminous pale blue core encased in a dark oak wooden exoskeleton, deeply carved with symbols and glyphs representing language and knowledge. Fragments of paper and ink float subtly around the core.",
       "personality": "Slightly eccentric and intensely focused on patterns in language and history. Speaks in layered metaphors, enjoys unraveling ancient texts, and delights in sharing philosophical insights.",
-      "location": "Orthos"
+      "location": "🌍 Orthos 🌍"
     },
     {
       "name": "Hilda Stoutbrew",
@@ -334,7 +334,7 @@
       "physical_description": "Tall metallic frame with reinforced plating and tool mounts along the limbs. Integrated stabilizers help maintain balance under heavy loads. Optical sensors glow softly in dim light.",
       "personality": "Stoic, methodical, and extremely precise. Constantly tests innovations under stress to improve performance and is deeply protective of allies in battle.",
       "other_details": "Innovation: Reinforced Exosuit, a personal armor enhancement that deploys stabilizing braces and adaptive shields to improve defense and mobility.",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     },
     {
       "name": "Rurik Pebbleleaf",
@@ -352,7 +352,7 @@
       "physical_description": "Gleaming, excessively gold-trimmed armor; a flowing crimson cape that billows without wind; perfectly styled hair he fixes mid-fight; and a cosmetically glowing longsword. Maintains a striking heroic pose at all times.",
       "personality": "Speaks in grand declarations, interrupts others to monologue, interprets disagreement as villainy, and escalates immediately to violence. Cannot admit defeat, insisting every loss was merely a test.",
       "other_details": "*Champion of Light, Scourge of Darkness, Hero of Destiny",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     },
     {
       "name": "Tahlok Shardframe",
@@ -369,7 +369,7 @@
       "class": "Cleric",
       "physical_description": "Stocky and strong, with auburn hair braided with golden beads. Wears chainmail and a pendant engraved with Helkara's holy symbols. Carries a reinforced battle tankard that doubles as a weapon and a small satchel of healing supplies.",
       "personality": "Warm, nurturing, jovial, and steadfast; protective of her allies and always ready with a healing word or frothy mug of ale to lift spirits.",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     },
     {
       "name": "Tink Gearwhistle",
@@ -395,7 +395,7 @@
       "class": "Wizard",
       "physical_description": "Tall and slender, with silver-white hair cascading over a deep blue robe adorned with arcane sigils. Carries a glowing magical staff, and three shimmering Aeon stones orbit his head, faintly illuminating his face.",
       "personality": "Brilliant, focused, and precise; loves experimentation and mastering destructive magic, though somewhat absent-minded socially. Analytical and strategic in combat, often serving as the party's magical powerhouse.",
-      "location": "Current Location Unknown"
+      "location": "❓ Current Location Unknown ❓"
     }
   ],
   "character_groups": [

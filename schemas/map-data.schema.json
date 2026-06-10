@@ -70,6 +70,10 @@
           ],
           "default": null,
           "title": "Color"
+        },
+        "shape": {
+          "$ref": "#/$defs/NodeShape",
+          "default": "ellipse"
         }
       },
       "required": [
@@ -103,6 +107,10 @@
           ],
           "default": null,
           "title": "Color"
+        },
+        "shape": {
+          "$ref": "#/$defs/NodeShape",
+          "default": "circle"
         }
       },
       "required": [
@@ -204,6 +212,23 @@
       "title": "ConnectionStatus",
       "type": "object"
     },
+    "NodeShape": {
+      "enum": [
+        "ellipse",
+        "circle",
+        "database",
+        "box",
+        "text",
+        "diamond",
+        "dot",
+        "star",
+        "triangle",
+        "triangleDown",
+        "square"
+      ],
+      "title": "NodeShape",
+      "type": "string"
+    },
     "Room": {
       "additionalProperties": false,
       "properties": {
@@ -228,6 +253,10 @@
           ],
           "default": null,
           "title": "Color"
+        },
+        "shape": {
+          "$ref": "#/$defs/NodeShape",
+          "default": "box"
         },
         "notes": {
           "default": "",
