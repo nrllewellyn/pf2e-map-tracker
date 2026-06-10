@@ -10,7 +10,7 @@ A basic map tracker for a PF2e TTRPG game.
 
 # Room Data JSON Format
 
-NOTE: The file `/src/test/resources/testData.json` is available for testing any code changes.
+NOTE: The file `/src/main/resources/testData.json` is available for testing any code changes.
 
 ## `rooms`
 
@@ -19,6 +19,21 @@ NOTE: The file `/src/test/resources/testData.json` is available for testing any 
 | `name`  | string | **Yes**   | Unique identifier and displayed label                                  | `"Kitchen"`                |
 | `color` | string | No        | Background color of the node (CSS color). Default:  `"#97c2fc"`        | `"#ffcc00"` or `"yellow"`  |
 | `notes` | string | No        | Additional text shown in node tooltip on hover. Default: Empty string. | `"Smells funny after 8pm"` |
+
+## `characters`
+
+| Key           | Type   | Required? | Description / Purpose                                                        | Example value                    |
+|---------------|--------|-----------|------------------------------------------------------------------------------|----------------------------------|
+| `name`        | string | **Yes**   | Unique identifier and displayed label. Must not match another node name.     | `"Valeros"`                      |
+| `ancestry`    | string | **Yes**   | Character ancestry shown in the node tooltip.                                | `"Human"`                        |
+| `class`       | string | No        | Character class shown in the node tooltip. Default: Empty string.             | `"Fighter"`                      |
+| `physical_description` | string | No | Physical description shown in the node tooltip. Default: Empty string.       | `"Tall and heavily armored."`    |
+| `personality` | string | No        | Personality description shown in the node tooltip. Default: Empty string.    | `"Quietly confident."`           |
+| `other_details` | string | No      | Any other character details shown in the node tooltip. Default: Empty string.| `"Travels with the armorer."`    |
+| `location`    | string | **Yes**   | Current location. Must match a room `name`.                                  | `"Entrance"`                     |
+| `color`       | string | No        | Background color of the character node (CSS color). Uses the default if absent. | `"#ffcc00"` or `"yellow"`     |
+
+Characters are displayed as ellipse-shaped nodes. Each character is automatically connected to its location by a dashed, neutral-colored line.
 
 ## `connections`
 

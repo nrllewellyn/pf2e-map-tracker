@@ -17,6 +17,11 @@
     {"name": "Garage", "color": "#757575", "notes": "Two-car garage"}
   ],
 
+  "characters": [
+    { "name": "Valeros", "ancestry": "Human", "physical_description": "A seasoned adventurer.", "location": "Entrance" },
+    { "name": "Merisiel", "ancestry": "Elf", "class": "Rogue", "personality": "Curious and observant.", "other_details": "Keeps an eye on the <b>locked doors</b>.", "location": "Upstairs Hall", "color": "#ffcc00" }
+  ],
+
   "connections": [
     {"from": "Entrance", "to": "Kitchen", "status": "open", "name": "Hallway"},
     {"from": "Entrance", "to": "Upstairs Hall", "status": "open", "name": "↗ Stairs", "notes": "Stairs squeak <b>loudly</b>"},

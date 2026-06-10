@@ -1,73 +1,344 @@
 {
-    "rooms": [
-        {"name": "Teleporter Room", "color": "#4CAF50", "notes": "Arrival area"},
-        {"name": "Main Corridor", "color": "#757575", "notes": "Corridor that appears to run the length of the ship"},
-        {"name": "Workshop", "notes": "Well-equipped workshop"},
-        {"name": "Forest", "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>" },
-        {"name": "Small Greenhouse", "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here." },
-        {"name": "Crystal Growth Lab", "notes":  "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"},
-        {"name": "Small Hallway behind Forest", "color": "#757575", "notes": "A small east/west hallway" },
-        {"name": "Memory Theater", "notes": "Theater that reads the audience's memories and displays them on a screen." },
-        {"name": "Orrery", "notes": "An orrery of a strange, alien solar system." },
-        {"name": "Small Hallway above Orrery", "color":  "#757575", "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway." },
-        {"name": "Restoration Engine", "notes":  "A massive arcane device submerged in a pool of liquid."},
-        {"name": "Hanging Registry", "notes":  "Memories of those left behind" },
-        {"name": "Porcelain Passageways", "notes":  "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."},
-        {"name": "Quartermaster's Bazaar", "notes":  "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."},
-        {"name": "The Crystal Mug", "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit back via doors in the back of the tavern."},
-        {"name": "Under Construction", "color":  "#fca503" },
-        {"name": "The Webbed Dungeon"},
-        {"name": "???? (1)"},
-        {"name": "???? (2)"},
-        {"name": "???? (3)"},
-        {"name": "???? (4)"},
-        {"name": "???? (5)"}
-    ],
-
-    "connections": [
-        {"from": "Teleporter Room", "to": "Main Corridor", "status": "open", "name": "Airtight Door"},
-        {"from": "Main Corridor", "to": "Workshop", "status": "locked", "name": "Airtight Door", "notes": "Locked due to security lockdown"},
-        {"from": "Main Corridor", "to": "Forest", "status": "open", "name": "Airtight Door"},
-        {"from": "Forest", "to": "Porcelain Passageways", "status": "open", "name": "Heavy metal door", "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways" },
-        {"from": "Forest", "to": "Small Hallway behind Forest", "status": "open", "name": "Airtight Door" },
-        {"from": "Small Hallway behind Forest", "to": "Memory Theater", "status": "open", "name": "Airtight Door" },
-        {"from": "Small Hallway behind Forest", "to": "Orrery", "status": "open", "name": "Plexiglass Door", "notes": "A spiral staircase down, behind a plexiglass door" },
-        {"from": "Memory Theater", "to": "Orrery", "status": "open", "direction": "forward_only", "name": "Spiral hallway", "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall" },
-        {"from": "Orrery", "to":  "Small Hallway above Orrery", "status":  "open", "name": "Spiral Staircase", "notes": "A spiral staircase up, ending behind a plexiglass door" },
-        {"from": "Small Hallway above Orrery", "to": "Restoration Engine", "status": "open" },
-        {"from": "Small Hallway above Orrery", "to": "Hanging Registry", "status": "open" },
-        {"from": "Small Hallway above Orrery", "to": "???? (1)", "status": "locked", "name":  "Heavy metal door", "notes":  "Heavy metal door, sealed due to security lockdown" },
-        {"from": "Restoration Engine", "to":  "The Crystal Mug", "status": "open", "name":  "Underwater door", "notes":  "See note on The Crystal Mug about arrival/departure." },
-        {"from": "Hanging Registry", "to": "Porcelain Passageways", "status": "open" },
-        {"from": "Porcelain Passageways", "to": "Small Greenhouse", "status": "open", "name": "Metal door with wood veneer" },
-        {"from": "Small Greenhouse", "to": "Crystal Growth Lab", "status": "open", "name": "Door that was once blocked by a massive tree" },
-        {"from": "Porcelain Passageways", "to": "Quartermaster's Bazaar", "status": "open" },
-        {"from": "Quartermaster's Bazaar", "to": "Under Construction", "status": "locked", "name": "Locked until the room is initialized" },
-        {"from": "Quartermaster's Bazaar", "to": "???? (2)", "status": "locked", "name": "Secret door with pentagonal keyhole" },
-        {"from": "The Crystal Mug", "to":  "The Webbed Dungeon", "status": "open", "notes":  "See note on The Crystal Mug about arrival/departure."  },
-        {"from": "The Crystal Mug", "to":  "???? (3)", "status": "blocked", "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure." },
-        {"from": "The Crystal Mug", "to":  "???? (4)", "status": "blocked", "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."  },
-        {"from": "The Crystal Mug", "to":  "???? (5)", "status": "blocked", "notes":  "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."  }
-    ],
-
-    "connectionStatus": [
-        {
-            "name": "open",
-            "display_color": "#4CAF50",
-            "line_style": "solid",
-            "description": "✔ Traversable"
-        },
-        {
-            "name": "locked",
-            "display_color": "#F44336",
-            "line_style": "dashed",
-            "description": "🔒 Locked"
-        },
-        {
-            "name": "blocked",
-            "display_color": "#9E9E9E",
-            "line_style": "dashed",
-            "description": "🚫 Blocked"
-        }
-    ]
+  "rooms": [
+    {
+      "name": "Teleporter Room",
+      "color": "#4CAF50",
+      "notes": "Arrival area"
+    },
+    {
+      "name": "Main Corridor",
+      "color": "#757575",
+      "notes": "Corridor that appears to run the length of the ship"
+    },
+    {
+      "name": "Workshop",
+      "notes": "Well-equipped workshop"
+    },
+    {
+      "name": "Forest",
+      "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>"
+    },
+    {
+      "name": "Small Greenhouse",
+      "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
+    },
+    {
+      "name": "Crystal Growth Lab",
+      "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
+    },
+    {
+      "name": "Small Hallway behind Forest",
+      "color": "#757575",
+      "notes": "A small east/west hallway"
+    },
+    {
+      "name": "Memory Theater",
+      "notes": "Theater that reads the audience's memories and displays them on a screen."
+    },
+    {
+      "name": "Orrery",
+      "notes": "An orrery of a strange, alien solar system."
+    },
+    {
+      "name": "Small Hallway above Orrery",
+      "color": "#757575",
+      "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
+    },
+    {
+      "name": "Restoration Engine",
+      "notes": "A massive arcane device submerged in a pool of liquid."
+    },
+    {
+      "name": "Hanging Registry",
+      "notes": "Memories of those left behind"
+    },
+    {
+      "name": "Porcelain Passageways",
+      "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."
+    },
+    {
+      "name": "Quartermaster's Bazaar",
+      "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."
+    },
+    {
+      "name": "The Crystal Mug",
+      "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit back via doors in the back of the tavern."
+    },
+    {
+      "name": "Under Construction",
+      "color": "#fca503"
+    },
+    {
+      "name": "The Webbed Dungeon"
+    },
+    {
+      "name": "???? (1)"
+    },
+    {
+      "name": "???? (2)"
+    },
+    {
+      "name": "???? (3)"
+    },
+    {
+      "name": "???? (4)"
+    },
+    {
+      "name": "???? (5)"
+    }
+  ],
+  "connections": [
+    {
+      "from": "Teleporter Room",
+      "to": "Main Corridor",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "Main Corridor",
+      "to": "Workshop",
+      "status": "locked",
+      "name": "Airtight Door",
+      "notes": "Locked due to security lockdown"
+    },
+    {
+      "from": "Main Corridor",
+      "to": "Forest",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "Forest",
+      "to": "Porcelain Passageways",
+      "status": "open",
+      "name": "Heavy metal door",
+      "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
+    },
+    {
+      "from": "Forest",
+      "to": "Small Hallway behind Forest",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "Small Hallway behind Forest",
+      "to": "Memory Theater",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "Small Hallway behind Forest",
+      "to": "Orrery",
+      "status": "open",
+      "name": "Plexiglass Door",
+      "notes": "A spiral staircase down, behind a plexiglass door"
+    },
+    {
+      "from": "Memory Theater",
+      "to": "Orrery",
+      "status": "open",
+      "direction": "forward_only",
+      "name": "Spiral hallway",
+      "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
+    },
+    {
+      "from": "Orrery",
+      "to": "Small Hallway above Orrery",
+      "status": "open",
+      "name": "Spiral Staircase",
+      "notes": "A spiral staircase up, ending behind a plexiglass door"
+    },
+    {
+      "from": "Small Hallway above Orrery",
+      "to": "Restoration Engine",
+      "status": "open"
+    },
+    {
+      "from": "Small Hallway above Orrery",
+      "to": "Hanging Registry",
+      "status": "open"
+    },
+    {
+      "from": "Small Hallway above Orrery",
+      "to": "???? (1)",
+      "status": "locked",
+      "name": "Heavy metal door",
+      "notes": "Heavy metal door, sealed due to security lockdown"
+    },
+    {
+      "from": "Restoration Engine",
+      "to": "The Crystal Mug",
+      "status": "open",
+      "name": "Underwater door",
+      "notes": "See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "Hanging Registry",
+      "to": "Porcelain Passageways",
+      "status": "open"
+    },
+    {
+      "from": "Porcelain Passageways",
+      "to": "Small Greenhouse",
+      "status": "open",
+      "name": "Metal door with wood veneer"
+    },
+    {
+      "from": "Small Greenhouse",
+      "to": "Crystal Growth Lab",
+      "status": "open",
+      "name": "Door that was once blocked by a massive tree"
+    },
+    {
+      "from": "Porcelain Passageways",
+      "to": "Quartermaster's Bazaar",
+      "status": "open"
+    },
+    {
+      "from": "Quartermaster's Bazaar",
+      "to": "Under Construction",
+      "status": "locked",
+      "name": "Locked until the room is initialized"
+    },
+    {
+      "from": "Quartermaster's Bazaar",
+      "to": "???? (2)",
+      "status": "locked",
+      "name": "Secret door with pentagonal keyhole"
+    },
+    {
+      "from": "The Crystal Mug",
+      "to": "The Webbed Dungeon",
+      "status": "open",
+      "notes": "See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "The Crystal Mug",
+      "to": "???? (3)",
+      "status": "blocked",
+      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "The Crystal Mug",
+      "to": "???? (4)",
+      "status": "blocked",
+      "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "The Crystal Mug",
+      "to": "???? (5)",
+      "status": "blocked",
+      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    }
+  ],
+  "characters": [
+    {
+      "name": "Arianna Isenhart",
+      "ancestry": "Human",
+      "class": "Inventor",
+      "physical_description": "Muscular, soot-streaked arms, hair pulled into a practical bun; always carrying a toolkit and a whetstone.",
+      "personality": "Precise, disciplined, quietly confident; speaks little but commands respect with her skill.",
+      "other_details": "Travels with Aurethion. Acts an armorer--assists in keeping his gear maintained, as well as making minor adjustments.",
+      "location": "Teleporter Room"
+    },
+    {
+      "name": "Arvek (Arvie) Spotsnout-Smith",
+      "ancestry": "Ratfolk",
+      "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
+      "class": "Inventor",
+      "location": "Teleporter Room"
+    },
+    {
+      "name": "Fennick Glimmerfoot",
+      "ancestry": "Sprite",
+      "class": "Bard",
+      "physical_description": "Tiny, radiant, greenish hair with floral accents; carries a small flute.",
+      "personality": "Cheerful, whimsical, loves playing pranks and keeping the group laughing.",
+      "other_details": "Travels with Britt Underfoot. Companion and morale booster; helps make long expeditions fun and engaging.",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Hilda Stoutbrew",
+      "ancestry": "Dwarf",
+      "class": "Cleric",
+      "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
+      "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
+      "other_details": "Travels with Thalra Brewmantle. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
+      "location": "Teleporter Room"
+    },
+    {
+      "name": "Lunexa Duskweaver",
+      "ancestry": "Fetchling",
+      "class": "Oracle",
+      "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
+      "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
+      "other_details": "Travels with Runeweaver. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
+      "location": "Teleporter Room"
+    },
+    {
+      "name": "Lyria Moonthread",
+      "ancestry": "Elf",
+      "class": "Wizard",
+      "physical_description": "Slender, dark hair tied back, robes slightly too long; carries notebooks, quills, and a small crystal orb.",
+      "personality": "Inquisitive, attentive, patient; fascinated by Veylorin's spells and constantly takes notes.",
+      "other_details": "Travels with Veylorin Starweaver. Apprentice; learns arcane theory and assists with spell research.",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Mira Brightleaf",
+      "ancestry": "Conrasu",
+      "class": "Bard",
+      "physical_description": "Youthful, luminous purple core encased in a wooden exoskeleton; carries a small lyre and floating sheets of notes.",
+      "personality": "Cheerful, encouraging, and talkative; keeps the group engaged during long research sessions.",
+      "other_details": "Travels with Ganizadi. Companion and morale booster; prevents Ganizadi from becoming too socially isolated while helping with note-taking.",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Rurik Pebbleleaf",
+      "ancestry": "Ghoran",
+      "class": "Wizard",
+      "physical_description": "Plant-like, dwarf-height humanoid; leafy hair and a small satchel of scrolls and ink bottles.",
+      "personality": "Methodical and loyal; loves organizing Ganizadi's research, taking meticulous notes, and cross-referencing texts.",
+      "other_details": "Travels with Ganizadi. Junior apprentice; shadows Ganizadi during research, learning analysis and pattern recognition.",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Tahlok Shardframe",
+      "ancestry": "Automaton",
+      "class": "Wizard (generalist)",
+      "physical_description": "Sleek metallic body, small glowing nodes, tool compartments along limbs; optical sensors blink softly.",
+      "personality": "Methodical and precise; logs experimental data carefully and assists Runeweaver with calculations.",
+      "other_details": "Travels with Runeweaver. Apprentice and assistant; helps with schematics, diagrams, and small technical tests.",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Tink Gearwhistle",
+      "ancestry": "Gnome",
+      "class": "Alchemist",
+      "physical_description": "Small, copper hair sticking out of a messy cap; always carrying tiny tools and vials.",
+      "personality": "Eager, excitable, curious; constantly experimenting under Britt's guidance.",
+      "other_details": "Travels with Britt Underfoot. Apprentice and assistant; helps Britt prepare tools, maps, and traps.",
+      "location": "Teleporter Room"
+    }
+  ],
+  "connectionStatus": [
+    {
+      "name": "open",
+      "display_color": "#4CAF50",
+      "line_style": "solid",
+      "description": "✔ Traversable"
+    },
+    {
+      "name": "locked",
+      "display_color": "#F44336",
+      "line_style": "dashed",
+      "description": "🔒 Locked"
+    },
+    {
+      "name": "blocked",
+      "display_color": "#9E9E9E",
+      "line_style": "dashed",
+      "description": "🚫 Blocked"
+    }
+  ]
 }

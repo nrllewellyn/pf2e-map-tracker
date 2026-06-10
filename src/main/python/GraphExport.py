@@ -1,10 +1,11 @@
 import json
+from enum import StrEnum
 from typing import Dict, Any, List
 
 from pyvis.network import Network
 
 
-class ConnectionDirection(str):
+class ConnectionDirection(StrEnum):
     FORWARD_ONLY = "forward_only"
     BACKWARD_ONLY = "backward_only"
     BIDIRECTIONAL = "bidirectional"
@@ -37,7 +38,15 @@ Default direction: 'bidirectional'.
 """
 
 DEFAULT_ROOM_COLOR = "#3175cf"
+DEFAULT_CHARACTER_COLOR = "#9c27b0"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
+REQUIRED_CHARACTER_FIELDS = ("name", "ancestry", "location")
+OPTIONAL_CHARACTER_FIELDS = (
+    "class",
+    "physical_description",
+    "personality",
+    "other_details"
+)
 
 
 def create_room_graph(json_file_path: str, output_html: str = "room_graph.html") -> None:
@@ -50,13 +59,18 @@ def create_room_graph(json_file_path: str, output_html: str = "room_graph.html")
     """
     data = _load_json(json_file_path)
     rooms = data.get("rooms", [])
+    characters = data.get("characters", [])
     connections = data.get("connections", [])
     status_config = {s["name"]: s for s in data.get("connectionStatus", [])}
+
+    _validate_rooms_and_characters(rooms, characters)
 
     net = _create_network_instance()
 
     _add_nodes(net, rooms)
+    _add_characters(net, characters)
     _add_edges(net, connections, status_config)
+    _add_character_location_edges(net, characters)
 
     _configure_physics_and_style(net)
 
@@ -115,6 +129,86 @@ def _add_single_node(net: Network, room: dict) -> None:
         title=tooltip_html,
         color=color,
         shape="box",
+        font={"size": 16}
+    )
+
+
+def _validate_rooms_and_characters(rooms: List[dict], characters: List[dict]) -> None:
+    """Validate room and character names, required fields, and character locations."""
+    room_names = set()
+
+    for room in rooms:
+        name = room.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("Missing room name")
+        if name in room_names:
+            raise ValueError(f"Duplicate node name '{name}'")
+        room_names.add(name)
+
+    node_names = set(room_names)
+    for character in characters:
+        for field in REQUIRED_CHARACTER_FIELDS:
+            value = character.get(field)
+            if not isinstance(value, str) or not value.strip():
+                character_name = character.get("name", "<unnamed>")
+                raise ValueError(
+                    f"Missing or empty required field '{field}' for character '{character_name}'"
+                )
+
+        for field in OPTIONAL_CHARACTER_FIELDS:
+            value = character.get(field)
+            if value is not None and not isinstance(value, str):
+                character_name = character.get("name", "<unnamed>")
+                raise ValueError(
+                    f"Optional field '{field}' must be a string for character '{character_name}'"
+                )
+
+        name = character["name"]
+        if name in node_names:
+            raise ValueError(f"Duplicate node name '{name}'")
+        node_names.add(name)
+
+        location = character["location"]
+        if location not in room_names:
+            raise ValueError(f"Unknown location '{location}' for character '{name}'")
+
+def _add_characters(net: Network, characters: List[dict]) -> None:
+    """Add all character nodes to the network."""
+    for character in characters:
+        _add_single_character(net, character)
+
+
+def _add_single_character(net: Network, character: dict) -> None:
+    """Add a character node with a formatted HTML tooltip."""
+    name = character["name"]
+    ancestry = character["ancestry"]
+    location = character["location"]
+    color = character.get("color", DEFAULT_CHARACTER_COLOR)
+
+    tooltip_html = (
+        f"<b>{name}</b>"
+        f"<br><br><b>Ancestry:</b> {ancestry}"
+    )
+    if character_class := character.get("class", ""):
+        tooltip_html += f"<br><b>Class:</b> {character_class}"
+    tooltip_html += f"<br><b>Location:</b> {location}"
+
+    detail_fields = (
+        ("physical_description", "Physical Description"),
+        ("personality", "Personality"),
+        ("other_details", "Other Details")
+    )
+    for field, label in detail_fields:
+        if detail := character.get(field, ""):
+            formatted_detail = detail.replace("\n", "<br>")
+            tooltip_html += f"<br><br><b>{label}:</b><br>{formatted_detail}"
+
+    net.add_node(
+        name,
+        label=name,
+        title=tooltip_html,
+        color=color,
+        shape="ellipse",
         font={"size": 16}
     )
 
@@ -189,6 +283,22 @@ def _add_single_edge(net: Network, connection: dict, status_config: Dict[str, di
     )
 
 
+def _add_character_location_edges(net: Network, characters: List[dict]) -> None:
+    """Connect every character to their current room."""
+    for character in characters:
+        net.add_edge(
+            character["name"],
+            character["location"],
+            color=DEFAULT_CONNECTION_COLOR,
+            dashes=True,
+            width=2.5,
+            arrows={
+                "to": {"enabled": False},
+                "from": {"enabled": False}
+            }
+        )
+
+
 def _configure_physics_and_style(net: Network) -> None:
     """Apply physics simulation and global styling overrides."""
 
@@ -203,7 +313,7 @@ def _configure_physics_and_style(net: Network) -> None:
             "hover": True,
             "hideEdgesOnDrag": False,
             "hideNodesOnDrag": False,
-            "tooltipDelay": 999999, # Extremely long delay to disable built-in tooltips (since we are using custom ones)
+            "tooltipDelay": 999999,  # Extremely long delay to disable built-in tooltips (since we are using custom ones)
         },
         "physics": {
             "enabled": True,
