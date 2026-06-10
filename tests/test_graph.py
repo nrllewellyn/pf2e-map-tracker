@@ -213,3 +213,17 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
     content = output_path.read_text(encoding="utf-8")
     assert loaded.connections[0].status == "open"
     assert all(value in content for value in emoji_values)
+
+
+def test_generate_graph_preserves_emoji_presentation_selector(tmp_path: Path) -> None:
+    emoji_label = "Room \U0001f6e1\ufe0f"
+    data = {"rooms": [{"id": "room", "name": emoji_label}]}
+    input_path = tmp_path / "emoji-presentation.json"
+    output_path = tmp_path / "emoji-presentation.html"
+    input_path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+    network = build_network(load_map_data(input_path))
+    generate_graph(input_path, output_path)
+
+    assert network.nodes[0]["label"] == emoji_label
+    assert emoji_label in output_path.read_text(encoding="utf-8")

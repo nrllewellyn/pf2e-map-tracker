@@ -70,10 +70,11 @@ Display strings in map data are treated as trusted HTML so notes can contain mar
 All object fields are validated strictly. Unknown fields are rejected so spelling mistakes are
 reported instead of silently ignored.
 
-Display text fields support emojis and other Unicode characters.
+Display text fields support emojis and other Unicode characters. For symbols that support both text and emoji presentation, such as `🛡` and `🛡️`, use the
+emoji-presentation variant (U+FE0F) in node names to reliably render the colorful emoji.
 
 Rooms, character groups, and connection statuses require an `id` containing lowercase letters and
-digits separated by single hyphens. Room and character-group IDs share a unique namespace.
+digits separated by single hyphens (lower-kabob-case). Room and character-group IDs share a unique namespace.
 Connection-status IDs are unique separately. Character names must be unique because characters do
 not have IDs; ID-backed object names do not need to be unique.
 

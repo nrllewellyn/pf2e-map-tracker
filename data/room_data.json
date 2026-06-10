@@ -2,7 +2,7 @@
   "rooms": [
     {
       "id": "teleporter-room",
-      "name": "Teleporter Room",
+      "name": "🛏️ Teleporter Room 🛏️",
       "anchor": true,
       "color": "#4CAF50",
       "notes": "Arrival area"
@@ -25,7 +25,7 @@
     },
     {
       "id": "small-greenhouse",
-      "name": "Small Greenhouse",
+      "name": "🛡️ Small Greenhouse 🛡️",
       "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
     },
     {
@@ -34,7 +34,7 @@
       "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
     },
     {
-      "id": "small-hallway-behind-forest",
+      "id": "hallway-forest",
       "name": "Small Hallway behind Forest",
       "color": "#757575",
       "notes": "A small east/west hallway"
@@ -50,7 +50,7 @@
       "notes": "An orrery of a strange, alien solar system."
     },
     {
-      "id": "small-hallway-above-orrery",
+      "id": "hallway-orrery",
       "name": "Small Hallway above Orrery",
       "color": "#757575",
       "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
@@ -82,7 +82,7 @@
     },
     {
       "id": "under-construction",
-      "name": "Under Construction",
+      "name": "🚧 Under Construction 🚧",
       "color": "#fca503"
     },
     {
@@ -129,18 +129,18 @@
     },
     {
       "from": "forest",
-      "to": "small-hallway-behind-forest",
+      "to": "hallway-forest",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "small-hallway-behind-forest",
+      "from": "hallway-forest",
       "to": "memory-theater",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "small-hallway-behind-forest",
+      "from": "hallway-forest",
       "to": "orrery",
       "status": "open",
       "name": "Plexiglass Door",
@@ -156,23 +156,23 @@
     },
     {
       "from": "orrery",
-      "to": "small-hallway-above-orrery",
+      "to": "hallway-orrery",
       "status": "open",
       "name": "Spiral Staircase",
       "notes": "A spiral staircase up, ending behind a plexiglass door"
     },
     {
-      "from": "small-hallway-above-orrery",
+      "from": "hallway-orrery",
       "to": "restoration-engine",
       "status": "open"
     },
     {
-      "from": "small-hallway-above-orrery",
+      "from": "hallway-orrery",
       "to": "hanging-registry",
       "status": "open"
     },
     {
-      "from": "small-hallway-above-orrery",
+      "from": "hallway-orrery",
       "to": "unknown",
       "status": "locked",
       "name": "Heavy metal door",
