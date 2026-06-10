@@ -1,0 +1,299 @@
+{
+  "$defs": {
+    "ArrowEndOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "scaleFactor": {
+          "exclusiveMinimum": 0,
+          "title": "Scalefactor",
+          "type": "number"
+        }
+      },
+      "required": [
+        "scaleFactor"
+      ],
+      "title": "ArrowEndOptions",
+      "type": "object"
+    },
+    "ArrowOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "to": {
+          "$ref": "#/$defs/ArrowEndOptions"
+        },
+        "from": {
+          "$ref": "#/$defs/ArrowEndOptions"
+        }
+      },
+      "required": [
+        "to",
+        "from"
+      ],
+      "title": "ArrowOptions",
+      "type": "object"
+    },
+    "BarnesHutOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "gravitationalConstant": {
+          "title": "Gravitationalconstant",
+          "type": "number"
+        },
+        "centralGravity": {
+          "title": "Centralgravity",
+          "type": "number"
+        },
+        "springLength": {
+          "title": "Springlength",
+          "type": "number"
+        },
+        "springConstant": {
+          "title": "Springconstant",
+          "type": "number"
+        },
+        "damping": {
+          "title": "Damping",
+          "type": "number"
+        },
+        "avoidOverlap": {
+          "title": "Avoidoverlap",
+          "type": "number"
+        }
+      },
+      "required": [
+        "gravitationalConstant",
+        "centralGravity",
+        "springLength",
+        "springConstant",
+        "damping",
+        "avoidOverlap"
+      ],
+      "title": "BarnesHutOptions",
+      "type": "object"
+    },
+    "EdgeOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "arrows": {
+          "$ref": "#/$defs/ArrowOptions"
+        },
+        "smooth": {
+          "$ref": "#/$defs/SmoothOptions"
+        }
+      },
+      "required": [
+        "arrows",
+        "smooth"
+      ],
+      "title": "EdgeOptions",
+      "type": "object"
+    },
+    "InteractionOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "zoomView": {
+          "title": "Zoomview",
+          "type": "boolean"
+        },
+        "dragView": {
+          "title": "Dragview",
+          "type": "boolean"
+        },
+        "keyboard": {
+          "title": "Keyboard",
+          "type": "boolean"
+        },
+        "hover": {
+          "title": "Hover",
+          "type": "boolean"
+        },
+        "hideEdgesOnDrag": {
+          "title": "Hideedgesondrag",
+          "type": "boolean"
+        },
+        "hideNodesOnDrag": {
+          "title": "Hidenodesondrag",
+          "type": "boolean"
+        },
+        "tooltipDelay": {
+          "minimum": 0,
+          "title": "Tooltipdelay",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "zoomView",
+        "dragView",
+        "keyboard",
+        "hover",
+        "hideEdgesOnDrag",
+        "hideNodesOnDrag",
+        "tooltipDelay"
+      ],
+      "title": "InteractionOptions",
+      "type": "object"
+    },
+    "LayoutOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "randomSeed": {
+          "title": "Randomseed",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "randomSeed"
+      ],
+      "title": "LayoutOptions",
+      "type": "object"
+    },
+    "NodeOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "shape": {
+          "title": "Shape",
+          "type": "string"
+        },
+        "margin": {
+          "title": "Margin",
+          "type": "number"
+        },
+        "scaling": {
+          "$ref": "#/$defs/ScalingOptions"
+        }
+      },
+      "required": [
+        "shape",
+        "margin",
+        "scaling"
+      ],
+      "title": "NodeOptions",
+      "type": "object"
+    },
+    "PhysicsOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "barnesHut": {
+          "$ref": "#/$defs/BarnesHutOptions"
+        },
+        "minVelocity": {
+          "minimum": 0,
+          "title": "Minvelocity",
+          "type": "number"
+        },
+        "solver": {
+          "const": "barnesHut",
+          "title": "Solver",
+          "type": "string"
+        },
+        "stabilization": {
+          "$ref": "#/$defs/StabilizationOptions"
+        }
+      },
+      "required": [
+        "enabled",
+        "barnesHut",
+        "minVelocity",
+        "solver",
+        "stabilization"
+      ],
+      "title": "PhysicsOptions",
+      "type": "object"
+    },
+    "ScalingOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "title": "ScalingOptions",
+      "type": "object"
+    },
+    "SmoothOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "SmoothOptions",
+      "type": "object"
+    },
+    "StabilizationOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "iterations": {
+          "exclusiveMinimum": 0,
+          "title": "Iterations",
+          "type": "integer"
+        },
+        "updateInterval": {
+          "exclusiveMinimum": 0,
+          "title": "Updateinterval",
+          "type": "integer"
+        },
+        "onlyDynamicEdges": {
+          "title": "Onlydynamicedges",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled",
+        "iterations",
+        "updateInterval",
+        "onlyDynamicEdges"
+      ],
+      "title": "StabilizationOptions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "layout": {
+      "$ref": "#/$defs/LayoutOptions"
+    },
+    "interaction": {
+      "$ref": "#/$defs/InteractionOptions"
+    },
+    "physics": {
+      "$ref": "#/$defs/PhysicsOptions"
+    },
+    "nodes": {
+      "$ref": "#/$defs/NodeOptions"
+    },
+    "edges": {
+      "$ref": "#/$defs/EdgeOptions"
+    }
+  },
+  "required": [
+    "layout",
+    "interaction",
+    "physics",
+    "nodes",
+    "edges"
+  ],
+  "title": "GraphOptions",
+  "type": "object"
+}

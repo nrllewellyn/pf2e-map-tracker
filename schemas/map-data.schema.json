@@ -1,0 +1,285 @@
+{
+  "$defs": {
+    "Character": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "ancestry": {
+          "minLength": 1,
+          "title": "Ancestry",
+          "type": "string"
+        },
+        "class": {
+          "default": "",
+          "title": "Class",
+          "type": "string"
+        },
+        "physical_description": {
+          "default": "",
+          "title": "Physical Description",
+          "type": "string"
+        },
+        "personality": {
+          "default": "",
+          "title": "Personality",
+          "type": "string"
+        },
+        "other_details": {
+          "default": "",
+          "title": "Other Details",
+          "type": "string"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Group"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        }
+      },
+      "required": [
+        "name",
+        "ancestry"
+      ],
+      "title": "Character",
+      "type": "object"
+    },
+    "CharacterGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "location": {
+          "minLength": 1,
+          "title": "Location",
+          "type": "string"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        }
+      },
+      "required": [
+        "name",
+        "location"
+      ],
+      "title": "CharacterGroup",
+      "type": "object"
+    },
+    "Connection": {
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "minLength": 1,
+          "title": "From",
+          "type": "string"
+        },
+        "to": {
+          "minLength": 1,
+          "title": "To",
+          "type": "string"
+        },
+        "status": {
+          "minLength": 1,
+          "title": "Status",
+          "type": "string"
+        },
+        "direction": {
+          "$ref": "#/$defs/ConnectionDirection",
+          "default": "bidirectional"
+        },
+        "name": {
+          "default": "",
+          "title": "Name",
+          "type": "string"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "status"
+      ],
+      "title": "Connection",
+      "type": "object"
+    },
+    "ConnectionDirection": {
+      "enum": [
+        "forward_only",
+        "backward_only",
+        "bidirectional"
+      ],
+      "title": "ConnectionDirection",
+      "type": "string"
+    },
+    "ConnectionStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "display_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Color"
+        },
+        "line_style": {
+          "default": "solid",
+          "enum": [
+            "solid",
+            "dashed"
+          ],
+          "title": "Line Style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "description"
+      ],
+      "title": "ConnectionStatus",
+      "type": "object"
+    },
+    "Room": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "anchor": {
+          "default": false,
+          "title": "Anchor",
+          "type": "boolean"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Color"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Room",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "rooms": {
+      "items": {
+        "$ref": "#/$defs/Room"
+      },
+      "title": "Rooms",
+      "type": "array"
+    },
+    "characters": {
+      "items": {
+        "$ref": "#/$defs/Character"
+      },
+      "title": "Characters",
+      "type": "array"
+    },
+    "character_groups": {
+      "items": {
+        "$ref": "#/$defs/CharacterGroup"
+      },
+      "title": "Character Groups",
+      "type": "array"
+    },
+    "connections": {
+      "items": {
+        "$ref": "#/$defs/Connection"
+      },
+      "title": "Connections",
+      "type": "array"
+    },
+    "connectionStatus": {
+      "items": {
+        "$ref": "#/$defs/ConnectionStatus"
+      },
+      "title": "Connectionstatus",
+      "type": "array"
+    }
+  },
+  "title": "MapData",
+  "type": "object"
+}

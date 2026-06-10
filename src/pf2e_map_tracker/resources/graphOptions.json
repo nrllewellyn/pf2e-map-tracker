@@ -1,0 +1,54 @@
+{
+  "layout": {
+    "randomSeed": 42
+  },
+  "interaction": {
+    "zoomView": true,
+    "dragView": true,
+    "keyboard": true,
+    "hover": true,
+    "hideEdgesOnDrag": false,
+    "hideNodesOnDrag": false,
+    "tooltipDelay": 999999
+  },
+  "physics": {
+    "enabled": true,
+    "barnesHut": {
+      "gravitationalConstant": -8000,
+      "centralGravity": 0.15,
+      "springLength": 200,
+      "springConstant": 0.08,
+      "damping": 0.55,
+      "avoidOverlap": 0.7
+    },
+    "minVelocity": 1.0,
+    "solver": "barnesHut",
+    "stabilization": {
+      "enabled": true,
+      "iterations": 3000,
+      "updateInterval": 25,
+      "onlyDynamicEdges": false
+    }
+  },
+  "nodes": {
+    "shape": "box",
+    "margin": 12,
+    "scaling": {
+      "min": 25,
+      "max": 50
+    }
+  },
+  "edges": {
+    "arrows": {
+      "to": {
+        "scaleFactor": 0.6
+      },
+      "from": {
+        "scaleFactor": 0.6
+      }
+    },
+    "smooth": {
+      "type": "continuous"
+    }
+  }
+}
