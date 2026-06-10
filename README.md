@@ -1,70 +1,122 @@
-# Description
+# PF2e Map Tracker
 
-A basic map tracker for a PF2e TTRPG game.
+Generate a standalone interactive HTML map for a PF2e campaign. Rooms, connections,
+characters, and character groups are defined in JSON and rendered with PyVis.
 
-# Updating
+## Setup
 
-- Update `/src/main/resources/roomData.json`
-- Run `main.py`
-- Updated HTML will be stored in `/docs`
+Python 3.11 or newer is required.
 
-# Room Data JSON Format
+```powershell
+python -m pip install -e ".[dev]"
+```
 
-NOTE: The file `/src/main/resources/testData.json` is available for testing any code changes.
+## Common Commands
 
-## `rooms`
+Run commands from the repository root:
 
-| Key     | Type   | Required? | Description / Purpose                                                  | Example value              |
-|---------|--------|-----------|------------------------------------------------------------------------|----------------------------|
-| `name`  | string | **Yes**   | Unique identifier and displayed label                                  | `"Kitchen"`                |
-| `anchor` | boolean | No       | When `true`, invisibly connects this room to other anchor rooms for graph layout. Default: `false`. | `true` |
-| `color` | string | No        | Background color of the node (CSS color). Default:  `"#97c2fc"`        | `"#ffcc00"` or `"yellow"`  |
-| `notes` | string | No        | Additional text shown in node tooltip on hover. Default: Empty string. | `"Smells funny after 8pm"` |
+```powershell
+# Validate campaign data and application-owned graph options
+pf2e-map-tracker validate
 
-Anchor rooms are connected in room-data order by invisible edges that participate in graph physics. Two anchors are connected as a pair; three or more anchors form a ring.
+# Generate dist/index.html
+pf2e-map-tracker build
 
-## `characters`
+# Build from or to a different path
+pf2e-map-tracker build --input tests/fixtures/test_data.json --output test-map.html
 
-| Key           | Type   | Required? | Description / Purpose                                                        | Example value                    |
-|---------------|--------|-----------|------------------------------------------------------------------------------|----------------------------------|
-| `name`        | string | **Yes**   | Unique identifier and displayed label. Must not match another node name.     | `"Valeros"`                      |
-| `ancestry`    | string | **Yes**   | Character ancestry shown in the node tooltip.                                | `"Human"`                        |
-| `class`       | string | No        | Character class shown in the node tooltip. Default: Empty string.             | `"Fighter"`                      |
-| `physical_description` | string | No | Physical description shown in the node tooltip. Default: Empty string.       | `"Tall and heavily armored."`    |
-| `personality` | string | No        | Personality description shown in the node tooltip. Default: Empty string.    | `"Quietly confident."`           |
-| `other_details` | string | No      | Any other character details shown in the node tooltip. Default: Empty string.| `"Travels with the armorer."`    |
-| `location`    | string | Conditional | Current location. Must match a room `name`. Exactly one of `location` or `group` is required. | `"Entrance"` |
-| `group`       | string | Conditional | Current character group. Must match a `character_groups` name. Exactly one of `location` or `group` is required. | `"Pathfinders"` |
-| `color`       | string | No        | Background color of the character node (CSS color). Uses the default if absent. | `"#ffcc00"` or `"yellow"`     |
+# Export JSON Schemas for editor integration
+pf2e-map-tracker export-schema
 
-Characters are displayed as ellipse-shaped nodes. Each character is automatically connected to either its location or its group by a dashed, neutral-colored line.
+# Run automated checks
+ruff check .
+pytest
+```
 
-## `character_groups`
+The same CLI is available through `python -m pf2e_map_tracker`.
 
-| Key        | Type   | Required? | Description / Purpose                                                        | Example value       |
-|------------|--------|-----------|------------------------------------------------------------------------------|---------------------|
-| `name`     | string | **Yes**   | Unique identifier and displayed label. Must not match another node name.     | `"Pathfinders"`     |
-| `location` | string | **Yes**   | Current location. Must match a room `name`.                                  | `"Entrance"`        |
-| `color`    | string | No        | Background color of the group node (CSS color). Uses the default if absent.  | `"#ffcc00"`         |
+## GitHub Pages Deployment
 
-Character groups are displayed as circle-shaped nodes with their location and member names in the tooltip. Each group is automatically connected to its location by a dashed, neutral-colored line.
+The `Build and deploy map` GitHub Actions workflow validates the project, builds the map, and
+publishes the generated `dist` directory whenever changes are pushed to `main`. It can also be
+started manually from the repository's **Actions** tab.
 
-## `connections`
+Before the first deployment, open the repository's **Settings > Pages** page and set the
+publishing source to **GitHub Actions**.
 
-| Key         | Type   | Required? | Description / Purpose                                                                                                             | Example value            |
-|-------------|--------|-----------|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------|
-| `from`      | string | **Yes**   | Name of the source room (must match a room `name`)                                                                                | `"Hallway"`              |
-| `to`        | string | **Yes**   | Name of the destination room                                                                                                      | `"Armory"`               |
-| `status`    | string | **Yes**   | References a status name from `connectionStatus`                                                                                  | `"locked"`               |
-| `direction` | string | No        | Connection description. If present, must be `"bidirectional"`, `"forward_only"`, or `"backward_only"`. Default: `"bidirectional"` | `"bidirectional"`        |
-| `name`      | string | No        | Optional short label/name for this specific connection. Default: Empty string.                                                    | `"Heavy iron door"`      |
-| `notes`     | string | No        | Extra info shown in edge tooltip. Defailt: Empty string.                                                                          | `"Requires red keycard"` |
+## Project Layout
 
-## `connectionStatus`
+- `data/room_data.json`: editable campaign map data.
+- `dist/index.html`: generated map output; ignored by Git.
+- `tests/fixtures/test_data.json`: smaller example map used by automated tests.
+- `src/pf2e_map_tracker/models.py`: typed data models and validation.
+- `src/pf2e_map_tracker/graph.py`: PyVis graph construction.
+- `src/pf2e_map_tracker/resources/graphOptions.json`: layout, physics, and visual options.
+- `src/pf2e_map_tracker/resources/graphEnhancements.js`: custom tooltip and visibility UI.
+- `schemas/`: generated JSON Schemas for map data and graph options.
 
-| Key             | Type   | Required? | Description / Purpose                                      | Example value                    |
-|-----------------|--------|-----------|------------------------------------------------------------|----------------------------------|
-| `name`          | string | **Yes**   | Unique identifier — referenced in connections              | `"locked"`                       |
-| `description`   | string | **Yes**   | Human-readable explanation (shown in edge tooltip)         | `"Requires key or code to pass"` |
-| `display_color` | string | No        | Color of the edge/arrow (CSS color). Default: `"#aaaaaa"`  | `"#ff4444"` or `"red"`           |
-| `line_style`    | string | No        | Must be either `"solid"` or `"dashed"`. Default: `"solid"` | `solid`                          |                          
+`graphOptions.json` is validated before every build. Run `pf2e-map-tracker validate` after
+editing it.
+
+## Trusted HTML
+
+Display strings in map data are treated as trusted HTML so notes can contain markup such as
+`<b>`, `<br>`, and `<p>`. Only build maps from JSON maintained by trusted authors.
+
+## Map Data Format
+
+All object fields are validated strictly. Unknown fields are rejected so spelling mistakes are
+reported instead of silently ignored.
+
+### Rooms
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | Yes | Unique node name and displayed label. |
+| `anchor` | No | Invisibly connects anchor rooms for layout stability. Defaults to `false`. |
+| `color` | No | CSS node color. |
+| `notes` | No | Trusted HTML shown in the room tooltip. |
+
+Two anchors are connected as a pair. Three or more anchors form a ring.
+
+### Characters
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | Yes | Unique node name and displayed label. |
+| `ancestry` | Yes | Ancestry shown in the tooltip. |
+| `class` | No | Class shown in the tooltip. |
+| `physical_description` | No | Trusted HTML shown in the tooltip. |
+| `personality` | No | Trusted HTML shown in the tooltip. |
+| `other_details` | No | Trusted HTML shown in the tooltip. |
+| `location` | Conditional | Existing room name. Exactly one of `location` or `group` is required. |
+| `group` | Conditional | Existing character-group name. Exactly one of `location` or `group` is required. |
+| `color` | No | CSS node color. |
+
+### Character Groups
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | Yes | Unique node name and displayed label. |
+| `location` | Yes | Existing room name. |
+| `color` | No | CSS node color. |
+
+### Connections
+
+| Field | Required | Description |
+|---|---|---|
+| `from` | Yes | Existing source room name. |
+| `to` | Yes | Existing destination room name. |
+| `status` | Yes | Existing `connectionStatus` name. |
+| `direction` | No | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
+| `name` | No | Connection label shown in the tooltip. |
+| `notes` | No | Trusted HTML shown in the tooltip. |
+
+### Connection Statuses
+
+| Field | Required | Description |
+|---|---|---|
+| `name` | Yes | Unique status name referenced by connections. |
+| `description` | Yes | Human-readable tooltip description. |
+| `display_color` | No | CSS edge color. |
+| `line_style` | No | `solid` or `dashed`. Defaults to `solid`. |
