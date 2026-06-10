@@ -135,7 +135,8 @@ def _add_single_node(net: Network, room: dict) -> None:
         title=tooltip_html,
         color=color,
         shape="box",
-        font={"size": 16}
+        font={"size": 16},
+        node_type="room"
     )
 
 
@@ -263,7 +264,8 @@ def _add_single_character_group(net: Network, character_group: dict, members: Li
         title=tooltip_html,
         color=color,
         shape="circle",
-        font={"size": 16}
+        font={"size": 16},
+        node_type="character_group"
     )
 
 
@@ -306,7 +308,8 @@ def _add_single_character(net: Network, character: dict) -> None:
         title=tooltip_html,
         color=color,
         shape="ellipse",
-        font={"size": 16}
+        font={"size": 16},
+        node_type="character"
     )
 
 
@@ -527,6 +530,52 @@ function hideTooltip() {
   tooltip.style.visibility = 'hidden';
 }
 
+function setCharacterVisibility(visibility) {
+  const updatedNodes = nodes.get().map(function(node) {
+    if (node.node_type === 'character') {
+      return { id: node.id, hidden: visibility !== 'show_all' };
+    }
+    if (node.node_type === 'character_group') {
+      return { id: node.id, hidden: visibility === 'hidden' };
+    }
+    return { id: node.id, hidden: false };
+  });
+
+  hideTooltip();
+  nodes.update(updatedNodes);
+}
+
+function setupCharacterVisibility() {
+  if (!window.network || !window.nodes) {
+    setTimeout(setupCharacterVisibility, 100);
+    return;
+  }
+
+  const selectMenu = document.getElementById('select-menu');
+  if (!selectMenu || document.getElementById('character-visibility')) {
+    return;
+  }
+
+  const controlRow = document.createElement('div');
+  controlRow.className = 'row no-gutters';
+  controlRow.innerHTML = `
+    <div class="col-12 pb-2">
+      <label for="character-visibility" class="form-label mb-1">Character Visibility</label>
+      <select id="character-visibility" class="form-select" aria-label="Character Visibility">
+        <option value="hidden">Hidden</option>
+        <option value="groups_only" selected>Groups Only</option>
+        <option value="show_all">Show All</option>
+      </select>
+    </div>`;
+  selectMenu.appendChild(controlRow);
+
+  const visibilitySelect = document.getElementById('character-visibility');
+  visibilitySelect.addEventListener('change', function(event) {
+    setCharacterVisibility(event.target.value);
+  });
+  setCharacterVisibility(visibilitySelect.value);
+}
+
 function setupCustomTooltips() {
   if (!window.network) {
     setTimeout(setupCustomTooltips, 100);
@@ -556,8 +605,10 @@ function setupCustomTooltips() {
 
 if (document.readyState === 'complete') {
   setupCustomTooltips();
+  setupCharacterVisibility();
 } else {
   document.addEventListener('DOMContentLoaded', setupCustomTooltips);
+  document.addEventListener('DOMContentLoaded', setupCharacterVisibility);
 }
 </script>"""
 
