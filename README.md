@@ -41,8 +41,10 @@ The `Build and deploy map` GitHub Actions workflow validates the project, builds
 publishes the generated `dist` directory whenever changes are pushed to `main`. It can also be
 started manually from the repository's **Actions** tab.
 
-Before the first deployment, open the repository's **Settings > Pages** page and set the
-publishing source to **GitHub Actions**.
+Before the first deployment, open the repository's **Settings > Pages** page. Under **Build and
+deployment**, change **Source** from **Deploy from a branch** to **GitHub Actions**. This disables
+the legacy Jekyll deployment that expects a `/docs` directory and allows the workflow to publish
+the generated `dist` artifact directly.
 
 ## Project Layout
 

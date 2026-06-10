@@ -38,7 +38,9 @@ jobs:
           pf2e-map-tracker validate
 
       - name: Build map
-        run: pf2e-map-tracker build
+        run: |
+          pf2e-map-tracker build
+          touch dist/.nojekyll
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
