@@ -71,7 +71,7 @@ def create_room_graph(json_file_path: str, output_html: str = "room_graph.html")
 
     net = _create_network_instance()
 
-    _add_nodes(net, rooms)
+    _add_nodes(net, rooms, character_groups, characters)
     _add_character_groups(net, character_groups, characters)
     _add_characters(net, characters)
     _add_edges(net, connections, status_config)
@@ -106,13 +106,43 @@ def _create_network_instance() -> Network:
     )
 
 
-def _add_nodes(net: Network, rooms: List[dict]) -> None:
+def _add_nodes(
+        net: Network,
+        rooms: List[dict],
+        character_groups: List[dict],
+        characters: List[dict]
+) -> None:
     """Add all room nodes to the network."""
+    groups_by_room = {room["name"]: [] for room in rooms}
+    direct_characters_by_room = {room["name"]: [] for room in rooms}
+    members_by_group = {group["name"]: [] for group in character_groups}
+
+    for character_group in character_groups:
+        groups_by_room[character_group["location"]].append(character_group["name"])
+
+    for character in characters:
+        if group := character.get("group"):
+            members_by_group[group].append(character["name"])
+        else:
+            direct_characters_by_room[character["location"]].append(character["name"])
+
     for room in rooms:
-        _add_single_node(net, room)
+        _add_single_node(
+            net,
+            room,
+            groups_by_room[room["name"]],
+            direct_characters_by_room[room["name"]],
+            members_by_group
+        )
 
 
-def _add_single_node(net: Network, room: dict) -> None:
+def _add_single_node(
+        net: Network,
+        room: dict,
+        group_names: List[str],
+        direct_character_names: List[str],
+        members_by_group: Dict[str, List[str]]
+) -> None:
     """Add a single room node with formatted HTML tooltip."""
     name = room.get("name")
     color = room.get("color", DEFAULT_ROOM_COLOR)
@@ -127,16 +157,38 @@ def _add_single_node(net: Network, room: dict) -> None:
         formatted_notes = notes.replace("\n", "<br>")
         tooltip_parts.append(f"<br><br><b>Notes:</b><br>{formatted_notes}")
 
-    tooltip_html = "".join(tooltip_parts)
+    base_tooltip_html = "".join(tooltip_parts)
+    hidden_tooltip_parts = [base_tooltip_html]
+    groups_only_tooltip_parts = [base_tooltip_html]
+
+    if group_names or direct_character_names:
+        hidden_tooltip_parts.append("<br><br><b>Characters:</b>")
+        for group_name in sorted(group_names):
+            hidden_tooltip_parts.append(f"<br>- {group_name}")
+            for member_name in sorted(members_by_group[group_name]):
+                hidden_tooltip_parts.append(f"<br>&nbsp;&nbsp;&nbsp;&nbsp;- {member_name}")
+        for character_name in sorted(direct_character_names):
+            hidden_tooltip_parts.append(f"<br>- {character_name}")
+
+    if direct_character_names:
+        groups_only_tooltip_parts.append("<br><br><b>Characters:</b>")
+        for character_name in sorted(direct_character_names):
+            groups_only_tooltip_parts.append(f"<br>- {character_name}")
+
+    hidden_tooltip_html = "".join(hidden_tooltip_parts)
+    groups_only_tooltip_html = "".join(groups_only_tooltip_parts)
 
     net.add_node(
         name,
         label=name,
-        title=tooltip_html,
+        title=base_tooltip_html,
         color=color,
         shape="box",
         font={"size": 16},
-        node_type="room"
+        node_type="room",
+        tooltip_hidden=hidden_tooltip_html,
+        tooltip_groups_only=groups_only_tooltip_html,
+        tooltip_show_all=base_tooltip_html
     )
 
 
@@ -242,7 +294,7 @@ def _add_character_groups(
         _add_single_character_group(
             net,
             character_group,
-            members_by_group[character_group["name"]]
+            sorted(members_by_group[character_group["name"]])
         )
 
 
@@ -251,21 +303,27 @@ def _add_single_character_group(net: Network, character_group: dict, members: Li
     name = character_group["name"]
     location = character_group["location"]
     color = character_group.get("color", DEFAULT_CHARACTER_GROUP_COLOR)
-    member_list = "<br>".join(members) if members else "None"
-    tooltip_html = (
+    base_tooltip_html = (
         f"<b>{name}</b>"
         f"<br><br><b>Location:</b> {location}"
+    )
+    member_list = "<br>".join(members) if members else "None"
+    groups_only_tooltip_html = (
+        base_tooltip_html +
         f"<br><br><b>Members:</b><br>{member_list}"
     )
 
     net.add_node(
         name,
         label=name,
-        title=tooltip_html,
+        title=base_tooltip_html,
         color=color,
         shape="circle",
         font={"size": 16},
-        node_type="character_group"
+        node_type="character_group",
+        tooltip_hidden=base_tooltip_html,
+        tooltip_groups_only=groups_only_tooltip_html,
+        tooltip_show_all=base_tooltip_html
     )
 
 
@@ -531,12 +589,24 @@ function hideTooltip() {
 }
 
 function setCharacterVisibility(visibility) {
+  const tooltipProperty = 'tooltip_' + visibility;
   const updatedNodes = nodes.get().map(function(node) {
     if (node.node_type === 'character') {
       return { id: node.id, hidden: visibility !== 'show_all' };
     }
     if (node.node_type === 'character_group') {
-      return { id: node.id, hidden: visibility === 'hidden' };
+      return {
+        id: node.id,
+        hidden: visibility === 'hidden',
+        title: node[tooltipProperty]
+      };
+    }
+    if (node.node_type === 'room') {
+      return {
+        id: node.id,
+        hidden: false,
+        title: node[tooltipProperty]
+      };
     }
     return { id: node.id, hidden: false };
   });
