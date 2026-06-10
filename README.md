@@ -17,8 +17,11 @@ NOTE: The file `/src/main/resources/testData.json` is available for testing any 
 | Key     | Type   | Required? | Description / Purpose                                                  | Example value              |
 |---------|--------|-----------|------------------------------------------------------------------------|----------------------------|
 | `name`  | string | **Yes**   | Unique identifier and displayed label                                  | `"Kitchen"`                |
+| `anchor` | boolean | No       | When `true`, invisibly connects this room to other anchor rooms for graph layout. Default: `false`. | `true` |
 | `color` | string | No        | Background color of the node (CSS color). Default:  `"#97c2fc"`        | `"#ffcc00"` or `"yellow"`  |
 | `notes` | string | No        | Additional text shown in node tooltip on hover. Default: Empty string. | `"Smells funny after 8pm"` |
+
+Anchor rooms are connected in room-data order by invisible edges that participate in graph physics. Two anchors are connected as a pair; three or more anchors form a ring.
 
 ## `characters`
 

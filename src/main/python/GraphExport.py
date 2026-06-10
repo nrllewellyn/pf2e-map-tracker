@@ -76,6 +76,7 @@ def create_room_graph(json_file_path: str, output_html: str = "room_graph.html")
     _add_characters(net, characters)
     _add_edges(net, connections, status_config)
     _add_placement_edges(net, characters, character_groups)
+    _add_anchor_edges(net, rooms)
 
     _configure_physics_and_style(net)
 
@@ -152,6 +153,9 @@ def _validate_graph_nodes(
             raise ValueError("Missing room name")
         if name in room_names:
             raise ValueError(f"Duplicate node name '{name}'")
+        anchor = room.get("anchor")
+        if anchor is not None and not isinstance(anchor, bool):
+            raise ValueError(f"Optional field 'anchor' must be a boolean for room '{name}'")
         room_names.add(name)
 
     node_names = set(room_names)
@@ -405,12 +409,33 @@ def _add_placement_edge(net: Network, source: str, target: str) -> None:
     )
 
 
+def _add_anchor_edges(net: Network, rooms: List[dict]) -> None:
+    """Connect anchor rooms with invisible edges that participate in physics."""
+    anchor_names = [room["name"] for room in rooms if room.get("anchor", False)]
+
+    if len(anchor_names) < 2:
+        return
+
+    edge_count = 1 if len(anchor_names) == 2 else len(anchor_names)
+    for index in range(edge_count):
+        net.add_edge(
+            anchor_names[index],
+            anchor_names[(index + 1) % len(anchor_names)],
+            hidden=True,
+            physics=True,
+            arrows={
+                "to": {"enabled": False},
+                "from": {"enabled": False}
+            }
+        )
+
+
 def _configure_physics_and_style(net: Network) -> None:
     """Apply physics simulation and global styling overrides."""
 
     options_dict = {
         "layout": {
-            "randomSeed": 51
+            "randomSeed": 42
         },
         "interaction": {
             "zoomView": True,
@@ -424,9 +449,9 @@ def _configure_physics_and_style(net: Network) -> None:
         "physics": {
             "enabled": True,
             "barnesHut": {
-                "gravitationalConstant": -5000,
+                "gravitationalConstant": -8000,
                 "centralGravity": 0.15,
-                "springLength": 140,
+                "springLength": 200,
                 "springConstant": 0.08,
                 "damping": 0.55,
                 "avoidOverlap": 0.7

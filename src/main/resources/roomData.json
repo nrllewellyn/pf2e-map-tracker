@@ -2,6 +2,7 @@
   "rooms": [
     {
       "name": "Teleporter Room",
+      "anchor": true,
       "color": "#4CAF50",
       "notes": "Arrival area"
     },
@@ -87,10 +88,12 @@
       "name": "???? (5)"
     },
     {
-      "name": "Orthos"
+      "name": "Orthos",
+      "anchor": true
     },
     {
-      "name": "Current Location Unknown"
+      "name": "Current Location Unknown",
+      "anchor": true
     }
   ],
   "connections": [
