@@ -1,241 +1,265 @@
 {
   "rooms": [
     {
+      "id": "teleporter-room",
       "name": "Teleporter Room",
       "anchor": true,
       "color": "#4CAF50",
       "notes": "Arrival area"
     },
     {
+      "id": "main-corridor",
       "name": "Main Corridor",
       "color": "#757575",
       "notes": "Corridor that appears to run the length of the ship"
     },
     {
+      "id": "workshop",
       "name": "Workshop",
       "notes": "Well-equipped workshop"
     },
     {
+      "id": "forest",
       "name": "Forest",
       "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>"
     },
     {
+      "id": "small-greenhouse",
       "name": "Small Greenhouse",
       "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
     },
     {
+      "id": "crystal-growth-lab",
       "name": "Crystal Growth Lab",
       "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
     },
     {
+      "id": "small-hallway-behind-forest",
       "name": "Small Hallway behind Forest",
       "color": "#757575",
       "notes": "A small east/west hallway"
     },
     {
+      "id": "memory-theater",
       "name": "Memory Theater",
       "notes": "Theater that reads the audience's memories and displays them on a screen."
     },
     {
+      "id": "orrery",
       "name": "Orrery",
       "notes": "An orrery of a strange, alien solar system."
     },
     {
+      "id": "small-hallway-above-orrery",
       "name": "Small Hallway above Orrery",
       "color": "#757575",
       "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
     },
     {
+      "id": "restoration-engine",
       "name": "Restoration Engine",
       "notes": "A massive arcane device submerged in a pool of liquid."
     },
     {
+      "id": "hanging-registry",
       "name": "Hanging Registry",
       "notes": "Memories of those left behind"
     },
     {
+      "id": "porcelain-passageways",
       "name": "Porcelain Passageways",
       "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."
     },
     {
+      "id": "quartermaster-s-bazaar",
       "name": "Quartermaster's Bazaar",
       "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."
     },
     {
+      "id": "the-crystal-mug",
       "name": "The Crystal Mug",
       "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit back via doors in the back of the tavern."
     },
     {
+      "id": "under-construction",
       "name": "Under Construction",
       "color": "#fca503"
     },
     {
+      "id": "the-webbed-dungeon",
       "name": "The Webbed Dungeon"
     },
     {
+      "id": "unknown-room-1",
       "name": "???? (1)"
     },
     {
+      "id": "unknown-room-2",
       "name": "???? (2)"
     },
     {
+      "id": "unknown-room-3",
       "name": "???? (3)"
     },
     {
+      "id": "unknown-room-4",
       "name": "???? (4)"
     },
     {
+      "id": "unknown-room-5",
       "name": "???? (5)"
     },
     {
+      "id": "orthos",
       "name": "🌍 Orthos 🌍",
       "anchor": true
     },
     {
+      "id": "current-location-unknown",
       "name": "❓ Current Location Unknown ❓",
       "anchor": true
     }
   ],
   "connections": [
     {
-      "from": "Teleporter Room",
-      "to": "Main Corridor",
+      "from": "teleporter-room",
+      "to": "main-corridor",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "Main Corridor",
-      "to": "Workshop",
+      "from": "main-corridor",
+      "to": "workshop",
       "status": "locked",
       "name": "Airtight Door",
       "notes": "Locked due to security lockdown"
     },
     {
-      "from": "Main Corridor",
-      "to": "Forest",
+      "from": "main-corridor",
+      "to": "forest",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "Forest",
-      "to": "Porcelain Passageways",
+      "from": "forest",
+      "to": "porcelain-passageways",
       "status": "open",
       "name": "Heavy metal door",
       "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
     },
     {
-      "from": "Forest",
-      "to": "Small Hallway behind Forest",
+      "from": "forest",
+      "to": "small-hallway-behind-forest",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "Small Hallway behind Forest",
-      "to": "Memory Theater",
+      "from": "small-hallway-behind-forest",
+      "to": "memory-theater",
       "status": "open",
       "name": "Airtight Door"
     },
     {
-      "from": "Small Hallway behind Forest",
-      "to": "Orrery",
+      "from": "small-hallway-behind-forest",
+      "to": "orrery",
       "status": "open",
       "name": "Plexiglass Door",
       "notes": "A spiral staircase down, behind a plexiglass door"
     },
     {
-      "from": "Memory Theater",
-      "to": "Orrery",
+      "from": "memory-theater",
+      "to": "orrery",
       "status": "open",
       "direction": "forward_only",
       "name": "Spiral hallway",
       "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
     },
     {
-      "from": "Orrery",
-      "to": "Small Hallway above Orrery",
+      "from": "orrery",
+      "to": "small-hallway-above-orrery",
       "status": "open",
       "name": "Spiral Staircase",
       "notes": "A spiral staircase up, ending behind a plexiglass door"
     },
     {
-      "from": "Small Hallway above Orrery",
-      "to": "Restoration Engine",
+      "from": "small-hallway-above-orrery",
+      "to": "restoration-engine",
       "status": "open"
     },
     {
-      "from": "Small Hallway above Orrery",
-      "to": "Hanging Registry",
+      "from": "small-hallway-above-orrery",
+      "to": "hanging-registry",
       "status": "open"
     },
     {
-      "from": "Small Hallway above Orrery",
-      "to": "???? (1)",
+      "from": "small-hallway-above-orrery",
+      "to": "unknown-room-1",
       "status": "locked",
       "name": "Heavy metal door",
       "notes": "Heavy metal door, sealed due to security lockdown"
     },
     {
-      "from": "Restoration Engine",
-      "to": "The Crystal Mug",
+      "from": "restoration-engine",
+      "to": "the-crystal-mug",
       "status": "open",
       "name": "Underwater door",
       "notes": "See note on The Crystal Mug about arrival/departure."
     },
     {
-      "from": "Hanging Registry",
-      "to": "Porcelain Passageways",
+      "from": "hanging-registry",
+      "to": "porcelain-passageways",
       "status": "open"
     },
     {
-      "from": "Porcelain Passageways",
-      "to": "Small Greenhouse",
+      "from": "porcelain-passageways",
+      "to": "small-greenhouse",
       "status": "open",
       "name": "Metal door with wood veneer"
     },
     {
-      "from": "Small Greenhouse",
-      "to": "Crystal Growth Lab",
+      "from": "small-greenhouse",
+      "to": "crystal-growth-lab",
       "status": "open",
       "name": "Door that was once blocked by a massive tree"
     },
     {
-      "from": "Porcelain Passageways",
-      "to": "Quartermaster's Bazaar",
+      "from": "porcelain-passageways",
+      "to": "quartermaster-s-bazaar",
       "status": "open"
     },
     {
-      "from": "Quartermaster's Bazaar",
-      "to": "Under Construction",
+      "from": "quartermaster-s-bazaar",
+      "to": "under-construction",
       "status": "locked",
       "name": "Locked until the room is initialized"
     },
     {
-      "from": "Quartermaster's Bazaar",
-      "to": "???? (2)",
+      "from": "quartermaster-s-bazaar",
+      "to": "unknown-room-2",
       "status": "locked",
       "name": "Secret door with pentagonal keyhole"
     },
     {
-      "from": "The Crystal Mug",
-      "to": "The Webbed Dungeon",
+      "from": "the-crystal-mug",
+      "to": "the-webbed-dungeon",
       "status": "open",
       "notes": "See note on The Crystal Mug about arrival/departure."
     },
     {
-      "from": "The Crystal Mug",
-      "to": "???? (3)",
+      "from": "the-crystal-mug",
+      "to": "unknown-room-3",
       "status": "blocked",
       "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
-      "from": "The Crystal Mug",
-      "to": "???? (4)",
+      "from": "the-crystal-mug",
+      "to": "unknown-room-4",
       "status": "blocked",
       "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
-      "from": "The Crystal Mug",
-      "to": "???? (5)",
+      "from": "the-crystal-mug",
+      "to": "unknown-room-5",
       "status": "blocked",
       "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     }
@@ -248,14 +272,14 @@
       "physical_description": "Muscular, soot-streaked arms, hair pulled into a practical bun; always carrying a toolkit and a whetstone.",
       "personality": "Precise, disciplined, quietly confident; speaks little but commands respect with her skill.",
       "other_details": "Travels with Aurethion. Acts an armorer--assists in keeping his gear maintained, as well as making minor adjustments.",
-      "group": "Base Camp"
+      "group": "base-camp"
     },
     {
       "name": "Arvek (Arvie) Spotsnout-Smith",
       "ancestry": "Ratfolk",
       "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
       "class": "Inventor",
-      "location": "Teleporter Room"
+      "location": "teleporter-room"
     },
     {
       "name": "Aurethion",
@@ -264,7 +288,7 @@
       "physical_description": "Tall and imposing, partially draconic with gleaming scales integrated into custom-forged plate armor.",
       "personality": "Honorable to a fault and protective almost to excess; struggles between draconic pride and knightly humility.",
       "other_details": "Serves the god Kasjsharux.",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     },
     {
       "name": "Britt Underfoot",
@@ -272,7 +296,7 @@
       "class": "Rogue",
       "physical_description": "Small and nimble, with quick fingers and bright green eyes; wears light leather armor and a utility belt full of tools.",
       "personality": "Curious, cheerful, and slightly mischievous; always the first to explore a new ruin or tunnel.",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     },
     {
       "name": "Fennick Glimmerfoot",
@@ -281,7 +305,7 @@
       "physical_description": "Tiny, radiant, greenish hair with floral accents; carries a small flute.",
       "personality": "Cheerful, whimsical, loves playing pranks and keeping the group laughing.",
       "other_details": "Travels with Britt Underfoot. Companion and morale booster; helps make long expeditions fun and engaging.",
-      "group": "Researchers"
+      "group": "researchers"
     },
     {
       "name": "Ganizadi Glyphroot",
@@ -289,7 +313,7 @@
       "class": "Oracle",
       "physical_description": "Luminous pale blue core encased in a dark oak wooden exoskeleton, deeply carved with symbols and glyphs representing language and knowledge. Fragments of paper and ink float subtly around the core.",
       "personality": "Slightly eccentric and intensely focused on patterns in language and history. Speaks in layered metaphors, enjoys unraveling ancient texts, and delights in sharing philosophical insights.",
-      "location": "🌍 Orthos 🌍"
+      "location": "orthos"
     },
     {
       "name": "Hilda Stoutbrew",
@@ -298,7 +322,7 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Thalra Brewmantle. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "group": "Base Camp"
+      "group": "base-camp"
     },
     {
       "name": "Lunexa Duskweaver",
@@ -307,7 +331,7 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Runeweaver. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "group": "Base Camp"
+      "group": "base-camp"
     },
     {
       "name": "Lyria Moonthread",
@@ -316,7 +340,7 @@
       "physical_description": "Slender, dark hair tied back, robes slightly too long; carries notebooks, quills, and a small crystal orb.",
       "personality": "Inquisitive, attentive, patient; fascinated by Veylorin's spells and constantly takes notes.",
       "other_details": "Travels with Veylorin Starweaver. Apprentice; learns arcane theory and assists with spell research.",
-      "group": "Researchers"
+      "group": "researchers"
     },
     {
       "name": "Mira Brightleaf",
@@ -325,7 +349,7 @@
       "physical_description": "Youthful, luminous purple core encased in a wooden exoskeleton; carries a small lyre and floating sheets of notes.",
       "personality": "Cheerful, encouraging, and talkative; keeps the group engaged during long research sessions.",
       "other_details": "Travels with Ganizadi. Companion and morale booster; prevents Ganizadi from becoming too socially isolated while helping with note-taking.",
-      "group": "Researchers"
+      "group": "researchers"
     },
     {
       "name": "Runeweaver",
@@ -334,7 +358,7 @@
       "physical_description": "Tall metallic frame with reinforced plating and tool mounts along the limbs. Integrated stabilizers help maintain balance under heavy loads. Optical sensors glow softly in dim light.",
       "personality": "Stoic, methodical, and extremely precise. Constantly tests innovations under stress to improve performance and is deeply protective of allies in battle.",
       "other_details": "Innovation: Reinforced Exosuit, a personal armor enhancement that deploys stabilizing braces and adaptive shields to improve defense and mobility.",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     },
     {
       "name": "Rurik Pebbleleaf",
@@ -343,7 +367,7 @@
       "physical_description": "Plant-like, dwarf-height humanoid; leafy hair and a small satchel of scrolls and ink bottles.",
       "personality": "Methodical and loyal; loves organizing Ganizadi's research, taking meticulous notes, and cross-referencing texts.",
       "other_details": "Travels with Ganizadi. Junior apprentice; shadows Ganizadi during research, learning analysis and pattern recognition.",
-      "group": "Researchers"
+      "group": "researchers"
     },
     {
       "name": "Sir Greg*",
@@ -352,7 +376,7 @@
       "physical_description": "Gleaming, excessively gold-trimmed armor; a flowing crimson cape that billows without wind; perfectly styled hair he fixes mid-fight; and a cosmetically glowing longsword. Maintains a striking heroic pose at all times.",
       "personality": "Speaks in grand declarations, interrupts others to monologue, interprets disagreement as villainy, and escalates immediately to violence. Cannot admit defeat, insisting every loss was merely a test.",
       "other_details": "*Champion of Light, Scourge of Darkness, Hero of Destiny",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     },
     {
       "name": "Tahlok Shardframe",
@@ -361,7 +385,7 @@
       "physical_description": "Sleek metallic body, small glowing nodes, tool compartments along limbs; optical sensors blink softly.",
       "personality": "Methodical and precise; logs experimental data carefully and assists Runeweaver with calculations.",
       "other_details": "Travels with Runeweaver. Apprentice and assistant; helps with schematics, diagrams, and small technical tests.",
-      "group": "Researchers"
+      "group": "researchers"
     },
     {
       "name": "Thalra Brewmantle",
@@ -369,7 +393,7 @@
       "class": "Cleric",
       "physical_description": "Stocky and strong, with auburn hair braided with golden beads. Wears chainmail and a pendant engraved with Helkara's holy symbols. Carries a reinforced battle tankard that doubles as a weapon and a small satchel of healing supplies.",
       "personality": "Warm, nurturing, jovial, and steadfast; protective of her allies and always ready with a healing word or frothy mug of ale to lift spirits.",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     },
     {
       "name": "Tink Gearwhistle",
@@ -378,7 +402,7 @@
       "physical_description": "Small, copper hair sticking out of a messy cap; always carrying tiny tools and vials.",
       "personality": "Eager, excitable, curious; constantly experimenting under Britt's guidance.",
       "other_details": "Travels with Britt Underfoot. Apprentice and assistant; helps Britt prepare tools, maps, and traps.",
-      "group": "Base Camp"
+      "group": "base-camp"
     },
     {
       "name": "Torren Alderforge",
@@ -387,7 +411,7 @@
       "physical_description": "Broad-shouldered and powerfully built. He is bald, with a full, meticulously maintained beard touched by dignified streaks of gray. Magical tattoos formed from luminous crystal trace across his skin, glowing softly and occasionally shifting patterns.",
       "personality": "Friendly, outgoing, and effortlessly welcoming, with a talent for making strangers feel like regulars. He genuinely cares for his patrons and readily offers advice, comfort, or a discreet favor. Beneath his warmth lies a practical business owner who understands that generosity has limits and even a timeless tavern must turn a profit.",
       "other_details": "Proprietor and bartender of The Crystal Mug, an enigmatic tavern that appears in different places and eras. He remembers countless patrons, cultures, and events, though he carefully avoids revealing knowledge that could disrupt history. No matter where The Crystal Mug appears, Torren is always behind the bar, polishing a glass and ready to greet whoever walks through its door.",
-      "location": "The Crystal Mug"
+      "location": "the-crystal-mug"
     },
     {
       "name": "Veylorin Starweaver",
@@ -395,39 +419,42 @@
       "class": "Wizard",
       "physical_description": "Tall and slender, with silver-white hair cascading over a deep blue robe adorned with arcane sigils. Carries a glowing magical staff, and three shimmering Aeon stones orbit his head, faintly illuminating his face.",
       "personality": "Brilliant, focused, and precise; loves experimentation and mastering destructive magic, though somewhat absent-minded socially. Analytical and strategic in combat, often serving as the party's magical powerhouse.",
-      "location": "❓ Current Location Unknown ❓"
+      "location": "current-location-unknown"
     }
   ],
   "character_groups": [
     {
+      "id": "researchers",
       "name": "Researchers",
-      "location": "Small Greenhouse"
+      "location": "small-greenhouse"
     },
     {
+      "id": "base-camp",
       "name": "Base Camp",
-      "location": "Teleporter Room"
+      "location": "teleporter-room"
     },
     {
+      "id": "the-party",
       "name": "The Party",
-      "location": "Teleporter Room",
+      "location": "teleporter-room",
       "color": "#d62000"
     }
   ],
   "connectionStatus": [
     {
-      "name": "open",
+      "id": "open",
       "display_color": "#4CAF50",
       "line_style": "solid",
       "description": "✔ Traversable"
     },
     {
-      "name": "locked",
+      "id": "locked",
       "display_color": "#F44336",
       "line_style": "dashed",
       "description": "🔒 Locked"
     },
     {
-      "name": "blocked",
+      "id": "blocked",
       "display_color": "#9E9E9E",
       "line_style": "dashed",
       "description": "🚫 Blocked"

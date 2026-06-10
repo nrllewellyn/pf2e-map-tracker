@@ -70,13 +70,19 @@ Display strings in map data are treated as trusted HTML so notes can contain mar
 All object fields are validated strictly. Unknown fields are rejected so spelling mistakes are
 reported instead of silently ignored.
 
-All string fields support emojis and other Unicode characters.
+Display text fields support emojis and other Unicode characters.
+
+Rooms, character groups, and connection statuses require an `id` containing lowercase letters and
+digits separated by single hyphens. Room and character-group IDs share a unique namespace.
+Connection-status IDs are unique separately. Character names must be unique because characters do
+not have IDs; ID-backed object names do not need to be unique.
 
 ### Rooms
 
 | Field    | Required | Description                                                                                                                                               |
 |----------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`   | Yes      | Unique node name and displayed label.                                                                                                                     |
+| `id`     | Yes      | Globally unique node ID used by references.                                                                                                               |
+| `name`   | Yes      | Displayed label.                                                                                                                                          |
 | `anchor` | No       | Invisibly connects anchor rooms for layout stability. Defaults to `false`.                                                                                |
 | `color`  | No       | CSS node color.                                                                                                                                           |
 | `shape`  | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `box`. |
@@ -88,14 +94,14 @@ Two anchors are connected as a pair. Three or more anchors form a ring.
 
 | Field                  | Required    | Description                                                                                                                                                   |
 |------------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`                 | Yes         | Unique node name and displayed label.                                                                                                                         |
+| `name`                 | Yes         | Unique character name and displayed label.                                                                                                                     |
 | `ancestry`             | Yes         | Ancestry shown in the tooltip.                                                                                                                                |
 | `class`                | No          | Class shown in the tooltip.                                                                                                                                   |
 | `physical_description` | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
 | `personality`          | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
 | `other_details`        | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
-| `location`             | Conditional | Existing room name. Exactly one of `location` or `group` is required.                                                                                         |
-| `group`                | Conditional | Existing character-group name. Exactly one of `location` or `group` is required.                                                                              |
+| `location`             | Conditional | Existing room ID. Exactly one of `location` or `group` is required.                                                                                           |
+| `group`                | Conditional | Existing character-group ID. Exactly one of `location` or `group` is required.                                                                                |
 | `color`                | No          | CSS node color.                                                                                                                                               |
 | `shape`                | No          | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `ellipse`. |
 
@@ -103,18 +109,19 @@ Two anchors are connected as a pair. Three or more anchors form a ring.
 
 | Field      | Required | Description                                                                                                                                                  |
 |------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`     | Yes      | Unique node name and displayed label.                                                                                                                        |
-| `location` | Yes      | Existing room name.                                                                                                                                          |
+| `id`       | Yes      | Globally unique node ID used by references.                                                                                                                  |
+| `name`     | Yes      | Displayed label.                                                                                                                                             |
+| `location` | Yes      | Existing room ID.                                                                                                                                            |
 | `color`    | No       | CSS node color.                                                                                                                                              |
-| `shape`    | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`.~~~~ Defaults to `circle`. |
+| `shape`    | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `circle`. |
 
 ### Connections
 
 | Field       | Required | Description                                                                       |
 |-------------|----------|-----------------------------------------------------------------------------------|
-| `from`      | Yes      | Existing source room name.                                                        |
-| `to`        | Yes      | Existing destination room name.                                                   |
-| `status`    | Yes      | Existing `connectionStatus` name.                                                 |
+| `from`      | Yes      | Existing source room ID.                                                          |
+| `to`        | Yes      | Existing destination room ID.                                                     |
+| `status`    | Yes      | Existing `connectionStatus` ID.                                                   |
 | `direction` | No       | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
 | `name`      | No       | Connection label shown in the tooltip.                                            |
 | `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
@@ -123,7 +130,7 @@ Two anchors are connected as a pair. Three or more anchors form a ring.
 
 | Field           | Required | Description                                   |
 |-----------------|----------|-----------------------------------------------|
-| `name`          | Yes      | Unique status name referenced by connections. |
+| `id`            | Yes      | Unique status ID referenced by connections.   |
 | `description`   | Yes      | Human-readable tooltip description.           |
 | `display_color` | No       | CSS edge color.                               |
 | `line_style`    | No       | `solid` or `dashed`. Defaults to `solid`.     |

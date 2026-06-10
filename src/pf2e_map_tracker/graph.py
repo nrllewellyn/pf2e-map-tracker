@@ -76,12 +76,12 @@ def build_network(data: MapData) -> Network:
 
 
 def _add_rooms(network: Network, data: MapData) -> None:
-    groups_by_room = {room.name: [] for room in data.rooms}
-    direct_characters_by_room = {room.name: [] for room in data.rooms}
-    members_by_group = {group.name: [] for group in data.character_groups}
+    groups_by_room = {room.id: [] for room in data.rooms}
+    direct_characters_by_room = {room.id: [] for room in data.rooms}
+    members_by_group = {group.id: [] for group in data.character_groups}
 
     for group in data.character_groups:
-        groups_by_room[group.location].append(group.name)
+        groups_by_room[group.location].append(group)
     for character in data.characters:
         if character.group:
             members_by_group[character.group].append(character.name)
@@ -91,12 +91,11 @@ def _add_rooms(network: Network, data: MapData) -> None:
     for room in data.rooms:
         base, hidden, groups_only = room_tooltips(
             room,
-            groups_by_room[room.name],
-            direct_characters_by_room[room.name],
-            members_by_group,
+            [(group.name, members_by_group[group.id]) for group in groups_by_room[room.id]],
+            direct_characters_by_room[room.id],
         )
         network.add_node(
-            room.name,
+            room.id,
             label=room.name,
             title=base,
             color=room.color or DEFAULT_ROOM_COLOR,
@@ -111,15 +110,20 @@ def _add_rooms(network: Network, data: MapData) -> None:
 
 
 def _add_character_groups(network: Network, data: MapData) -> None:
-    members_by_group = {group.name: [] for group in data.character_groups}
+    rooms_by_id = {room.id: room for room in data.rooms}
+    members_by_group = {group.id: [] for group in data.character_groups}
     for character in data.characters:
         if character.group:
             members_by_group[character.group].append(character.name)
 
     for group in data.character_groups:
-        base, groups_only = character_group_tooltips(group, sorted(members_by_group[group.name]))
+        base, groups_only = character_group_tooltips(
+            group,
+            rooms_by_id[group.location].name,
+            sorted(members_by_group[group.id]),
+        )
         network.add_node(
-            group.name,
+            group.id,
             label=group.name,
             title=base,
             color=group.color or DEFAULT_CHARACTER_GROUP_COLOR,
@@ -133,11 +137,18 @@ def _add_character_groups(network: Network, data: MapData) -> None:
 
 
 def _add_characters(network: Network, data: MapData) -> None:
-    for character in data.characters:
+    rooms_by_id = {room.id: room for room in data.rooms}
+    groups_by_id = {group.id: group for group in data.character_groups}
+    for index, character in enumerate(data.characters):
+        placement_name = (
+            rooms_by_id[character.location].name
+            if character.location
+            else groups_by_id[character.group].name
+        )
         network.add_node(
-            character.name,
+            _character_node_id(index),
             label=character.name,
-            title=character_tooltip(character),
+            title=character_tooltip(character, placement_name),
             color=character.color or DEFAULT_CHARACTER_COLOR,
             shape=character.shape,
             font={"size": 16},
@@ -146,13 +157,19 @@ def _add_characters(network: Network, data: MapData) -> None:
 
 
 def _add_connections(network: Network, data: MapData) -> None:
-    statuses = {status.name: status for status in data.connection_statuses}
+    rooms = {room.id: room for room in data.rooms}
+    statuses = {status.id: status for status in data.connection_statuses}
     for connection in data.connections:
         status = statuses[connection.status]
         network.add_edge(
             connection.source,
             connection.target,
-            title=connection_tooltip(connection, status),
+            title=connection_tooltip(
+                connection,
+                status,
+                rooms[connection.source].name,
+                rooms[connection.target].name,
+            ),
             color=status.display_color or DEFAULT_CONNECTION_COLOR,
             dashes=status.line_style == "dashed",
             width=2.5,
@@ -161,10 +178,14 @@ def _add_connections(network: Network, data: MapData) -> None:
 
 
 def _add_placement_edges(network: Network, data: MapData) -> None:
-    for character in data.characters:
-        _add_placement_edge(network, character.name, character.location or character.group)
+    for index, character in enumerate(data.characters):
+        _add_placement_edge(
+            network,
+            _character_node_id(index),
+            character.location or character.group,
+        )
     for group in data.character_groups:
-        _add_placement_edge(network, group.name, group.location)
+        _add_placement_edge(network, group.id, group.location)
 
 
 def _add_placement_edge(network: Network, source: str, target: str) -> None:
@@ -178,16 +199,20 @@ def _add_placement_edge(network: Network, source: str, target: str) -> None:
     )
 
 
+def _character_node_id(index: int) -> str:
+    return f"__character-{index}"
+
+
 def _add_anchor_edges(network: Network, data: MapData) -> None:
-    anchor_names = [room.name for room in data.rooms if room.anchor]
-    if len(anchor_names) < 2:
+    anchor_ids = [room.id for room in data.rooms if room.anchor]
+    if len(anchor_ids) < 2:
         return
 
-    edge_count = 1 if len(anchor_names) == 2 else len(anchor_names)
+    edge_count = 1 if len(anchor_ids) == 2 else len(anchor_ids)
     for index in range(edge_count):
         network.add_edge(
-            anchor_names[index],
-            anchor_names[(index + 1) % len(anchor_names)],
+            anchor_ids[index],
+            anchor_ids[(index + 1) % len(anchor_ids)],
             hidden=True,
             physics=True,
             length=ANCHOR_SPRING_LENGTH,

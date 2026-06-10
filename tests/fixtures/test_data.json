@@ -1,78 +1,93 @@
 {
   "rooms": [
     {
+      "id": "entrance",
       "name": "Entrance",
       "anchor": true,
       "color": "#4CAF50",
       "notes": "Main entry point"
     },
     {
+      "id": "kitchen",
       "name": "Kitchen",
       "color": "#FF9800",
       "notes": "Heart of the home with <b>large</b> island"
     },
     {
+      "id": "upstairs-hall",
       "name": "Upstairs Hall",
       "anchor": true,
       "color": "#27F5F2",
       "notes": "Central hallway upstairs"
     },
     {
+      "id": "master-bedroom",
       "name": "Master Bedroom",
       "color": "#9C27B0",
       "notes": "Private sleeping area with en-suite bathroom"
     },
     {
+      "id": "guest-bedroom",
       "name": "Guest Bedroom",
       "color": "#E91E63"
     },
     {
+      "id": "living-room",
       "name": "Living Room",
       "color": "#2196F3",
       "notes": "Main family gathering space"
     },
     {
+      "id": "dining-room",
       "name": "Dining Room",
       "color": "#607D8B",
       "notes": "Formal dining area"
     },
     {
+      "id": "family-room",
       "name": "Family Room",
       "color": "#3F51B5",
       "notes": "Casual TV and relaxation space"
     },
     {
+      "id": "bathroom-main",
       "name": "Bathroom (Main)",
       "color": "#00BCD4",
       "notes": "Upstairs full bathroom"
     },
     {
+      "id": "master-bathroom",
       "name": "Master Bathroom",
       "color": "#009688",
       "notes": "En-suite with double vanity"
     },
     {
+      "id": "basement-hall",
       "name": "Basement Hall",
       "anchor": true,
       "color": "#795548",
       "notes": "Lower level hall"
     },
     {
+      "id": "basement-rec-room",
       "name": "Basement Rec Room",
       "color": "#607D8B",
       "notes": "Game room and media area"
     },
     {
+      "id": "laundry-room",
       "name": "Laundry Room",
       "color": "#8BC34A",
       "notes": "Utility and washing area"
     },
     {
+      "id": "home-office",
       "name": "Home Office",
       "color": "#FF5722",
       "notes": "Quiet workspace"
     },
     {
+      "id": "garage",
       "name": "Garage",
       "color": "#757575",
       "notes": "Two-car garage"
@@ -83,7 +98,7 @@
       "name": "Valeros",
       "ancestry": "Human",
       "physical_description": "A seasoned adventurer.",
-      "group": "Pathfinders"
+      "group": "pathfinders"
     },
     {
       "name": "Merisiel",
@@ -91,124 +106,126 @@
       "class": "Rogue",
       "personality": "Curious and observant.",
       "other_details": "Keeps an eye on the <b>locked doors</b>.",
-      "location": "Upstairs Hall",
+      "location": "upstairs-hall",
       "color": "#ffcc00"
     }
   ],
   "character_groups": [
     {
+      "id": "pathfinders",
       "name": "Pathfinders",
-      "location": "Entrance"
+      "location": "entrance"
     },
     {
+      "id": "empty-group",
       "name": "Empty Group",
-      "location": "Kitchen",
+      "location": "kitchen",
       "color": "#00cccc"
     }
   ],
   "connections": [
     {
-      "from": "Entrance",
-      "to": "Kitchen",
+      "from": "entrance",
+      "to": "kitchen",
       "status": "open",
       "name": "Hallway"
     },
     {
-      "from": "Entrance",
-      "to": "Upstairs Hall",
+      "from": "entrance",
+      "to": "upstairs-hall",
       "status": "open",
       "name": "↗ Stairs",
       "notes": "Stairs squeak <b>loudly</b>"
     },
     {
-      "from": "Entrance",
-      "to": "Living Room",
+      "from": "entrance",
+      "to": "living-room",
       "status": "open",
       "name": "Wide archway"
     },
     {
-      "from": "Entrance",
-      "to": "Basement Hall",
+      "from": "entrance",
+      "to": "basement-hall",
       "status": "open",
       "name": "↘ Basement Stairs"
     },
     {
-      "from": "Kitchen",
-      "to": "Dining Room",
+      "from": "kitchen",
+      "to": "dining-room",
       "status": "open",
       "name": "Open doorway"
     },
     {
-      "from": "Kitchen",
-      "to": "Laundry Room",
+      "from": "kitchen",
+      "to": "laundry-room",
       "status": "open",
       "name": "Side door"
     },
     {
-      "from": "Kitchen",
-      "to": "Garage",
+      "from": "kitchen",
+      "to": "garage",
       "status": "open",
       "name": "Garage entry"
     },
     {
-      "from": "Living Room",
-      "to": "Dining Room",
+      "from": "living-room",
+      "to": "dining-room",
       "status": "open",
       "name": "Open plan"
     },
     {
-      "from": "Living Room",
-      "to": "Family Room",
+      "from": "living-room",
+      "to": "family-room",
       "status": "open",
       "name": "Sliding doors"
     },
     {
-      "from": "Upstairs Hall",
-      "to": "Guest Bedroom",
+      "from": "upstairs-hall",
+      "to": "guest-bedroom",
       "status": "blocked",
       "notes": "Under renovation"
     },
     {
-      "from": "Upstairs Hall",
-      "to": "Master Bedroom",
+      "from": "upstairs-hall",
+      "to": "master-bedroom",
       "status": "locked",
       "notes": "Requires key after 10pm"
     },
     {
-      "from": "Upstairs Hall",
-      "to": "Bathroom (Main)",
+      "from": "upstairs-hall",
+      "to": "bathroom-main",
       "status": "open",
       "name": "Hall bathroom"
     },
     {
-      "from": "Master Bedroom",
-      "to": "Master Bathroom",
+      "from": "master-bedroom",
+      "to": "master-bathroom",
       "status": "open",
       "name": "En-suite door"
     },
     {
-      "from": "Basement Hall",
-      "to": "Basement Rec Room",
+      "from": "basement-hall",
+      "to": "basement-rec-room",
       "status": "open",
       "name": "First hall door"
     },
     {
-      "from": "Basement Hall",
-      "to": "Home Office",
+      "from": "basement-hall",
+      "to": "home-office",
       "status": "open",
       "direction": "bidirectional",
       "name": "Second hall door"
     },
     {
-      "from": "Basement Rec Room",
-      "to": "Laundry Room",
+      "from": "basement-rec-room",
+      "to": "laundry-room",
       "status": "open",
       "direction": "forward_only",
       "name": "One-way secret door"
     },
     {
-      "from": "Laundry Room",
-      "to": "Garage",
+      "from": "laundry-room",
+      "to": "garage",
       "status": "open",
       "direction": "backward_only",
       "name": "Chute to laundry room"
@@ -216,19 +233,19 @@
   ],
   "connectionStatus": [
     {
-      "name": "open",
+      "id": "open",
       "display_color": "#4CAF50",
       "line_style": "solid",
       "description": "✔ Traversable"
     },
     {
-      "name": "locked",
+      "id": "locked",
       "display_color": "#F44336",
       "line_style": "dashed",
       "description": "🔒 Locked"
     },
     {
-      "name": "blocked",
+      "id": "blocked",
       "display_color": "#9E9E9E",
       "line_style": "dashed",
       "description": "🚫 Blocked"

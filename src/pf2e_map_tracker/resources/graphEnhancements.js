@@ -50,6 +50,25 @@ function setCharacterVisibility(visibility) {
     nodes.update(updatedNodes);
 }
 
+function setupNodeSelectorLabels() {
+    if (!window.nodes) {
+        setTimeout(setupNodeSelectorLabels, 100);
+        return;
+    }
+    const nodeSelect = document.getElementById('select-node');
+    if (!nodeSelect || nodeSelect.dataset.displayLabelsApplied) {
+        return;
+    }
+    nodeSelect.options[0].textContent = 'Select a Node';
+    Array.from(nodeSelect.options).slice(1).forEach(function (option) {
+        const node = nodes.get(option.value);
+        if (node?.label) {
+            option.textContent = node.label;
+        }
+    });
+    nodeSelect.dataset.displayLabelsApplied = 'true';
+}
+
 function setupCharacterVisibility() {
     if (!window.network || !window.nodes) {
         setTimeout(setupCharacterVisibility, 100);
@@ -102,7 +121,9 @@ function setupCustomTooltips() {
 if (document.readyState === 'complete') {
     setupCustomTooltips();
     setupCharacterVisibility();
+    setupNodeSelectorLabels();
 } else {
     document.addEventListener('DOMContentLoaded', setupCustomTooltips);
     document.addEventListener('DOMContentLoaded', setupCharacterVisibility);
+    document.addEventListener('DOMContentLoaded', setupNodeSelectorLabels);
 }

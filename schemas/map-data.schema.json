@@ -36,7 +36,7 @@
         "location": {
           "anyOf": [
             {
-              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
               "type": "string"
             },
             {
@@ -49,7 +49,7 @@
         "group": {
           "anyOf": [
             {
-              "minLength": 1,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
               "type": "string"
             },
             {
@@ -86,13 +86,18 @@
     "CharacterGroup": {
       "additionalProperties": false,
       "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
         "name": {
           "minLength": 1,
           "title": "Name",
           "type": "string"
         },
         "location": {
-          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "title": "Location",
           "type": "string"
         },
@@ -114,6 +119,7 @@
         }
       },
       "required": [
+        "id",
         "name",
         "location"
       ],
@@ -124,17 +130,17 @@
       "additionalProperties": false,
       "properties": {
         "from": {
-          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "title": "From",
           "type": "string"
         },
         "to": {
-          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "title": "To",
           "type": "string"
         },
         "status": {
-          "minLength": 1,
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "title": "Status",
           "type": "string"
         },
@@ -173,9 +179,9 @@
     "ConnectionStatus": {
       "additionalProperties": false,
       "properties": {
-        "name": {
-          "minLength": 1,
-          "title": "Name",
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
           "type": "string"
         },
         "description": {
@@ -206,7 +212,7 @@
         }
       },
       "required": [
-        "name",
+        "id",
         "description"
       ],
       "title": "ConnectionStatus",
@@ -232,6 +238,11 @@
     "Room": {
       "additionalProperties": false,
       "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
         "name": {
           "minLength": 1,
           "title": "Name",
@@ -265,6 +276,7 @@
         }
       },
       "required": [
+        "id",
         "name"
       ],
       "title": "Room",

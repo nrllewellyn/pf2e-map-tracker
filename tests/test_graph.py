@@ -27,6 +27,40 @@ def test_build_network_contains_all_nodes_and_edges() -> None:
     )
 
 
+def test_network_uses_ids_for_links_and_names_for_display() -> None:
+    data = MapData.model_validate(
+        {
+            "rooms": [
+                {"id": "source-room", "name": "Shared Name"},
+                {"id": "target-room", "name": "Shared Name"},
+            ],
+            "character_groups": [
+                {"id": "group", "name": "Display Group", "location": "source-room"}
+            ],
+            "characters": [
+                {
+                    "name": "Display Character",
+                    "ancestry": "Human",
+                    "group": "group",
+                }
+            ],
+            "connections": [{"from": "source-room", "to": "target-room", "status": "open"}],
+            "connectionStatus": [{"id": "open", "description": "Open"}],
+        }
+    )
+
+    network = build_network(data)
+    nodes = {node["id"]: node for node in network.nodes}
+    connection = network.edges[0]
+
+    assert nodes["source-room"]["label"] == "Shared Name"
+    assert nodes["__character-0"]["label"] == "Display Character"
+    assert "Display Group" in nodes["__character-0"]["title"]
+    assert connection["from"] == "source-room"
+    assert connection["to"] == "target-room"
+    assert "Shared Name" in connection["title"]
+
+
 def test_anchor_edges_override_spring_length() -> None:
     network = build_network(load_map_data(TEST_DATA))
     anchor_edges = [edge for edge in network.edges if edge.get("hidden")]
@@ -39,12 +73,12 @@ def test_anchor_nodes_have_stronger_repulsion() -> None:
     data = load_map_data(TEST_DATA)
     network = build_network(data)
     nodes = {node["id"]: node for node in network.nodes}
-    anchor_names = {room.name for room in data.rooms if room.anchor}
-    non_anchor_names = {room.name for room in data.rooms if not room.anchor}
+    anchor_ids = {room.id for room in data.rooms if room.anchor}
+    non_anchor_ids = {room.id for room in data.rooms if not room.anchor}
 
-    assert anchor_names
-    assert all(nodes[name]["mass"] == ANCHOR_NODE_MASS for name in anchor_names)
-    assert all("mass" not in nodes[name] for name in non_anchor_names)
+    assert anchor_ids
+    assert all(nodes[node_id]["mass"] == ANCHOR_NODE_MASS for node_id in anchor_ids)
+    assert all("mass" not in nodes[node_id] for node_id in non_anchor_ids)
 
 
 def test_generate_graph_injects_enhancements_once(tmp_path: Path) -> None:
@@ -54,6 +88,7 @@ def test_generate_graph_injects_enhancements_once(tmp_path: Path) -> None:
     content = output.read_text(encoding="utf-8")
     assert content.count(INJECTION_MARKER) == 1
     assert "setupCharacterVisibility" in content
+    assert "setupNodeSelectorLabels" in content
     assert "Valeros" in content
 
 
@@ -61,25 +96,27 @@ def test_trusted_html_is_preserved_in_tooltips() -> None:
     character = Character(
         name="Merisiel",
         ancestry="Elf",
-        location="Kitchen",
+        location="kitchen",
         other_details="<b>trusted</b>",
     )
-    room = Room(name="Kitchen", notes="<p>trusted</p>")
+    room = Room(id="kitchen", name="Kitchen", notes="<p>trusted</p>")
 
-    assert "<b>trusted</b>" in character_tooltip(character)
-    assert "<p>trusted</p>" in room_tooltips(room, [], [], {})[0]
+    assert "<b>trusted</b>" in character_tooltip(character, "Kitchen")
+    assert "<p>trusted</p>" in room_tooltips(room, [], [])[0]
 
 
 def test_node_shape_overrides_are_added_to_network() -> None:
     data = MapData.model_validate(
         {
-            "rooms": [{"name": "Room", "shape": "star"}],
-            "character_groups": [{"name": "Group", "location": "Room", "shape": "triangle"}],
+            "rooms": [{"id": "room", "name": "Room", "shape": "star"}],
+            "character_groups": [
+                {"id": "group", "name": "Group", "location": "room", "shape": "triangle"}
+            ],
             "characters": [
                 {
                     "name": "Character",
                     "ancestry": "Human",
-                    "group": "Group",
+                    "group": "group",
                     "shape": "diamond",
                 }
             ],
@@ -88,9 +125,9 @@ def test_node_shape_overrides_are_added_to_network() -> None:
 
     nodes = {node["id"]: node for node in build_network(data).nodes}
 
-    assert nodes["Room"]["shape"] == "star"
-    assert nodes["Group"]["shape"] == "triangle"
-    assert nodes["Character"]["shape"] == "diamond"
+    assert nodes["room"]["shape"] == "star"
+    assert nodes["group"]["shape"] == "triangle"
+    assert nodes["__character-0"]["shape"] == "diamond"
 
 
 def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_path: Path) -> None:
@@ -111,10 +148,10 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
     ]
     data = {
         "rooms": [
-            {"name": "Room 🏰", "notes": "Notes 📝"},
-            {"name": "Other Room 🚪"},
+            {"id": "room-castle", "name": "Room 🏰", "notes": "Notes 📝"},
+            {"id": "other-room", "name": "Other Room 🚪"},
         ],
-        "character_groups": [{"name": "Party 🛡️", "location": "Room 🏰"}],
+        "character_groups": [{"id": "party", "name": "Party 🛡️", "location": "room-castle"}],
         "characters": [
             {
                 "name": "Hero 🧙",
@@ -123,19 +160,19 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
                 "physical_description": "Description 👀",
                 "personality": "Personality 😀",
                 "other_details": "Details 🔮",
-                "group": "Party 🛡️",
+                "group": "party",
             }
         ],
         "connections": [
             {
-                "from": "Room 🏰",
-                "to": "Other Room 🚪",
-                "status": "Open ✅",
+                "from": "room-castle",
+                "to": "other-room",
+                "status": "open",
                 "name": "Passage ↗️",
                 "notes": "Connection notes 🧭",
             }
         ],
-        "connectionStatus": [{"name": "Open ✅", "description": "Open door 🚶"}],
+        "connectionStatus": [{"id": "open", "description": "Open door 🚶"}],
     }
     input_path = tmp_path / "emoji.json"
     output_path = tmp_path / "emoji.html"
@@ -145,5 +182,5 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
     generate_graph(input_path, output_path)
 
     content = output_path.read_text(encoding="utf-8")
-    assert loaded.connections[0].status == "Open ✅"
+    assert loaded.connections[0].status == "open"
     assert all(value in content for value in emoji_values)

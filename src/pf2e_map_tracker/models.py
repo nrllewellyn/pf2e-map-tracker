@@ -6,6 +6,7 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+MapId = Annotated[str, StringConstraints(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")]
 
 
 class StrictModel(BaseModel):
@@ -33,6 +34,7 @@ class NodeShape(StrEnum):
 
 
 class Room(StrictModel):
+    id: MapId
     name: NonEmptyString
     anchor: bool = False
     color: str | None = None
@@ -41,8 +43,9 @@ class Room(StrictModel):
 
 
 class CharacterGroup(StrictModel):
+    id: MapId
     name: NonEmptyString
-    location: NonEmptyString
+    location: MapId
     color: str | None = None
     shape: NodeShape = NodeShape.CIRCLE
 
@@ -54,8 +57,8 @@ class Character(StrictModel):
     physical_description: str = ""
     personality: str = ""
     other_details: str = ""
-    location: NonEmptyString | None = None
-    group: NonEmptyString | None = None
+    location: MapId | None = None
+    group: MapId | None = None
     color: str | None = None
     shape: NodeShape = NodeShape.ELLIPSE
 
@@ -67,16 +70,16 @@ class Character(StrictModel):
 
 
 class ConnectionStatus(StrictModel):
-    name: NonEmptyString
+    id: MapId
     description: NonEmptyString
     display_color: str | None = None
     line_style: Literal["solid", "dashed"] = "solid"
 
 
 class Connection(StrictModel):
-    source: NonEmptyString = Field(alias="from")
-    target: NonEmptyString = Field(alias="to")
-    status: NonEmptyString
+    source: MapId = Field(alias="from")
+    target: MapId = Field(alias="to")
+    status: MapId
     direction: ConnectionDirection = ConnectionDirection.BIDIRECTIONAL
     name: str = ""
     notes: str = ""
@@ -95,45 +98,52 @@ class MapData(StrictModel):
     @model_validator(mode="after")
     def validate_references(self) -> "MapData":
         errors: list[str] = []
-        room_names = self._unique_names("room", self.rooms, errors)
-        group_names = self._unique_names("character group", self.character_groups, errors)
-        character_names = self._unique_names("character", self.characters, errors)
-        status_names = self._unique_names("connection status", self.connection_statuses, errors)
+        room_ids = {room.id for room in self.rooms}
+        group_ids = {group.id for group in self.character_groups}
+        status_ids = self._unique_ids("connection status", self.connection_statuses, errors)
 
-        all_node_names = room_names | group_names | character_names
-        if len(all_node_names) != len(room_names) + len(group_names) + len(character_names):
-            seen: set[str] = set()
-            for node in [*self.rooms, *self.character_groups, *self.characters]:
-                if node.name in seen:
-                    errors.append(f"duplicate node name '{node.name}'")
-                seen.add(node.name)
+        self._unique_ids(
+            "node",
+            [*self.rooms, *self.character_groups],
+            errors,
+        )
+        self._unique_names("character", self.characters, errors)
 
         for group in self.character_groups:
-            if group.location not in room_names:
+            if group.location not in room_ids:
                 errors.append(
                     f"unknown location '{group.location}' for character group '{group.name}'"
                 )
 
         for character in self.characters:
-            if character.location is not None and character.location not in room_names:
+            if character.location is not None and character.location not in room_ids:
                 errors.append(
                     f"unknown location '{character.location}' for character '{character.name}'"
                 )
-            if character.group is not None and character.group not in group_names:
+            if character.group is not None and character.group not in group_ids:
                 errors.append(f"unknown group '{character.group}' for character '{character.name}'")
 
         for index, connection in enumerate(self.connections):
             label = connection.name or f"connection #{index + 1}"
-            if connection.source not in room_names:
+            if connection.source not in room_ids:
                 errors.append(f"unknown source room '{connection.source}' for {label}")
-            if connection.target not in room_names:
+            if connection.target not in room_ids:
                 errors.append(f"unknown target room '{connection.target}' for {label}")
-            if connection.status not in status_names:
+            if connection.status not in status_ids:
                 errors.append(f"unknown status '{connection.status}' for {label}")
 
         if errors:
             raise ValueError("\n".join(dict.fromkeys(errors)))
         return self
+
+    @staticmethod
+    def _unique_ids(kind: str, items: list, errors: list[str]) -> set[str]:
+        ids: set[str] = set()
+        for item in items:
+            if item.id in ids:
+                errors.append(f"duplicate {kind} id '{item.id}'")
+            ids.add(item.id)
+        return ids
 
     @staticmethod
     def _unique_names(kind: str, items: list, errors: list[str]) -> set[str]:
