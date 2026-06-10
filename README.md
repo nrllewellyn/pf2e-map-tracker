@@ -30,10 +30,21 @@ NOTE: The file `/src/main/resources/testData.json` is available for testing any 
 | `physical_description` | string | No | Physical description shown in the node tooltip. Default: Empty string.       | `"Tall and heavily armored."`    |
 | `personality` | string | No        | Personality description shown in the node tooltip. Default: Empty string.    | `"Quietly confident."`           |
 | `other_details` | string | No      | Any other character details shown in the node tooltip. Default: Empty string.| `"Travels with the armorer."`    |
-| `location`    | string | **Yes**   | Current location. Must match a room `name`.                                  | `"Entrance"`                     |
+| `location`    | string | Conditional | Current location. Must match a room `name`. Exactly one of `location` or `group` is required. | `"Entrance"` |
+| `group`       | string | Conditional | Current character group. Must match a `character_groups` name. Exactly one of `location` or `group` is required. | `"Pathfinders"` |
 | `color`       | string | No        | Background color of the character node (CSS color). Uses the default if absent. | `"#ffcc00"` or `"yellow"`     |
 
-Characters are displayed as ellipse-shaped nodes. Each character is automatically connected to its location by a dashed, neutral-colored line.
+Characters are displayed as ellipse-shaped nodes. Each character is automatically connected to either its location or its group by a dashed, neutral-colored line.
+
+## `character_groups`
+
+| Key        | Type   | Required? | Description / Purpose                                                        | Example value       |
+|------------|--------|-----------|------------------------------------------------------------------------------|---------------------|
+| `name`     | string | **Yes**   | Unique identifier and displayed label. Must not match another node name.     | `"Pathfinders"`     |
+| `location` | string | **Yes**   | Current location. Must match a room `name`.                                  | `"Entrance"`        |
+| `color`    | string | No        | Background color of the group node (CSS color). Uses the default if absent.  | `"#ffcc00"`         |
+
+Character groups are displayed as circle-shaped nodes with their location and member names in the tooltip. Each group is automatically connected to its location by a dashed, neutral-colored line.
 
 ## `connections`
 

@@ -245,7 +245,7 @@
       "physical_description": "Muscular, soot-streaked arms, hair pulled into a practical bun; always carrying a toolkit and a whetstone.",
       "personality": "Precise, disciplined, quietly confident; speaks little but commands respect with her skill.",
       "other_details": "Travels with Aurethion. Acts an armorer--assists in keeping his gear maintained, as well as making minor adjustments.",
-      "location": "Teleporter Room"
+      "group": "Base Camp"
     },
     {
       "name": "Arvek (Arvie) Spotsnout-Smith",
@@ -278,7 +278,7 @@
       "physical_description": "Tiny, radiant, greenish hair with floral accents; carries a small flute.",
       "personality": "Cheerful, whimsical, loves playing pranks and keeping the group laughing.",
       "other_details": "Travels with Britt Underfoot. Companion and morale booster; helps make long expeditions fun and engaging.",
-      "location": "Small Greenhouse"
+      "group": "Researchers"
     },
     {
       "name": "Ganizadi Glyphroot",
@@ -295,7 +295,7 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Thalra Brewmantle. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "location": "Teleporter Room"
+      "group": "Base Camp"
     },
     {
       "name": "Lunexa Duskweaver",
@@ -304,7 +304,7 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Runeweaver. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "location": "Teleporter Room"
+      "group": "Base Camp"
     },
     {
       "name": "Lyria Moonthread",
@@ -313,7 +313,7 @@
       "physical_description": "Slender, dark hair tied back, robes slightly too long; carries notebooks, quills, and a small crystal orb.",
       "personality": "Inquisitive, attentive, patient; fascinated by Veylorin's spells and constantly takes notes.",
       "other_details": "Travels with Veylorin Starweaver. Apprentice; learns arcane theory and assists with spell research.",
-      "location": "Small Greenhouse"
+      "group": "Researchers"
     },
     {
       "name": "Mira Brightleaf",
@@ -322,7 +322,7 @@
       "physical_description": "Youthful, luminous purple core encased in a wooden exoskeleton; carries a small lyre and floating sheets of notes.",
       "personality": "Cheerful, encouraging, and talkative; keeps the group engaged during long research sessions.",
       "other_details": "Travels with Ganizadi. Companion and morale booster; prevents Ganizadi from becoming too socially isolated while helping with note-taking.",
-      "location": "Small Greenhouse"
+      "group": "Researchers"
     },
     {
       "name": "Runeweaver",
@@ -340,7 +340,7 @@
       "physical_description": "Plant-like, dwarf-height humanoid; leafy hair and a small satchel of scrolls and ink bottles.",
       "personality": "Methodical and loyal; loves organizing Ganizadi's research, taking meticulous notes, and cross-referencing texts.",
       "other_details": "Travels with Ganizadi. Junior apprentice; shadows Ganizadi during research, learning analysis and pattern recognition.",
-      "location": "Small Greenhouse"
+      "group": "Researchers"
     },
     {
       "name": "Sir Greg*",
@@ -358,7 +358,7 @@
       "physical_description": "Sleek metallic body, small glowing nodes, tool compartments along limbs; optical sensors blink softly.",
       "personality": "Methodical and precise; logs experimental data carefully and assists Runeweaver with calculations.",
       "other_details": "Travels with Runeweaver. Apprentice and assistant; helps with schematics, diagrams, and small technical tests.",
-      "location": "Small Greenhouse"
+      "group": "Researchers"
     },
     {
       "name": "Thalra Brewmantle",
@@ -375,7 +375,7 @@
       "physical_description": "Small, copper hair sticking out of a messy cap; always carrying tiny tools and vials.",
       "personality": "Eager, excitable, curious; constantly experimenting under Britt's guidance.",
       "other_details": "Travels with Britt Underfoot. Apprentice and assistant; helps Britt prepare tools, maps, and traps.",
-      "location": "Teleporter Room"
+      "group": "Base Camp"
     },
     {
       "name": "Torren Alderforge",
@@ -393,6 +393,16 @@
       "physical_description": "Tall and slender, with silver-white hair cascading over a deep blue robe adorned with arcane sigils. Carries a glowing magical staff, and three shimmering Aeon stones orbit his head, faintly illuminating his face.",
       "personality": "Brilliant, focused, and precise; loves experimentation and mastering destructive magic, though somewhat absent-minded socially. Analytical and strategic in combat, often serving as the party's magical powerhouse.",
       "location": "Current Location Unknown"
+    }
+  ],
+  "character_groups": [
+    {
+      "name": "Researchers",
+      "location": "Small Greenhouse"
+    },
+    {
+      "name": "Base Camp",
+      "location": "Teleporter Room"
     }
   ],
   "connectionStatus": [

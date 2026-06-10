@@ -39,14 +39,17 @@ Default direction: 'bidirectional'.
 
 DEFAULT_ROOM_COLOR = "#3175cf"
 DEFAULT_CHARACTER_COLOR = "#9c27b0"
+DEFAULT_CHARACTER_GROUP_COLOR = "#00a896"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
-REQUIRED_CHARACTER_FIELDS = ("name", "ancestry", "location")
+REQUIRED_CHARACTER_FIELDS = ("name", "ancestry")
 OPTIONAL_CHARACTER_FIELDS = (
     "class",
     "physical_description",
     "personality",
-    "other_details"
+    "other_details",
+    "color"
 )
+REQUIRED_CHARACTER_GROUP_FIELDS = ("name", "location")
 
 
 def create_room_graph(json_file_path: str, output_html: str = "room_graph.html") -> None:
@@ -60,17 +63,19 @@ def create_room_graph(json_file_path: str, output_html: str = "room_graph.html")
     data = _load_json(json_file_path)
     rooms = data.get("rooms", [])
     characters = data.get("characters", [])
+    character_groups = data.get("character_groups", [])
     connections = data.get("connections", [])
     status_config = {s["name"]: s for s in data.get("connectionStatus", [])}
 
-    _validate_rooms_and_characters(rooms, characters)
+    _validate_graph_nodes(rooms, characters, character_groups)
 
     net = _create_network_instance()
 
     _add_nodes(net, rooms)
+    _add_character_groups(net, character_groups, characters)
     _add_characters(net, characters)
     _add_edges(net, connections, status_config)
-    _add_character_location_edges(net, characters)
+    _add_placement_edges(net, characters, character_groups)
 
     _configure_physics_and_style(net)
 
@@ -133,8 +138,12 @@ def _add_single_node(net: Network, room: dict) -> None:
     )
 
 
-def _validate_rooms_and_characters(rooms: List[dict], characters: List[dict]) -> None:
-    """Validate room and character names, required fields, and character locations."""
+def _validate_graph_nodes(
+        rooms: List[dict],
+        characters: List[dict],
+        character_groups: List[dict]
+) -> None:
+    """Validate rooms, characters, groups, and their placement relationships."""
     room_names = set()
 
     for room in rooms:
@@ -146,6 +155,33 @@ def _validate_rooms_and_characters(rooms: List[dict], characters: List[dict]) ->
         room_names.add(name)
 
     node_names = set(room_names)
+    character_group_names = set()
+    for character_group in character_groups:
+        for field in REQUIRED_CHARACTER_GROUP_FIELDS:
+            value = character_group.get(field)
+            if not isinstance(value, str) or not value.strip():
+                group_name = character_group.get("name", "<unnamed>")
+                raise ValueError(
+                    f"Missing or empty required field '{field}' for character group '{group_name}'"
+                )
+
+        color = character_group.get("color")
+        if color is not None and not isinstance(color, str):
+            raise ValueError(
+                f"Optional field 'color' must be a string for character group "
+                f"'{character_group['name']}'"
+            )
+
+        name = character_group["name"]
+        if name in node_names:
+            raise ValueError(f"Duplicate node name '{name}'")
+        node_names.add(name)
+        character_group_names.add(name)
+
+        location = character_group["location"]
+        if location not in room_names:
+            raise ValueError(f"Unknown location '{location}' for character group '{name}'")
+
     for character in characters:
         for field in REQUIRED_CHARACTER_FIELDS:
             value = character.get(field)
@@ -168,9 +204,64 @@ def _validate_rooms_and_characters(rooms: List[dict], characters: List[dict]) ->
             raise ValueError(f"Duplicate node name '{name}'")
         node_names.add(name)
 
-        location = character["location"]
-        if location not in room_names:
+        location = character.get("location")
+        group = character.get("group")
+        has_location = isinstance(location, str) and bool(location.strip())
+        has_group = isinstance(group, str) and bool(group.strip())
+        if has_location == has_group:
+            raise ValueError(
+                f"Character '{name}' must have exactly one non-empty 'location' or 'group'"
+            )
+        if location is not None and not isinstance(location, str):
+            raise ValueError(f"Character 'location' must be a string for character '{name}'")
+        if group is not None and not isinstance(group, str):
+            raise ValueError(f"Character 'group' must be a string for character '{name}'")
+        if has_location and location not in room_names:
             raise ValueError(f"Unknown location '{location}' for character '{name}'")
+        if has_group and group not in character_group_names:
+            raise ValueError(f"Unknown group '{group}' for character '{name}'")
+
+
+def _add_character_groups(
+        net: Network,
+        character_groups: List[dict],
+        characters: List[dict]
+) -> None:
+    """Add all character-group nodes to the network."""
+    members_by_group = {group["name"]: [] for group in character_groups}
+    for character in characters:
+        if group := character.get("group"):
+            members_by_group[group].append(character["name"])
+
+    for character_group in character_groups:
+        _add_single_character_group(
+            net,
+            character_group,
+            members_by_group[character_group["name"]]
+        )
+
+
+def _add_single_character_group(net: Network, character_group: dict, members: List[str]) -> None:
+    """Add a character-group node with its location and members in the tooltip."""
+    name = character_group["name"]
+    location = character_group["location"]
+    color = character_group.get("color", DEFAULT_CHARACTER_GROUP_COLOR)
+    member_list = "<br>".join(members) if members else "None"
+    tooltip_html = (
+        f"<b>{name}</b>"
+        f"<br><br><b>Location:</b> {location}"
+        f"<br><br><b>Members:</b><br>{member_list}"
+    )
+
+    net.add_node(
+        name,
+        label=name,
+        title=tooltip_html,
+        color=color,
+        shape="circle",
+        font={"size": 16}
+    )
+
 
 def _add_characters(net: Network, characters: List[dict]) -> None:
     """Add all character nodes to the network."""
@@ -182,7 +273,6 @@ def _add_single_character(net: Network, character: dict) -> None:
     """Add a character node with a formatted HTML tooltip."""
     name = character["name"]
     ancestry = character["ancestry"]
-    location = character["location"]
     color = character.get("color", DEFAULT_CHARACTER_COLOR)
 
     tooltip_html = (
@@ -191,7 +281,10 @@ def _add_single_character(net: Network, character: dict) -> None:
     )
     if character_class := character.get("class", ""):
         tooltip_html += f"<br><b>Class:</b> {character_class}"
-    tooltip_html += f"<br><b>Location:</b> {location}"
+    if location := character.get("location"):
+        tooltip_html += f"<br><b>Location:</b> {location}"
+    else:
+        tooltip_html += f"<br><b>Group:</b> {character['group']}"
 
     detail_fields = (
         ("physical_description", "Physical Description"),
@@ -283,20 +376,33 @@ def _add_single_edge(net: Network, connection: dict, status_config: Dict[str, di
     )
 
 
-def _add_character_location_edges(net: Network, characters: List[dict]) -> None:
-    """Connect every character to their current room."""
+def _add_placement_edges(
+        net: Network,
+        characters: List[dict],
+        character_groups: List[dict]
+) -> None:
+    """Connect characters to their placement target and groups to their rooms."""
     for character in characters:
-        net.add_edge(
-            character["name"],
-            character["location"],
-            color=DEFAULT_CONNECTION_COLOR,
-            dashes=True,
-            width=2.5,
-            arrows={
-                "to": {"enabled": False},
-                "from": {"enabled": False}
-            }
-        )
+        target = character.get("location") or character["group"]
+        _add_placement_edge(net, character["name"], target)
+
+    for character_group in character_groups:
+        _add_placement_edge(net, character_group["name"], character_group["location"])
+
+
+def _add_placement_edge(net: Network, source: str, target: str) -> None:
+    """Add a dashed, neutral, arrowless placement edge."""
+    net.add_edge(
+        source,
+        target,
+        color=DEFAULT_CONNECTION_COLOR,
+        dashes=True,
+        width=2.5,
+        arrows={
+            "to": {"enabled": False},
+            "from": {"enabled": False}
+        }
+    )
 
 
 def _configure_physics_and_style(net: Network) -> None:
@@ -304,7 +410,7 @@ def _configure_physics_and_style(net: Network) -> None:
 
     options_dict = {
         "layout": {
-            "randomSeed": 42
+            "randomSeed": 51
         },
         "interaction": {
             "zoomView": True,

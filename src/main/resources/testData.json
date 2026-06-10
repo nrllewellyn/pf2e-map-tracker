@@ -18,8 +18,13 @@
   ],
 
   "characters": [
-    { "name": "Valeros", "ancestry": "Human", "physical_description": "A seasoned adventurer.", "location": "Entrance" },
+    { "name": "Valeros", "ancestry": "Human", "physical_description": "A seasoned adventurer.", "group": "Pathfinders" },
     { "name": "Merisiel", "ancestry": "Elf", "class": "Rogue", "personality": "Curious and observant.", "other_details": "Keeps an eye on the <b>locked doors</b>.", "location": "Upstairs Hall", "color": "#ffcc00" }
+  ],
+
+  "character_groups": [
+    { "name": "Pathfinders", "location": "Entrance" },
+    { "name": "Empty Group", "location": "Kitchen", "color": "#00cccc" }
   ],
 
   "connections": [
