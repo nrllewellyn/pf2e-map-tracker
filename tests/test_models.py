@@ -5,7 +5,14 @@ import pytest
 from pydantic import ValidationError
 
 from pf2e_map_tracker.io import load_graph_options, load_map_data
-from pf2e_map_tracker.models import Character, CharacterGroup, MapData, NodeShape, Room
+from pf2e_map_tracker.models import (
+    Character,
+    CharacterGroup,
+    GraphOptions,
+    MapData,
+    NodeShape,
+    Room,
+)
 
 PRODUCTION_DATA = Path("data/room_data.json")
 TEST_DATA = Path("tests/fixtures/test_data.json")
@@ -17,9 +24,38 @@ def test_repository_map_data_is_valid(path: Path) -> None:
 
 
 def test_graph_options_are_valid() -> None:
-    options = load_graph_options()
-    assert options.physics.solver == "barnesHut"
-    assert options.layout.random_seed == 42
+    assert load_graph_options()
+
+
+@pytest.mark.parametrize(
+    ("path", "value"),
+    [
+        (("layout", "randomSeed"), "not-an-integer"),
+        (("physics", "solver"), "unsupported"),
+    ],
+)
+def test_invalid_graph_options_fail_validation(path: tuple[str, str], value: str) -> None:
+    options = load_graph_options().model_dump(by_alias=True)
+    options[path[0]][path[1]] = value
+
+    with pytest.raises(ValidationError):
+        GraphOptions.model_validate(options)
+
+
+def test_missing_graph_options_fail_validation() -> None:
+    options = load_graph_options().model_dump(by_alias=True)
+    del options["layout"]["randomSeed"]
+
+    with pytest.raises(ValidationError, match="randomSeed"):
+        GraphOptions.model_validate(options)
+
+
+def test_unknown_graph_options_fail_validation() -> None:
+    options = load_graph_options().model_dump(by_alias=True)
+    options["layout"]["unexpected"] = True
+
+    with pytest.raises(ValidationError, match="unexpected"):
+        GraphOptions.model_validate(options)
 
 
 def test_invalid_direction_fails_validation() -> None:

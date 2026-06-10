@@ -5,6 +5,7 @@ from pf2e_map_tracker.graph import (
     ANCHOR_NODE_MASS,
     ANCHOR_SPRING_LENGTH,
     UNKNOWN_ROOM_COLOR,
+    UNKNOWN_ROOM_NAME,
     build_network,
     generate_graph,
 )
@@ -80,13 +81,13 @@ def test_unknown_connection_endpoints_create_separate_virtual_rooms() -> None:
     unknown_edges = network.edges
 
     assert len(unknown_nodes) == 4
-    assert all(node["label"] == "Unknown room" for node in unknown_nodes)
+    assert all(node["label"] == UNKNOWN_ROOM_NAME for node in unknown_nodes)
     assert all(node["color"] == UNKNOWN_ROOM_COLOR for node in unknown_nodes)
     assert unknown_edges[0]["to"] == "__unknown-0-target"
     assert unknown_edges[1]["from"] == "__unknown-1-source"
     assert unknown_edges[2]["from"] == "__unknown-2-source"
     assert unknown_edges[2]["to"] == "__unknown-2-target"
-    assert all("Unknown room" in edge["title"] for edge in unknown_edges)
+    assert all(UNKNOWN_ROOM_NAME in edge["title"] for edge in unknown_edges)
 
 
 def test_anchor_edges_override_spring_length() -> None:
