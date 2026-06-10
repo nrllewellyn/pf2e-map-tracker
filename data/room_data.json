@@ -90,26 +90,6 @@
       "name": "The Webbed Dungeon"
     },
     {
-      "id": "unknown-room-1",
-      "name": "???? (1)"
-    },
-    {
-      "id": "unknown-room-2",
-      "name": "???? (2)"
-    },
-    {
-      "id": "unknown-room-3",
-      "name": "???? (3)"
-    },
-    {
-      "id": "unknown-room-4",
-      "name": "???? (4)"
-    },
-    {
-      "id": "unknown-room-5",
-      "name": "???? (5)"
-    },
-    {
       "id": "orthos",
       "name": "🌍 Orthos 🌍",
       "anchor": true
@@ -193,7 +173,7 @@
     },
     {
       "from": "small-hallway-above-orrery",
-      "to": "unknown-room-1",
+      "to": "unknown",
       "status": "locked",
       "name": "Heavy metal door",
       "notes": "Heavy metal door, sealed due to security lockdown"
@@ -235,7 +215,7 @@
     },
     {
       "from": "quartermaster-s-bazaar",
-      "to": "unknown-room-2",
+      "to": "unknown",
       "status": "locked",
       "name": "Secret door with pentagonal keyhole"
     },
@@ -247,19 +227,19 @@
     },
     {
       "from": "the-crystal-mug",
-      "to": "unknown-room-3",
+      "to": "unknown",
       "status": "blocked",
       "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
-      "to": "unknown-room-4",
+      "to": "unknown",
       "status": "blocked",
       "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
-      "to": "unknown-room-5",
+      "to": "unknown",
       "status": "blocked",
       "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     }

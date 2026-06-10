@@ -7,7 +7,7 @@ from pyvis.network import Network
 
 from pf2e_map_tracker.html_enhancements import inject_enhancements
 from pf2e_map_tracker.io import load_graph_options, load_map_data
-from pf2e_map_tracker.models import ConnectionDirection, MapData
+from pf2e_map_tracker.models import UNKNOWN_ROOM_ID, ConnectionDirection, MapData
 from pf2e_map_tracker.tooltips import (
     character_group_tooltips,
     character_tooltip,
@@ -16,11 +16,13 @@ from pf2e_map_tracker.tooltips import (
 )
 
 DEFAULT_ROOM_COLOR = "#3175cf"
+UNKNOWN_ROOM_COLOR = "#4c498c"
 DEFAULT_CHARACTER_COLOR = "#9c27b0"
 DEFAULT_CHARACTER_GROUP_COLOR = "#00a896"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
 ANCHOR_SPRING_LENGTH = 400
 ANCHOR_NODE_MASS = 4
+UNKNOWN_ROOM_NAME = "Unknown Room"
 
 ARROW_CONFIG = {
     ConnectionDirection.FORWARD_ONLY: {
@@ -109,6 +111,22 @@ def _add_rooms(network: Network, data: MapData) -> None:
         )
 
 
+def _add_unknown_room(network: Network, node_id: str) -> None:
+    tooltip = f"<b>{UNKNOWN_ROOM_NAME}</b>"
+    network.add_node(
+        node_id,
+        label=UNKNOWN_ROOM_NAME,
+        title=tooltip,
+        color=UNKNOWN_ROOM_COLOR,
+        shape="box",
+        font={"size": 16},
+        node_type="room",
+        tooltip_hidden=tooltip,
+        tooltip_groups_only=tooltip,
+        tooltip_show_all=tooltip,
+    )
+
+
 def _add_character_groups(network: Network, data: MapData) -> None:
     rooms_by_id = {room.id: room for room in data.rooms}
     members_by_group = {group.id: [] for group in data.character_groups}
@@ -157,24 +175,36 @@ def _add_characters(network: Network, data: MapData) -> None:
 
 
 def _add_connections(network: Network, data: MapData) -> None:
-    rooms = {room.id: room for room in data.rooms}
+    room_names = {room.id: room.name for room in data.rooms}
+    room_names[UNKNOWN_ROOM_ID] = UNKNOWN_ROOM_NAME
     statuses = {status.id: status for status in data.connection_statuses}
-    for connection in data.connections:
+    for index, connection in enumerate(data.connections):
         status = statuses[connection.status]
+        source = _connection_endpoint(network, connection.source, index, "source")
+        target = _connection_endpoint(network, connection.target, index, "target")
         network.add_edge(
-            connection.source,
-            connection.target,
+            source,
+            target,
             title=connection_tooltip(
                 connection,
                 status,
-                rooms[connection.source].name,
-                rooms[connection.target].name,
+                room_names[connection.source],
+                room_names[connection.target],
             ),
             color=status.display_color or DEFAULT_CONNECTION_COLOR,
             dashes=status.line_style == "dashed",
             width=2.5,
             arrows=ARROW_CONFIG[connection.direction],
         )
+
+
+def _connection_endpoint(network: Network, room_id: str, index: int, side: str) -> str:
+    if room_id != UNKNOWN_ROOM_ID:
+        return room_id
+
+    node_id = f"__unknown-{index}-{side}"
+    _add_unknown_room(network, node_id)
+    return node_id
 
 
 def _add_placement_edges(network: Network, data: MapData) -> None:

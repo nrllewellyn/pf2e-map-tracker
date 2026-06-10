@@ -3,10 +3,18 @@
 from enum import StrEnum
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    field_validator,
+    model_validator,
+)
 
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 MapId = Annotated[str, StringConstraints(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")]
+UNKNOWN_ROOM_ID = "unknown"
 
 
 class StrictModel(BaseModel):
@@ -40,6 +48,13 @@ class Room(StrictModel):
     color: str | None = None
     shape: NodeShape = NodeShape.BOX
     notes: str = ""
+
+    @field_validator("id")
+    @classmethod
+    def reject_reserved_id(cls, value: str) -> str:
+        if value == UNKNOWN_ROOM_ID:
+            raise ValueError(f"'{UNKNOWN_ROOM_ID}' is reserved for unknown connection endpoints")
+        return value
 
 
 class CharacterGroup(StrictModel):
@@ -125,9 +140,9 @@ class MapData(StrictModel):
 
         for index, connection in enumerate(self.connections):
             label = connection.name or f"connection #{index + 1}"
-            if connection.source not in room_ids:
+            if connection.source not in room_ids and connection.source != UNKNOWN_ROOM_ID:
                 errors.append(f"unknown source room '{connection.source}' for {label}")
-            if connection.target not in room_ids:
+            if connection.target not in room_ids and connection.target != UNKNOWN_ROOM_ID:
                 errors.append(f"unknown target room '{connection.target}' for {label}")
             if connection.status not in status_ids:
                 errors.append(f"unknown status '{connection.status}' for {label}")

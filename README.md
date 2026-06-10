@@ -89,6 +89,7 @@ not have IDs; ID-backed object names do not need to be unique.
 | `notes`  | No       | Trusted HTML shown in the room tooltip.                                                                                                                   |
 
 Two anchors are connected as a pair. Three or more anchors form a ring.
+The room ID `unknown` is reserved and must not appear in `rooms`.
 
 ### Characters
 
@@ -125,6 +126,9 @@ Two anchors are connected as a pair. Three or more anchors form a ring.
 | `direction` | No       | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
 | `name`      | No       | Connection label shown in the tooltip.                                            |
 | `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
+
+Connections may use the reserved room ID `unknown` in `from` or `to`. Each reference creates a
+separate virtual node named **Unknown room** on the graph.
 
 ### Connection Statuses
 

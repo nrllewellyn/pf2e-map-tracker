@@ -1,6 +1,6 @@
 {
   "layout": {
-    "randomSeed": 42
+    "randomSeed": 44
   },
   "interaction": {
     "zoomView": true,
@@ -14,7 +14,7 @@
   "physics": {
     "enabled": true,
     "barnesHut": {
-      "gravitationalConstant": -8000,
+      "gravitationalConstant": -9000,
       "centralGravity": 0.15,
       "springLength": 120,
       "springConstant": 0.08,

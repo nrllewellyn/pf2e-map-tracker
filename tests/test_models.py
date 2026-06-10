@@ -118,6 +118,16 @@ def test_ids_are_required() -> None:
         MapData.model_validate(data)
 
 
+def test_unknown_is_reserved_for_connection_endpoints() -> None:
+    data = _minimal_data()
+    data["connections"][0]["to"] = "unknown"
+    assert MapData.model_validate(data)
+
+    data["rooms"][0]["id"] = "unknown"
+    with pytest.raises(ValidationError, match="reserved for unknown connection endpoints"):
+        MapData.model_validate(data)
+
+
 def test_room_and_group_ids_are_globally_unique_but_names_may_repeat() -> None:
     data = _minimal_data()
     data["rooms"][1]["name"] = data["rooms"][0]["name"]
