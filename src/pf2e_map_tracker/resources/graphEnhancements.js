@@ -79,17 +79,25 @@ function setupCharacterVisibility() {
         return;
     }
     const controlRow = document.createElement('div');
-    controlRow.className = 'row no-gutters';
+    controlRow.className = 'd-flex align-items-end justify-content-between';
     controlRow.innerHTML = `
-    <div class="col-12 pb-2" style="max-width: 320px;">
+    <div class="pb-2 text-left" style="width: 320px;">
       <label for="character-visibility" class="form-label mb-1">Character Visibility</label>
       <select id="character-visibility" class="form-select" aria-label="Character Visibility">
         <option value="hidden">Hidden</option>
         <option value="groups_only" selected>Groups Only</option>
         <option value="show_all">Show All</option>
       </select>
+    </div>
+    <div class="pb-2 text-right" style="margin-left: auto;">
+      <div id="program-version"></div>
+      <div id="build-date"></div>
     </div>`;
     selectMenu.prepend(controlRow);
+    document.getElementById('program-version').textContent =
+        'Version ' + PF2E_MAP_TRACKER_BUILD.version;
+    document.getElementById('build-date').textContent =
+        'Built ' + PF2E_MAP_TRACKER_BUILD.builtAt;
     const visibilitySelect = document.getElementById('character-visibility');
     visibilitySelect.addEventListener('change', function (event) {
         setCharacterVisibility(event.target.value);

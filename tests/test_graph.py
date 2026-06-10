@@ -1,4 +1,6 @@
 import json
+import re
+import tomllib
 from pathlib import Path
 
 from pf2e_map_tracker.graph import (
@@ -119,6 +121,22 @@ def test_generate_graph_injects_enhancements_once(tmp_path: Path) -> None:
     assert "setupCharacterVisibility" in content
     assert "setupNodeSelectorLabels" in content
     assert "Valeros" in content
+
+
+def test_generate_graph_includes_version_and_build_time(tmp_path: Path) -> None:
+    output = generate_graph(TEST_DATA, tmp_path / "map.html")
+
+    content = output.read_text(encoding="utf-8")
+    with (Path(__file__).resolve().parents[1] / "pyproject.toml").open("rb") as pyproject:
+        expected_version = tomllib.load(pyproject)["project"]["version"]
+
+    assert f'"version": "{expected_version}"' in content
+    assert re.search(
+        r'"builtAt": "\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} GMT[+-]\d{2}:\d{2}"',
+        content,
+    )
+    assert "program-version" in content
+    assert "build-date" in content
 
 
 def test_trusted_html_is_preserved_in_tooltips() -> None:

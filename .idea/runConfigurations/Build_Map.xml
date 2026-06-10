@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Build Map" type="PythonConfigurationType" factoryName="Python">
-    <module name="PF2e Map Tracker" />
+    <module name="pf2e-map-tracker" />
     <option name="ENV_FILES" value="" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />

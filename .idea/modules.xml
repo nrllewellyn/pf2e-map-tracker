@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PF2e Map Tracker.iml" filepath="$PROJECT_DIR$/.idea/PF2e Map Tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pf2e-map-tracker.iml" filepath="$PROJECT_DIR$/.idea/pf2e-map-tracker.iml" />
     </modules>
   </component>
 </project>
