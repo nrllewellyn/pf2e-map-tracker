@@ -502,7 +502,7 @@ function setupCharacterVisibility() {
   const controlRow = document.createElement('div');
   controlRow.className = 'row no-gutters';
   controlRow.innerHTML = `
-    <div class="col-12 pb-2">
+    <div class="col-12 pb-2" style="max-width: 320px;">
       <label for="character-visibility" class="form-label mb-1">Character Visibility</label>
       <select id="character-visibility" class="form-select" aria-label="Character Visibility">
         <option value="hidden">Hidden</option>
@@ -510,7 +510,7 @@ function setupCharacterVisibility() {
         <option value="show_all">Show All</option>
       </select>
     </div>`;
-  selectMenu.appendChild(controlRow);
+  selectMenu.prepend(controlRow);
 
   const visibilitySelect = document.getElementById('character-visibility');
   visibilitySelect.addEventListener('change', function(event) {
