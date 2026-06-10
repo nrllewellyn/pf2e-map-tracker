@@ -19,6 +19,8 @@ DEFAULT_ROOM_COLOR = "#3175cf"
 DEFAULT_CHARACTER_COLOR = "#9c27b0"
 DEFAULT_CHARACTER_GROUP_COLOR = "#00a896"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
+ANCHOR_SPRING_LENGTH = 400
+ANCHOR_NODE_MASS = 4
 
 ARROW_CONFIG = {
     ConnectionDirection.FORWARD_ONLY: {
@@ -101,6 +103,7 @@ def _add_rooms(network: Network, data: MapData) -> None:
             shape=room.shape,
             font={"size": 16},
             node_type="room",
+            **({"mass": ANCHOR_NODE_MASS} if room.anchor else {}),
             tooltip_hidden=hidden,
             tooltip_groups_only=groups_only,
             tooltip_show_all=base,
@@ -187,5 +190,6 @@ def _add_anchor_edges(network: Network, data: MapData) -> None:
             anchor_names[(index + 1) % len(anchor_names)],
             hidden=True,
             physics=True,
+            length=ANCHOR_SPRING_LENGTH,
             arrows=NO_ARROWS,
         )

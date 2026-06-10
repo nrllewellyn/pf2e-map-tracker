@@ -19,7 +19,7 @@ def test_repository_map_data_is_valid(path: Path) -> None:
 def test_graph_options_are_valid() -> None:
     options = load_graph_options()
     assert options.physics.solver == "barnesHut"
-    assert options.layout.random_seed == 42
+    assert options.layout.random_seed == 41
 
 
 def test_invalid_direction_fails_validation() -> None:

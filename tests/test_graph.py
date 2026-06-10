@@ -1,7 +1,12 @@
 import json
 from pathlib import Path
 
-from pf2e_map_tracker.graph import build_network, generate_graph
+from pf2e_map_tracker.graph import (
+    ANCHOR_NODE_MASS,
+    ANCHOR_SPRING_LENGTH,
+    build_network,
+    generate_graph,
+)
 from pf2e_map_tracker.html_enhancements import INJECTION_MARKER, inject_enhancements
 from pf2e_map_tracker.io import load_map_data
 from pf2e_map_tracker.models import Character, MapData, Room
@@ -20,6 +25,26 @@ def test_build_network_contains_all_nodes_and_edges() -> None:
     assert len(network.edges) == (
         len(data.connections) + expected_placement_edges + expected_anchor_edges
     )
+
+
+def test_anchor_edges_override_spring_length() -> None:
+    network = build_network(load_map_data(TEST_DATA))
+    anchor_edges = [edge for edge in network.edges if edge.get("hidden")]
+
+    assert anchor_edges
+    assert all(edge["length"] == ANCHOR_SPRING_LENGTH for edge in anchor_edges)
+
+
+def test_anchor_nodes_have_stronger_repulsion() -> None:
+    data = load_map_data(TEST_DATA)
+    network = build_network(data)
+    nodes = {node["id"]: node for node in network.nodes}
+    anchor_names = {room.name for room in data.rooms if room.anchor}
+    non_anchor_names = {room.name for room in data.rooms if not room.anchor}
+
+    assert anchor_names
+    assert all(nodes[name]["mass"] == ANCHOR_NODE_MASS for name in anchor_names)
+    assert all("mass" not in nodes[name] for name in non_anchor_names)
 
 
 def test_generate_graph_injects_enhancements_once(tmp_path: Path) -> None:

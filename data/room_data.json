@@ -406,6 +406,11 @@
     {
       "name": "Base Camp",
       "location": "Teleporter Room"
+    },
+    {
+      "name": "The Party",
+      "location": "Teleporter Room",
+      "color": "#d62000"
     }
   ],
   "connectionStatus": [
