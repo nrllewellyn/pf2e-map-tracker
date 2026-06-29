@@ -15,7 +15,7 @@ from pf2e_map_tracker.models import (
 )
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
-PRODUCTION_DATA = REPOSITORY_ROOT / "data/room_data.json"
+PRODUCTION_DATA = REPOSITORY_ROOT / "data/map_data.json"
 TEST_DATA = REPOSITORY_ROOT / "tests/fixtures/test_data.json"
 
 

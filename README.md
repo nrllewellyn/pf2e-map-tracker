@@ -48,7 +48,7 @@ the generated `dist` artifact directly.
 
 ## Project Layout
 
-- `data/room_data.json`: editable campaign map data.
+- `data/map_data.json`: editable campaign map data.
 - `dist/index.html`: generated map output; ignored by Git.
 - `tests/fixtures/test_data.json`: smaller example map used by automated tests.
 - `src/pf2e_map_tracker/models.py`: typed data models and validation.

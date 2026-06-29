@@ -11,7 +11,7 @@ from pf2e_map_tracker.graph import generate_graph
 from pf2e_map_tracker.io import load_graph_options, load_map_data
 from pf2e_map_tracker.models import GraphOptions, MapData
 
-DEFAULT_INPUT = Path("data/room_data.json")
+DEFAULT_INPUT = Path("data/map_data.json")
 DEFAULT_OUTPUT = Path("dist/index.html")
 
 
