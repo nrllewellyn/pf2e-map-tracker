@@ -305,6 +305,12 @@
       "group": "base-camp"
     },
     {
+      "name": "Krigah, Son of Oman",
+      "ancestry": "Minotaur",
+      "class": "Sorcerer",
+      "group": "the-party"
+    },
+    {
       "name": "Lunexa Duskweaver",
       "ancestry": "Fetchling",
       "class": "Oracle",
@@ -320,7 +326,19 @@
       "physical_description": "Slender, dark hair tied back, robes slightly too long; carries notebooks, quills, and a small crystal orb.",
       "personality": "Inquisitive, attentive, patient; fascinated by Veylorin's spells and constantly takes notes.",
       "other_details": "Travels with Veylorin Starweaver. Apprentice; learns arcane theory and assists with spell research.",
-      "group": "researchers"
+      "group": "the-party"
+    },
+    {
+      "name": "Mallow Mistnook",
+      "ancestry": "Gnome",
+      "class": "Kineticist",
+      "group": "the-party"
+    },
+    {
+      "name": "Merora",
+      "ancestry": "Dwarf",
+      "class": "Cleric",
+      "group": "the-party"
     },
     {
       "name": "Mira Brightleaf",
@@ -366,6 +384,12 @@
       "personality": "Methodical and precise; logs experimental data carefully and assists Runeweaver with calculations.",
       "other_details": "Travels with Runeweaver. Apprentice and assistant; helps with schematics, diagrams, and small technical tests.",
       "group": "researchers"
+    },
+    {
+      "name": "Thaddeus",
+      "ancestry": "Orc",
+      "class": "Fighter",
+      "group": "the-party"
     },
     {
       "name": "Thalra Brewmantle",
@@ -416,7 +440,7 @@
     {
       "id": "the-party",
       "name": "The Party",
-      "location": "teleporter-room",
+      "location": "the-webbed-dungeon",
       "color": "#d62000"
     }
   ],
