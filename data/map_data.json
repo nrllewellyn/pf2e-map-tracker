@@ -1,7 +1,7 @@
 {
   "rooms": [
     {
-      "id": "teleporter-room",
+      "id": "teleporter-room-arrival",
       "name": "🛏️ Teleporter Room 🛏️",
       "anchor": true,
       "color": "#4CAF50",
@@ -26,6 +26,7 @@
     {
       "id": "small-greenhouse",
       "name": "🛏️ Small Greenhouse 🛏️",
+      "color": "#4CAF50",
       "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
     },
     {
@@ -87,7 +88,13 @@
     },
     {
       "id": "the-webbed-dungeon",
-      "name": "The Webbed Dungeon"
+      "name": "The Webbed Dungeon",
+      "notes": "A crypt containing statues of unknown gods and a tomb protected by celestials."
+    },
+    {
+      "id": "teleporter-room-crystal-mug",
+      "name": "Teleporter Room",
+      "notes": "A crypt containing statues of unknown gods and a tomb protected by celestials."
     },
     {
       "id": "orthos",
@@ -102,7 +109,7 @@
   ],
   "connections": [
     {
-      "from": "teleporter-room",
+      "from": "teleporter-room-arrival",
       "to": "main-corridor",
       "status": "open",
       "name": "Airtight Door"
@@ -227,9 +234,9 @@
     },
     {
       "from": "the-crystal-mug",
-      "to": "unknown",
-      "status": "blocked",
-      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+      "to": "teleporter-room-crystal-mug",
+      "status": "open",
+      "notes": "See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
@@ -259,7 +266,7 @@
       "ancestry": "Ratfolk",
       "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
       "class": "Inventor",
-      "location": "teleporter-room"
+      "location": "teleporter-room-arrival"
     },
     {
       "name": "Aurethion",
@@ -435,12 +442,12 @@
     {
       "id": "base-camp",
       "name": "Base Camp",
-      "location": "teleporter-room"
+      "location": "teleporter-room-arrival"
     },
     {
       "id": "the-party",
       "name": "The Party",
-      "location": "the-webbed-dungeon",
+      "location": "teleporter-room-arrival",
       "color": "#d62000"
     }
   ],
