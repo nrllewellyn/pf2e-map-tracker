@@ -72,7 +72,7 @@
       "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."
     },
     {
-      "id": "quartermaster-s-bazaar",
+      "id": "quartermasters-bazaar",
       "name": "Quartermaster's Bazaar",
       "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."
     },
@@ -80,6 +80,11 @@
       "id": "the-crystal-mug",
       "name": "The Crystal Mug",
       "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern."
+    },
+    {
+      "id": "lighthouse",
+      "name": "Lighthouse",
+      "color": "#fca503"
     },
     {
       "id": "under-construction",
@@ -211,20 +216,19 @@
     },
     {
       "from": "porcelain-passageways",
-      "to": "quartermaster-s-bazaar",
+      "to": "quartermasters-bazaar",
       "status": "open"
     },
     {
-      "from": "quartermaster-s-bazaar",
+      "from": "quartermasters-bazaar",
+      "to": "lighthouse",
+      "status": "open"
+    },
+    {
+      "from": "quartermasters-bazaar",
       "to": "under-construction",
       "status": "locked",
       "name": "Locked until the room is initialized"
-    },
-    {
-      "from": "quartermaster-s-bazaar",
-      "to": "unknown",
-      "status": "locked",
-      "name": "Secret door with pentagonal keyhole"
     },
     {
       "from": "the-crystal-mug",
@@ -447,7 +451,7 @@
     {
       "id": "the-party",
       "name": "The Party",
-      "location": "teleporter-room-arrival",
+      "location": "small-greenhouse",
       "color": "#d62000"
     }
   ],
