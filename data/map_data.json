@@ -299,7 +299,7 @@
       "ancestry": "Ratfolk",
       "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
       "class": "Inventor",
-      "location": "teleporter-room-arrival"
+      "location": "security"
     },
     {
       "name": "Aurethion",
