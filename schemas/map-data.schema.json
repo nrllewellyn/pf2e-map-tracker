@@ -59,6 +59,17 @@
           "default": null,
           "title": "Group"
         },
+        "defaultPosition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Position"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "color": {
           "anyOf": [
             {
@@ -100,6 +111,17 @@
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "title": "Location",
           "type": "string"
+        },
+        "defaultPosition": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Position"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "color": {
           "anyOf": [
@@ -218,6 +240,25 @@
       "title": "ConnectionStatus",
       "type": "object"
     },
+    "DefaultView": {
+      "additionalProperties": false,
+      "properties": {
+        "position": {
+          "$ref": "#/$defs/Position"
+        },
+        "scale": {
+          "exclusiveMinimum": 0,
+          "title": "Scale",
+          "type": "number"
+        }
+      },
+      "required": [
+        "position",
+        "scale"
+      ],
+      "title": "DefaultView",
+      "type": "object"
+    },
     "NodeShape": {
       "enum": [
         "ellipse",
@@ -235,6 +276,25 @@
       "title": "NodeShape",
       "type": "string"
     },
+    "Position": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Position",
+      "type": "object"
+    },
     "Room": {
       "additionalProperties": false,
       "properties": {
@@ -248,10 +308,8 @@
           "title": "Name",
           "type": "string"
         },
-        "anchor": {
-          "default": false,
-          "title": "Anchor",
-          "type": "boolean"
+        "position": {
+          "$ref": "#/$defs/Position"
         },
         "color": {
           "anyOf": [
@@ -277,7 +335,8 @@
       },
       "required": [
         "id",
-        "name"
+        "name",
+        "position"
       ],
       "title": "Room",
       "type": "object"
@@ -285,6 +344,17 @@
   },
   "additionalProperties": false,
   "properties": {
+    "defaultView": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DefaultView"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "rooms": {
       "items": {
         "$ref": "#/$defs/Room"

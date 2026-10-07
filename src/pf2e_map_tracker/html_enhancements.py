@@ -7,11 +7,13 @@ from importlib.metadata import version
 from importlib.resources import files
 from pathlib import Path
 
+from pf2e_map_tracker.models import DefaultView
+
 INJECTION_MARKER = "<!-- pf2e-map-tracker-enhancements -->"
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
-def inject_enhancements(html_path: Path) -> None:
+def inject_enhancements(html_path: Path, default_view: DefaultView | None = None) -> None:
     content = html_path.read_text(encoding="utf-8")
     if INJECTION_MARKER in content:
         return
@@ -27,9 +29,11 @@ def inject_enhancements(html_path: Path) -> None:
             "builtAt": _build_timestamp(),
         }
     )
+    view_info = json.dumps(default_view.model_dump() if default_view is not None else None)
     injection = (
         f"{INJECTION_MARKER}\n<script>\n"
         f"const PF2E_MAP_TRACKER_BUILD = {build_info};\n"
+        f"const PF2E_MAP_TRACKER_DEFAULT_VIEW = {view_info};\n"
         f"{javascript}\n</script>"
     )
     body_index = content.lower().rfind("</body>")

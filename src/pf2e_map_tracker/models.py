@@ -41,10 +41,20 @@ class NodeShape(StrEnum):
     SQUARE = "square"
 
 
+class Position(StrictModel):
+    x: float = Field(strict=True, allow_inf_nan=False)
+    y: float = Field(strict=True, allow_inf_nan=False)
+
+
+class DefaultView(StrictModel):
+    position: Position
+    scale: float = Field(strict=True, gt=0, allow_inf_nan=False)
+
+
 class Room(StrictModel):
     id: MapId
     name: NonEmptyString
-    anchor: bool = False
+    position: Position
     color: str | None = None
     shape: NodeShape = NodeShape.BOX
     notes: str = ""
@@ -61,6 +71,7 @@ class CharacterGroup(StrictModel):
     id: MapId
     name: NonEmptyString
     location: MapId
+    default_position: Position | None = Field(default=None, alias="defaultPosition")
     color: str | None = None
     shape: NodeShape = NodeShape.CIRCLE
 
@@ -74,6 +85,7 @@ class Character(StrictModel):
     other_details: str = ""
     location: MapId | None = None
     group: MapId | None = None
+    default_position: Position | None = Field(default=None, alias="defaultPosition")
     color: str | None = None
     shape: NodeShape = NodeShape.ELLIPSE
 
@@ -101,6 +113,7 @@ class Connection(StrictModel):
 
 
 class MapData(StrictModel):
+    default_view: DefaultView | None = Field(default=None, alias="defaultView")
     rooms: list[Room] = Field(default_factory=list)
     characters: list[Character] = Field(default_factory=list)
     character_groups: list[CharacterGroup] = Field(default_factory=list)
@@ -170,10 +183,6 @@ class MapData(StrictModel):
         return names
 
 
-class LayoutOptions(StrictModel):
-    random_seed: int = Field(alias="randomSeed")
-
-
 class InteractionOptions(StrictModel):
     zoom_view: bool = Field(alias="zoomView")
     drag_view: bool = Field(alias="dragView")
@@ -182,30 +191,6 @@ class InteractionOptions(StrictModel):
     hide_edges_on_drag: bool = Field(alias="hideEdgesOnDrag")
     hide_nodes_on_drag: bool = Field(alias="hideNodesOnDrag")
     tooltip_delay: int = Field(alias="tooltipDelay", ge=0)
-
-
-class BarnesHutOptions(StrictModel):
-    gravitational_constant: float = Field(alias="gravitationalConstant")
-    central_gravity: float = Field(alias="centralGravity")
-    spring_length: float = Field(alias="springLength")
-    spring_constant: float = Field(alias="springConstant")
-    damping: float
-    avoid_overlap: float = Field(alias="avoidOverlap")
-
-
-class StabilizationOptions(StrictModel):
-    enabled: bool
-    iterations: int = Field(gt=0)
-    update_interval: int = Field(alias="updateInterval", gt=0)
-    only_dynamic_edges: bool = Field(alias="onlyDynamicEdges")
-
-
-class PhysicsOptions(StrictModel):
-    enabled: bool
-    barnes_hut: BarnesHutOptions = Field(alias="barnesHut")
-    min_velocity: float = Field(alias="minVelocity", ge=0)
-    solver: Literal["barnesHut"]
-    stabilization: StabilizationOptions
 
 
 class ScalingOptions(StrictModel):
@@ -229,7 +214,17 @@ class ArrowOptions(StrictModel):
 
 
 class SmoothOptions(StrictModel):
-    type: str
+    type: Literal[
+        "continuous",
+        "discrete",
+        "diagonalCross",
+        "straightCross",
+        "horizontal",
+        "vertical",
+        "curvedCW",
+        "curvedCCW",
+        "cubicBezier",
+    ]
 
 
 class EdgeOptions(StrictModel):
@@ -238,8 +233,6 @@ class EdgeOptions(StrictModel):
 
 
 class GraphOptions(StrictModel):
-    layout: LayoutOptions
     interaction: InteractionOptions
-    physics: PhysicsOptions
     nodes: NodeOptions
     edges: EdgeOptions

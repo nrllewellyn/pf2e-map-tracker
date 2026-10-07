@@ -1,7 +1,4 @@
 {
-  "layout": {
-    "randomSeed": 49
-  },
   "interaction": {
     "zoomView": true,
     "dragView": true,
@@ -10,25 +7,6 @@
     "hideEdgesOnDrag": false,
     "hideNodesOnDrag": false,
     "tooltipDelay": 999999
-  },
-  "physics": {
-    "enabled": true,
-    "barnesHut": {
-      "gravitationalConstant": -9000,
-      "centralGravity": 0.15,
-      "springLength": 120,
-      "springConstant": 0.08,
-      "damping": 0.55,
-      "avoidOverlap": 0.7
-    },
-    "minVelocity": 1.0,
-    "solver": "barnesHut",
-    "stabilization": {
-      "enabled": true,
-      "iterations": 3000,
-      "updateInterval": 25,
-      "onlyDynamicEdges": false
-    }
   },
   "nodes": {
     "shape": "box",

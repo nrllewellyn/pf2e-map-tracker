@@ -32,45 +32,6 @@
       "title": "ArrowOptions",
       "type": "object"
     },
-    "BarnesHutOptions": {
-      "additionalProperties": false,
-      "properties": {
-        "gravitationalConstant": {
-          "title": "Gravitationalconstant",
-          "type": "number"
-        },
-        "centralGravity": {
-          "title": "Centralgravity",
-          "type": "number"
-        },
-        "springLength": {
-          "title": "Springlength",
-          "type": "number"
-        },
-        "springConstant": {
-          "title": "Springconstant",
-          "type": "number"
-        },
-        "damping": {
-          "title": "Damping",
-          "type": "number"
-        },
-        "avoidOverlap": {
-          "title": "Avoidoverlap",
-          "type": "number"
-        }
-      },
-      "required": [
-        "gravitationalConstant",
-        "centralGravity",
-        "springLength",
-        "springConstant",
-        "damping",
-        "avoidOverlap"
-      ],
-      "title": "BarnesHutOptions",
-      "type": "object"
-    },
     "EdgeOptions": {
       "additionalProperties": false,
       "properties": {
@@ -133,20 +94,6 @@
       "title": "InteractionOptions",
       "type": "object"
     },
-    "LayoutOptions": {
-      "additionalProperties": false,
-      "properties": {
-        "randomSeed": {
-          "title": "Randomseed",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "randomSeed"
-      ],
-      "title": "LayoutOptions",
-      "type": "object"
-    },
     "NodeOptions": {
       "additionalProperties": false,
       "properties": {
@@ -168,40 +115,6 @@
         "scaling"
       ],
       "title": "NodeOptions",
-      "type": "object"
-    },
-    "PhysicsOptions": {
-      "additionalProperties": false,
-      "properties": {
-        "enabled": {
-          "title": "Enabled",
-          "type": "boolean"
-        },
-        "barnesHut": {
-          "$ref": "#/$defs/BarnesHutOptions"
-        },
-        "minVelocity": {
-          "minimum": 0,
-          "title": "Minvelocity",
-          "type": "number"
-        },
-        "solver": {
-          "const": "barnesHut",
-          "title": "Solver",
-          "type": "string"
-        },
-        "stabilization": {
-          "$ref": "#/$defs/StabilizationOptions"
-        }
-      },
-      "required": [
-        "enabled",
-        "barnesHut",
-        "minVelocity",
-        "solver",
-        "stabilization"
-      ],
-      "title": "PhysicsOptions",
       "type": "object"
     },
     "ScalingOptions": {
@@ -227,6 +140,17 @@
       "additionalProperties": false,
       "properties": {
         "type": {
+          "enum": [
+            "continuous",
+            "discrete",
+            "diagonalCross",
+            "straightCross",
+            "horizontal",
+            "vertical",
+            "curvedCW",
+            "curvedCCW",
+            "cubicBezier"
+          ],
           "title": "Type",
           "type": "string"
         }
@@ -236,49 +160,12 @@
       ],
       "title": "SmoothOptions",
       "type": "object"
-    },
-    "StabilizationOptions": {
-      "additionalProperties": false,
-      "properties": {
-        "enabled": {
-          "title": "Enabled",
-          "type": "boolean"
-        },
-        "iterations": {
-          "exclusiveMinimum": 0,
-          "title": "Iterations",
-          "type": "integer"
-        },
-        "updateInterval": {
-          "exclusiveMinimum": 0,
-          "title": "Updateinterval",
-          "type": "integer"
-        },
-        "onlyDynamicEdges": {
-          "title": "Onlydynamicedges",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "enabled",
-        "iterations",
-        "updateInterval",
-        "onlyDynamicEdges"
-      ],
-      "title": "StabilizationOptions",
-      "type": "object"
     }
   },
   "additionalProperties": false,
   "properties": {
-    "layout": {
-      "$ref": "#/$defs/LayoutOptions"
-    },
     "interaction": {
       "$ref": "#/$defs/InteractionOptions"
-    },
-    "physics": {
-      "$ref": "#/$defs/PhysicsOptions"
     },
     "nodes": {
       "$ref": "#/$defs/NodeOptions"
@@ -288,9 +175,7 @@
     }
   },
   "required": [
-    "layout",
     "interaction",
-    "physics",
     "nodes",
     "edges"
   ],

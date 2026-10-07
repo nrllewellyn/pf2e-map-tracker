@@ -1,287 +1,231 @@
 {
+  "defaultView": {
+    "position": {
+      "x": -260.39218811284184,
+      "y": -324.36153567117725
+    },
+    "scale": 0.9871395356341592
+  },
   "rooms": [
     {
       "id": "teleporter-room-arrival",
-      "name": "Teleporter Room",
-      "anchor": true,
+      "name": "🌀 Teleporter Room 🌀",
+      "position": {
+        "x": -750.0,
+        "y": -750.0
+      },
+      "color": "#ff8800",
       "notes": "Arrival area"
     },
     {
       "id": "main-corridor",
       "name": "Main Corridor",
+      "position": {
+        "x": -500.0,
+        "y": -500.0
+      },
       "color": "#757575",
       "notes": "Corridor that appears to run the length of the ship"
     },
     {
       "id": "workshop",
       "name": "Workshop",
+      "position": {
+        "x": -750.0,
+        "y": -500.0
+      },
       "notes": "Well-equipped workshop"
     },
     {
       "id": "forest",
       "name": "Forest",
+      "position": {
+        "x": -500.0,
+        "y": -250.0
+      },
       "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>"
     },
     {
       "id": "small-greenhouse",
       "name": "🛏️ Small Greenhouse 🛏️",
+      "position": {
+        "x": 250.0,
+        "y": 250.0
+      },
       "color": "#4CAF50",
       "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
     },
     {
       "id": "crystal-growth-lab",
       "name": "Crystal Growth Lab",
+      "position": {
+        "x": 500.0,
+        "y": 250.0
+      },
       "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
     },
     {
       "id": "hallway-forest",
       "name": "Small Hallway behind Forest",
+      "position": {
+        "x": -750.0,
+        "y": -250.0
+      },
       "color": "#757575",
       "notes": "A small east/west hallway"
     },
     {
       "id": "memory-theater",
       "name": "Memory Theater",
+      "position": {
+        "x": -750.0,
+        "y": 0.0
+      },
       "notes": "Theater that reads the audience's memories and displays them on a screen."
     },
     {
       "id": "orrery",
       "name": "Orrery",
+      "position": {
+        "x": -500.0,
+        "y": 0.0
+      },
       "notes": "An orrery of a strange, alien solar system."
     },
     {
       "id": "hallway-orrery",
       "name": "Small Hallway above Orrery",
+      "position": {
+        "x": -250.0,
+        "y": 0.0
+      },
       "color": "#757575",
       "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
     },
     {
       "id": "restoration-engine",
       "name": "Restoration Engine",
+      "position": {
+        "x": -500.0,
+        "y": 250.0
+      },
       "notes": "A massive arcane device submerged in a pool of liquid."
     },
     {
       "id": "hanging-registry",
       "name": "Hanging Registry",
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
       "notes": "Memories of those left behind"
     },
     {
       "id": "porcelain-passageways",
       "name": "Porcelain Passageways",
+      "position": {
+        "x": 0.0,
+        "y": -250.0
+      },
       "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."
     },
     {
       "id": "quartermasters-bazaar",
       "name": "Quartermaster's Bazaar",
+      "position": {
+        "x": 250.0,
+        "y": -250.0
+      },
       "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."
     },
     {
       "id": "the-crystal-mug",
       "name": "The Crystal Mug",
+      "position": {
+        "x": -250.0,
+        "y": 250.0
+      },
       "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern."
     },
     {
       "id": "lighthouse",
       "name": "Lighthouse",
+      "position": {
+        "x": 250.0,
+        "y": 0.0
+      },
       "notes": "A lighthouse floating above the clouds."
     },
     {
       "id": "sky-void",
       "name": "☁️ Sky Void ☁️",
-      "color": "#8CBED6",
+      "position": {
+        "x": 500.0,
+        "y": 0.0
+      },
+      "color": "#5cc0ff",
       "notes": "Blue sky and clouds, but no ground in sight."
     },
     {
       "id": "gryphon-roost-inn",
       "name": "Gryphon Roost Inn",
+      "position": {
+        "x": 500.0,
+        "y": -250.0
+      },
       "notes": "A cozy inn floating above the clouds"
     },
     {
       "id": "the-webbed-dungeon",
       "name": "The Webbed Dungeon",
+      "position": {
+        "x": -500.0,
+        "y": 500.0
+      },
       "notes": "A crypt containing statues of unknown gods and a tomb protected by celestials."
     },
     {
       "id": "teleporter-room-crystal-mug",
-      "name": "Teleporter Room",
+      "name": "🌀 Teleporter Room 🌀",
+      "position": {
+        "x": 0.0,
+        "y": 250.0
+      },
+      "color": "#ff8800",
       "notes": "A small teleporter room, just off the Crystal Mug."
     },
     {
       "id": "orthos",
       "name": "🌍 Orthos 🌍",
-      "anchor": true
+      "position": {
+        "x": 750.0,
+        "y": 750.0
+      }
     },
     {
       "id": "security",
       "name": "🛡️🛏️ Security 🛏️🛡️",
-      "color": "#4CAF50",
-      "anchor": true
+      "position": {
+        "x": -750.0,
+        "y": 500.0
+      },
+      "color": "#4CAF50"
     },
     {
       "id": "cryogenic-prison",
       "name": "🧊 Cryo Prison 🧊",
-      "anchor": true
+      "position": {
+        "x": 0.0,
+        "y": 750.0
+      }
     },
     {
       "id": "current-location-unknown",
       "name": "❓ Current Location Unknown ❓",
-      "anchor": true
-    }
-  ],
-  "connections": [
-    {
-      "from": "teleporter-room-arrival",
-      "to": "main-corridor",
-      "status": "open",
-      "name": "Airtight Door"
-    },
-    {
-      "from": "main-corridor",
-      "to": "workshop",
-      "status": "locked",
-      "name": "Airtight Door",
-      "notes": "Locked due to security lockdown"
-    },
-    {
-      "from": "main-corridor",
-      "to": "forest",
-      "status": "open",
-      "name": "Airtight Door"
-    },
-    {
-      "from": "forest",
-      "to": "porcelain-passageways",
-      "status": "open",
-      "name": "Heavy metal door",
-      "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
-    },
-    {
-      "from": "forest",
-      "to": "hallway-forest",
-      "status": "open",
-      "name": "Airtight Door"
-    },
-    {
-      "from": "hallway-forest",
-      "to": "memory-theater",
-      "status": "open",
-      "name": "Airtight Door"
-    },
-    {
-      "from": "hallway-forest",
-      "to": "orrery",
-      "status": "open",
-      "name": "Plexiglass Door",
-      "notes": "A spiral staircase down, behind a plexiglass door"
-    },
-    {
-      "from": "memory-theater",
-      "to": "orrery",
-      "status": "open",
-      "direction": "forward_only",
-      "name": "Spiral hallway",
-      "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
-    },
-    {
-      "from": "orrery",
-      "to": "hallway-orrery",
-      "status": "open",
-      "name": "Spiral Staircase",
-      "notes": "A spiral staircase up, ending behind a plexiglass door"
-    },
-    {
-      "from": "hallway-orrery",
-      "to": "restoration-engine",
-      "status": "open"
-    },
-    {
-      "from": "hallway-orrery",
-      "to": "hanging-registry",
-      "status": "open"
-    },
-    {
-      "from": "hallway-orrery",
-      "to": "unknown",
-      "status": "locked",
-      "name": "Heavy metal door",
-      "notes": "Heavy metal door, sealed due to security lockdown"
-    },
-    {
-      "from": "restoration-engine",
-      "to": "the-crystal-mug",
-      "status": "open",
-      "name": "Underwater door",
-      "notes": "See note on The Crystal Mug about arrival/departure."
-    },
-    {
-      "from": "hanging-registry",
-      "to": "porcelain-passageways",
-      "status": "open"
-    },
-    {
-      "from": "porcelain-passageways",
-      "to": "small-greenhouse",
-      "status": "open",
-      "name": "Metal door with wood veneer"
-    },
-    {
-      "from": "small-greenhouse",
-      "to": "crystal-growth-lab",
-      "status": "open",
-      "name": "Door that was once blocked by a massive tree"
-    },
-    {
-      "from": "porcelain-passageways",
-      "to": "quartermasters-bazaar",
-      "status": "open"
-    },
-    {
-      "from": "quartermasters-bazaar",
-      "to": "lighthouse",
-      "status": "open"
-    },
-    {
-      "from": "quartermasters-bazaar",
-      "to": "gryphon-roost-inn",
-      "status": "open"
-    },
-    {
-      "from": "lighthouse",
-      "to": "sky-void",
-      "status": "open",
-      "name": "Airship path",
-      "notes": "Requires flight or an airship to move between islands"
-    },
-    {
-      "from": "gryphon-roost-inn",
-      "to": "sky-void",
-      "status": "open",
-      "name": "Airship path",
-      "notes": "Requires flight or an airship to move between islands"
-    },
-    {
-      "from": "the-crystal-mug",
-      "to": "the-webbed-dungeon",
-      "status": "open",
-      "notes": "See note on The Crystal Mug about arrival/departure."
-    },
-    {
-      "from": "the-crystal-mug",
-      "to": "teleporter-room-crystal-mug",
-      "status": "open",
-      "notes": "See note on The Crystal Mug about arrival/departure."
-    },
-    {
-      "from": "the-crystal-mug",
-      "to": "unknown",
-      "status": "blocked",
-      "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
-    },
-    {
-      "from": "the-crystal-mug",
-      "to": "unknown",
-      "status": "blocked",
-      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+      "position": {
+        "x": 500.0,
+        "y": 750.0
+      }
     }
   ],
   "characters": [
@@ -297,8 +241,8 @@
     {
       "name": "Arvek (Arvie) Spotsnout-Smith",
       "ancestry": "Ratfolk",
-      "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
       "class": "Inventor",
+      "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
       "location": "security"
     },
     {
@@ -479,7 +423,11 @@
     {
       "id": "researchers",
       "name": "Researchers",
-      "location": "small-greenhouse"
+      "location": "small-greenhouse",
+      "defaultPosition": {
+        "x": 151.0,
+        "y": 479.0
+      }
     },
     {
       "id": "base-camp",
@@ -493,24 +441,180 @@
       "color": "#d62000"
     }
   ],
+  "connections": [
+    {
+      "from": "teleporter-room-arrival",
+      "to": "main-corridor",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "main-corridor",
+      "to": "workshop",
+      "status": "locked",
+      "name": "Airtight Door",
+      "notes": "Locked due to security lockdown"
+    },
+    {
+      "from": "main-corridor",
+      "to": "forest",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "forest",
+      "to": "porcelain-passageways",
+      "status": "open",
+      "name": "Heavy metal door",
+      "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
+    },
+    {
+      "from": "forest",
+      "to": "hallway-forest",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "hallway-forest",
+      "to": "memory-theater",
+      "status": "open",
+      "name": "Airtight Door"
+    },
+    {
+      "from": "hallway-forest",
+      "to": "orrery",
+      "status": "open",
+      "name": "Plexiglass Door",
+      "notes": "A spiral staircase down, behind a plexiglass door"
+    },
+    {
+      "from": "memory-theater",
+      "to": "orrery",
+      "status": "open",
+      "direction": "forward_only",
+      "name": "Spiral hallway",
+      "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
+    },
+    {
+      "from": "orrery",
+      "to": "hallway-orrery",
+      "status": "open",
+      "name": "Spiral Staircase",
+      "notes": "A spiral staircase up, ending behind a plexiglass door"
+    },
+    {
+      "from": "hallway-orrery",
+      "to": "restoration-engine",
+      "status": "open"
+    },
+    {
+      "from": "hallway-orrery",
+      "to": "hanging-registry",
+      "status": "open"
+    },
+    {
+      "from": "hallway-orrery",
+      "to": "unknown",
+      "status": "locked",
+      "name": "Heavy metal door",
+      "notes": "Heavy metal door, sealed due to security lockdown"
+    },
+    {
+      "from": "restoration-engine",
+      "to": "the-crystal-mug",
+      "status": "open",
+      "name": "Underwater door",
+      "notes": "See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "hanging-registry",
+      "to": "porcelain-passageways",
+      "status": "open"
+    },
+    {
+      "from": "porcelain-passageways",
+      "to": "small-greenhouse",
+      "status": "open",
+      "name": "Metal door with wood veneer"
+    },
+    {
+      "from": "small-greenhouse",
+      "to": "crystal-growth-lab",
+      "status": "open",
+      "name": "Door that was once blocked by a massive tree"
+    },
+    {
+      "from": "porcelain-passageways",
+      "to": "quartermasters-bazaar",
+      "status": "open"
+    },
+    {
+      "from": "quartermasters-bazaar",
+      "to": "lighthouse",
+      "status": "open"
+    },
+    {
+      "from": "quartermasters-bazaar",
+      "to": "gryphon-roost-inn",
+      "status": "open"
+    },
+    {
+      "from": "lighthouse",
+      "to": "sky-void",
+      "status": "open",
+      "name": "Airship path",
+      "notes": "Requires flight or an airship to move between islands"
+    },
+    {
+      "from": "gryphon-roost-inn",
+      "to": "sky-void",
+      "status": "open",
+      "name": "Airship path",
+      "notes": "Requires flight or an airship to move between islands"
+    },
+    {
+      "from": "the-crystal-mug",
+      "to": "the-webbed-dungeon",
+      "status": "open",
+      "notes": "See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "the-crystal-mug",
+      "to": "teleporter-room-crystal-mug",
+      "status": "open",
+      "notes": "See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "the-crystal-mug",
+      "to": "unknown",
+      "status": "blocked",
+      "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "the-crystal-mug",
+      "to": "unknown",
+      "status": "blocked",
+      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    }
+  ],
   "connectionStatus": [
     {
       "id": "open",
+      "description": "✔ Traversable",
       "display_color": "#4CAF50",
-      "line_style": "solid",
-      "description": "✔ Traversable"
+      "line_style": "solid"
     },
     {
       "id": "locked",
+      "description": "🔒 Locked",
       "display_color": "#F44336",
-      "line_style": "dashed",
-      "description": "🔒 Locked"
+      "line_style": "dashed"
     },
     {
       "id": "blocked",
+      "description": "🚫 Blocked",
       "display_color": "#9E9E9E",
-      "line_style": "dashed",
-      "description": "🚫 Blocked"
+      "line_style": "dashed"
     }
   ]
 }

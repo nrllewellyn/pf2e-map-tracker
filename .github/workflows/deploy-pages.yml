@@ -28,7 +28,10 @@ jobs:
           cache: pip
 
       - name: Install project
-        run: python -m pip install -e ".[dev]"
+        run: python -m pip install -e ".[dev,editor]"
+
+      - name: Install test browser
+        run: python -m playwright install --with-deps chromium
 
       - name: Run checks
         run: |
@@ -36,6 +39,9 @@ jobs:
           ruff format --check .
           pytest
           pf2e-map-tracker validate
+
+      - name: Run editor browser tests
+        run: pytest tests/test_editor_browser.py --run-editor-browser
 
       - name: Build map
         run: |

@@ -23,6 +23,11 @@ def build_parser() -> argparse.ArgumentParser:
     build.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     build.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
 
+    edit = subparsers.add_parser("edit", help="Launch the local visual map editor.")
+    edit.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    edit.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    edit.add_argument("--port", type=int, default=8000)
+
     validate = subparsers.add_parser("validate", help="Validate map data and graph options.")
     validate.add_argument("--input", type=Path, default=DEFAULT_INPUT)
 
@@ -41,6 +46,21 @@ def main(argv: list[str] | None = None) -> int:
             load_map_data(args.input)
             load_graph_options()
             print(f"Valid map data: {args.input}")
+        elif args.command == "edit":
+            if not 1 <= args.port <= 65535:
+                raise ValueError("port must be between 1 and 65535")
+            try:
+                import uvicorn
+
+                from pf2e_map_tracker.editor import create_app
+            except ImportError:
+                print(
+                    'Install the editor with: python -m pip install -e ".[editor]"', file=sys.stderr
+                )
+                return 1
+            app = create_app(args.input, args.output)
+            print(f"Map editor: http://127.0.0.1:{args.port} (Ctrl+C to stop)", flush=True)
+            uvicorn.run(app, host="127.0.0.1", port=args.port)
         else:
             _export_schemas(args.output_dir)
             print(f"Schemas saved to: {args.output_dir}")

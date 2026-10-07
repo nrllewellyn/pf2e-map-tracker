@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PF2e Map Editor</title>
+  <link rel="stylesheet" href="/vendor/vis-network.css">
+  <link rel="stylesheet" href="/editor.css">
+  <script defer src="/vendor/vis-network.min.js"></script>
+  <script defer src="/editor-state.js"></script>
+  <script defer src="/editor.js"></script>
+</head>
+<body>
+  <header>
+    <div><span class="eyebrow">PF2E MAP TRACKER</span><h1>Map editor</h1></div>
+    <div class="actions">
+      <span id="save-state">Loading…</span>
+      <button id="reload" type="button">Reload</button>
+      <button id="save" type="button" disabled>Save</button>
+      <button id="rebuild" class="primary" type="button" disabled>Rebuild graph</button>
+    </div>
+  </header>
+  <div id="notice" role="status" aria-live="polite">Loading your map…</div>
+  <main>
+    <aside class="library" aria-label="Map objects">
+      <h2>Map objects</h2>
+      <label for="search" class="sr-only">Search map objects</label>
+      <input id="search" type="search" placeholder="Search names or IDs…">
+      <div class="add-row">
+        <label for="add-kind" class="sr-only">Object type to add</label>
+        <select id="add-kind">
+          <option value="rooms">Room</option>
+          <option value="character_groups">Group</option>
+          <option value="characters">Character</option>
+          <option value="connections">Connection</option>
+          <option value="connectionStatus">Connection status</option>
+        </select>
+        <button id="add" type="button" disabled>Add</button>
+      </div>
+      <nav id="object-list" aria-label="Select a map object"></nav>
+    </aside>
+    <section class="canvas-panel" aria-label="Map graph">
+      <div class="canvas-toolbar">
+        <div><h2>Graph preview</h2><span id="map-count" class="muted"></span></div>
+        <div class="canvas-actions">
+          <label for="visibility" class="sr-only">Character visibility</label>
+          <select id="visibility" aria-label="Character visibility">
+            <option value="show_all">Show all</option>
+            <option value="groups_only">Groups only</option>
+            <option value="hidden">Hide characters &amp; groups</option>
+          </select>
+          <button id="fit" type="button">Fit graph</button>
+          <button id="set-default-view" type="button" disabled title="Capture the current center and zoom. Save to keep this default.">Set default view</button>
+        </div>
+      </div>
+      <div id="graph"></div>
+      <div class="canvas-caption">Drag rooms to snap to a 250 px grid; hold Shift to position freely. Drag groups and characters to set their starting position before physics.</div>
+    </section>
+    <aside class="inspector" aria-label="Selected object">
+      <h2 id="form-title">Select an object</h2>
+      <p id="form-help" class="muted">Choose an object on the graph or in the list, or add something new.</p>
+      <form id="object-form" hidden>
+        <div id="fields"></div>
+        <div id="form-errors" role="alert"></div>
+        <div class="form-actions">
+          <button id="apply" class="primary" type="submit">Apply</button>
+          <button id="delete" class="danger" type="button">Delete</button>
+          <button id="cancel" type="button" hidden>Cancel</button>
+        </div>
+      </form>
+    </aside>
+  </main>
+  <footer><span id="file-path"></span><span>Preview changes stay in memory until you save.</span></footer>
+  <iframe id="graph-tooltip" title="Map tooltip" sandbox="" hidden></iframe>
+</body>
+</html>

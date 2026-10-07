@@ -3,94 +3,151 @@
     {
       "id": "entrance",
       "name": "Entrance",
-      "anchor": true,
       "color": "#4CAF50",
-      "notes": "Main entry point"
+      "notes": "Main entry point",
+      "position": {
+        "x": -1800.0,
+        "y": -1800.0
+      }
     },
     {
       "id": "kitchen",
       "name": "Kitchen",
       "color": "#FF9800",
-      "notes": "Heart of the home with <b>large</b> island"
+      "notes": "Heart of the home with <b>large</b> island",
+      "position": {
+        "x": -600.0,
+        "y": -1800.0
+      }
     },
     {
       "id": "upstairs-hall",
       "name": "Upstairs Hall",
-      "anchor": true,
       "color": "#27F5F2",
-      "notes": "Central hallway upstairs"
+      "notes": "Central hallway upstairs",
+      "position": {
+        "x": 600.0,
+        "y": -1800.0
+      }
     },
     {
       "id": "master-bedroom",
       "name": "Master Bedroom",
       "color": "#9C27B0",
-      "notes": "Private sleeping area with en-suite bathroom"
+      "notes": "Private sleeping area with en-suite bathroom",
+      "position": {
+        "x": 1800.0,
+        "y": -1800.0
+      }
     },
     {
       "id": "guest-bedroom",
       "name": "Guest Bedroom",
-      "color": "#E91E63"
+      "color": "#E91E63",
+      "position": {
+        "x": -1800.0,
+        "y": -600.0
+      }
     },
     {
       "id": "living-room",
       "name": "Living Room",
       "color": "#2196F3",
-      "notes": "Main family gathering space"
+      "notes": "Main family gathering space",
+      "position": {
+        "x": -600.0,
+        "y": -600.0
+      }
     },
     {
       "id": "dining-room",
       "name": "Dining Room",
       "color": "#607D8B",
-      "notes": "Formal dining area"
+      "notes": "Formal dining area",
+      "position": {
+        "x": 600.0,
+        "y": -600.0
+      }
     },
     {
       "id": "family-room",
       "name": "Family Room",
       "color": "#3F51B5",
-      "notes": "Casual TV and relaxation space"
+      "notes": "Casual TV and relaxation space",
+      "position": {
+        "x": 1800.0,
+        "y": -600.0
+      }
     },
     {
       "id": "bathroom-main",
       "name": "Bathroom (Main)",
       "color": "#00BCD4",
-      "notes": "Upstairs full bathroom"
+      "notes": "Upstairs full bathroom",
+      "position": {
+        "x": -1800.0,
+        "y": 600.0
+      }
     },
     {
       "id": "master-bathroom",
       "name": "Master Bathroom",
       "color": "#009688",
-      "notes": "En-suite with double vanity"
+      "notes": "En-suite with double vanity",
+      "position": {
+        "x": -600.0,
+        "y": 600.0
+      }
     },
     {
       "id": "basement-hall",
       "name": "Basement Hall",
-      "anchor": true,
       "color": "#795548",
-      "notes": "Lower level hall"
+      "notes": "Lower level hall",
+      "position": {
+        "x": 600.0,
+        "y": 600.0
+      }
     },
     {
       "id": "basement-rec-room",
       "name": "Basement Rec Room",
       "color": "#607D8B",
-      "notes": "Game room and media area"
+      "notes": "Game room and media area",
+      "position": {
+        "x": 1800.0,
+        "y": 600.0
+      }
     },
     {
       "id": "laundry-room",
       "name": "Laundry Room",
       "color": "#8BC34A",
-      "notes": "Utility and washing area"
+      "notes": "Utility and washing area",
+      "position": {
+        "x": -1800.0,
+        "y": 1800.0
+      }
     },
     {
       "id": "home-office",
       "name": "Home Office",
       "color": "#FF5722",
-      "notes": "Quiet workspace"
+      "notes": "Quiet workspace",
+      "position": {
+        "x": -600.0,
+        "y": 1800.0
+      }
     },
     {
       "id": "garage",
       "name": "Garage",
       "color": "#757575",
-      "notes": "Two-car garage"
+      "notes": "Two-car garage",
+      "position": {
+        "x": 600.0,
+        "y": 1800.0
+      }
     }
   ],
   "characters": [

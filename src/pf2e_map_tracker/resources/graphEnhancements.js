@@ -126,12 +126,23 @@ function setupCustomTooltips() {
     network.on('blurEdge', hideTooltip);
 }
 
+function setupDefaultView() {
+    if (!PF2E_MAP_TRACKER_DEFAULT_VIEW) return;
+    if (!window.network) {
+        setTimeout(setupDefaultView, 100);
+        return;
+    }
+    network.moveTo({...PF2E_MAP_TRACKER_DEFAULT_VIEW, animation: false});
+}
+
 if (document.readyState === 'complete') {
     setupCustomTooltips();
     setupCharacterVisibility();
     setupNodeSelectorLabels();
+    setupDefaultView();
 } else {
     document.addEventListener('DOMContentLoaded', setupCustomTooltips);
     document.addEventListener('DOMContentLoaded', setupCharacterVisibility);
     document.addEventListener('DOMContentLoaded', setupNodeSelectorLabels);
+    document.addEventListener('DOMContentLoaded', setupDefaultView);
 }

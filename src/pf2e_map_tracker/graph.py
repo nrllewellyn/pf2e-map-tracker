@@ -1,6 +1,7 @@
 """Build and write the interactive PyVis graph."""
 
 import json
+import math
 from pathlib import Path
 
 from pyvis.network import Network
@@ -20,8 +21,10 @@ UNKNOWN_ROOM_COLOR = "#4c498c"
 DEFAULT_CHARACTER_COLOR = "#9c27b0"
 DEFAULT_CHARACTER_GROUP_COLOR = "#00a896"
 DEFAULT_CONNECTION_COLOR = "#aaaaaa"
-ANCHOR_SPRING_LENGTH = 400
-ANCHOR_NODE_MASS = 4
+PLACEMENT_SPRING_LENGTH = 180
+SEED_RING_RADIUS = 240
+SEED_RING_CAPACITY = 8
+DETACHED_PAIR_SPACING = 1200
 UNKNOWN_ROOM_NAME = "Unknown Room"
 
 ARROW_CONFIG = {
@@ -43,10 +46,15 @@ NO_ARROWS = {"to": {"enabled": False}, "from": {"enabled": False}}
 
 def generate_graph(input_path: Path, output_path: Path) -> Path:
     data = load_map_data(input_path)
+    return write_graph(data, output_path)
+
+
+def write_graph(data: MapData, output_path: Path) -> Path:
+    """Render a validated snapshot, including the standalone viewer controls."""
     network = build_network(data)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(network.generate_html(notebook=False), encoding="utf-8")
-    inject_enhancements(output_path)
+    inject_enhancements(output_path, data.default_view)
     return output_path
 
 
@@ -71,8 +79,19 @@ def build_network(data: MapData) -> Network:
     _add_characters(network, data)
     _add_connections(network, data)
     _add_placement_edges(network, data)
-    _add_anchor_edges(network, data)
+    _seed_positions(network, data)
     options = load_graph_options().model_dump(by_alias=True)
+    # Room coordinates and satellite settling are application behavior, not editable options.
+    options["layout"] = {"improvedLayout": False, "hierarchical": {"enabled": False}}
+    options["interaction"]["dragNodes"] = False
+    options["physics"] = {
+        "enabled": True,
+        "solver": "barnesHut",
+        "barnesHut": {"centralGravity": 0, "avoidOverlap": 0.7},
+        "stabilization": {"enabled": True},
+    }
+    if data.default_view is not None:
+        options["physics"]["stabilization"]["fit"] = False
     network.set_options(json.dumps(options))
     return network
 
@@ -104,7 +123,10 @@ def _add_rooms(network: Network, data: MapData) -> None:
             shape=room.shape,
             font={"size": 16},
             node_type="room",
-            **({"mass": ANCHOR_NODE_MASS} if room.anchor else {}),
+            x=room.position.x,
+            y=room.position.y,
+            fixed={"x": True, "y": True},
+            physics=True,
             tooltip_hidden=hidden,
             tooltip_groups_only=groups_only,
             tooltip_show_all=base,
@@ -121,6 +143,8 @@ def _add_unknown_room(network: Network, node_id: str) -> None:
         shape="box",
         font={"size": 16},
         node_type="room",
+        fixed=False,
+        physics=True,
         tooltip_hidden=tooltip,
         tooltip_groups_only=tooltip,
         tooltip_show_all=tooltip,
@@ -148,6 +172,8 @@ def _add_character_groups(network: Network, data: MapData) -> None:
             shape=group.shape,
             font={"size": 16},
             node_type="character_group",
+            fixed=False,
+            physics=True,
             tooltip_hidden=base,
             tooltip_groups_only=groups_only,
             tooltip_show_all=base,
@@ -171,6 +197,8 @@ def _add_characters(network: Network, data: MapData) -> None:
             shape=character.shape,
             font={"size": 16},
             node_type="character",
+            fixed=False,
+            physics=True,
         )
 
 
@@ -195,6 +223,12 @@ def _add_connections(network: Network, data: MapData) -> None:
             dashes=status.line_style == "dashed",
             width=2.5,
             arrows=ARROW_CONFIG[connection.direction],
+            physics=UNKNOWN_ROOM_ID in (connection.source, connection.target),
+            **(
+                {"length": PLACEMENT_SPRING_LENGTH}
+                if UNKNOWN_ROOM_ID in (connection.source, connection.target)
+                else {}
+            ),
         )
 
 
@@ -226,6 +260,8 @@ def _add_placement_edge(network: Network, source: str, target: str) -> None:
         dashes=True,
         width=2.5,
         arrows=NO_ARROWS,
+        physics=True,
+        length=PLACEMENT_SPRING_LENGTH,
     )
 
 
@@ -233,18 +269,62 @@ def _character_node_id(index: int) -> str:
     return f"__character-{index}"
 
 
-def _add_anchor_edges(network: Network, data: MapData) -> None:
-    anchor_ids = [room.id for room in data.rooms if room.anchor]
-    if len(anchor_ids) < 2:
-        return
+def _seed_positions(network: Network, data: MapData) -> None:
+    """Seed nearby nodes without inferring any hierarchy from room connections."""
+    positions = {room.id: (room.position.x, room.position.y) for room in data.rooms}
+    children = {node.id: [] for node in [*data.rooms, *data.character_groups]}
+    for group in data.character_groups:
+        children[group.location].append(group.id)
+    for index, character in enumerate(data.characters):
+        children[character.location or character.group].append(_character_node_id(index))
 
-    edge_count = 1 if len(anchor_ids) == 2 else len(anchor_ids)
-    for index in range(edge_count):
-        network.add_edge(
-            anchor_ids[index],
-            anchor_ids[(index + 1) % len(anchor_ids)],
-            hidden=True,
-            physics=True,
-            length=ANCHOR_SPRING_LENGTH,
-            arrows=NO_ARROWS,
-        )
+    detached_x = max((position[0] for position in positions.values()), default=0)
+    detached_y = min((position[1] for position in positions.values()), default=0)
+    detached_count = 0
+    for index, connection in enumerate(data.connections):
+        if connection.source == connection.target == UNKNOWN_ROOM_ID:
+            center = (
+                detached_x + DETACHED_PAIR_SPACING,
+                detached_y + detached_count * DETACHED_PAIR_SPACING,
+            )
+            positions.update(
+                _ring_positions(center, [f"__unknown-{index}-source", f"__unknown-{index}-target"])
+            )
+            detached_count += 1
+        elif connection.source == UNKNOWN_ROOM_ID:
+            children[connection.target].append(f"__unknown-{index}-source")
+        elif connection.target == UNKNOWN_ROOM_ID:
+            children[connection.source].append(f"__unknown-{index}-target")
+
+    for room in data.rooms:
+        positions.update(_ring_positions(positions[room.id], children[room.id]))
+    # Keep automatic ring slots unchanged, then override only authored starting positions.
+    for group in data.character_groups:
+        if group.default_position is not None:
+            positions[group.id] = (group.default_position.x, group.default_position.y)
+    for group in data.character_groups:
+        positions.update(_ring_positions(positions[group.id], children[group.id]))
+    for index, character in enumerate(data.characters):
+        if character.default_position is not None:
+            positions[_character_node_id(index)] = (
+                character.default_position.x,
+                character.default_position.y,
+            )
+    for node in network.nodes:
+        node["x"], node["y"] = positions[node["id"]]
+
+
+def _ring_positions(
+    center: tuple[float, float], node_ids: list[str]
+) -> dict[str, tuple[float, float]]:
+    positions = {}
+    for start in range(0, len(node_ids), SEED_RING_CAPACITY):
+        ring = node_ids[start : start + SEED_RING_CAPACITY]
+        radius = SEED_RING_RADIUS * (1 + start // SEED_RING_CAPACITY)
+        for index, node_id in enumerate(ring):
+            angle = -math.pi / 2 + 2 * math.pi * index / len(ring)
+            positions[node_id] = (
+                center[0] + radius * math.cos(angle),
+                center[1] + radius * math.sin(angle),
+            )
+    return positions
