@@ -35,6 +35,10 @@ pytest
 
 The same CLI is available through `python -m pf2e_map_tracker`.
 
+JSON syntax errors identify the source file, parser reason, line, and column.
+A numbered excerpt shows nearby lines, with a caret marking where parsing stopped.
+These diagnostics also appear when loading malformed JSON in the visual editor.
+
 ## Visual Map Editor
 
 Install the optional local editor and launch it from the repository root:
@@ -55,7 +59,14 @@ pf2e-map-tracker edit --input tests/fixtures/test_data.json --output dist/test-m
 Select a graph node or connection, or search the object list. Use **Add** to create
 a room, group, character, connection, or connection status. Fill out the form and
 click **Apply**. HTML fields include a rendered preview; formatting is
-entered as HTML. Drag rooms to arrange them on a 250 px grid in both directions.
+entered as HTML.
+
+Picture controls accept local paths or hosted URLs, alt text, and plain-text captions.
+Use **Add picture**, **Move up**, **Move down**, and **Remove picture** to manage
+the gallery; its first picture appears in hover previews. Detailed text fields have
+HTML previews and appear only in the generated viewer's details panel.
+
+Drag rooms to arrange them on a 250 px grid in both directions.
 Hold Shift to position freely; Shift can be pressed or released during a drag.
 The grid uses map coordinates, so snapping stays consistent at any zoom level.
 Numeric coordinate fields allow exact positions without snapping.
@@ -101,7 +112,7 @@ To run the editor API tests and browser workflow tests:
 python -m pip install -e ".[dev,editor]"
 python -m playwright install chromium
 pytest
-pytest tests/test_editor_browser.py --run-editor-browser
+pytest tests/test_editor_browser.py tests/test_viewer_browser.py --run-browser
 ```
 
 ## GitHub Pages Deployment
@@ -128,6 +139,20 @@ the generated `dist` artifact directly.
 
 `graphOptions.json` is validated before every build. Run `pf2e-map-tracker validate` after
 editing it.
+
+## Viewing map details
+
+Hover over nodes or connections for a summary and, when present, the first picture
+with a count of additional pictures. Click to open a read-only details panel with
+fields, referenced room/group names, and a full picture gallery. IDs and saved
+coordinates and empty fields are omitted from the panel. A colored node
+shape or connection-line preview appears beside **Close**; shape names and color
+codes are omitted from the text. Choose gallery thumbnails to switch pictures. Images preserve
+their proportions and fit the screen. Close the panel with **Close**, Escape, or
+a click on the backdrop. Clicking no longer selects or dims graph objects.
+
+The top bar contains character visibility and build information. The local visual
+editor retains click-to-select and dragging for authoring.
 
 ## Trusted HTML
 
@@ -174,6 +199,8 @@ default unless you capture the view again.
 | `color`  | No       | CSS node color.                                                                                                                                           |
 | `shape`  | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `box`. |
 | `notes`  | No       | Trusted HTML shown in the room tooltip.                                                                                                                   |
+| `details` | No      | Trusted HTML shown only in the details panel. |
+| `images` | No       | Ordered pictures, as described below. |
 
 The room ID `unknown` is reserved and must not appear in `rooms`.
 
@@ -194,7 +221,7 @@ beyond the room grid. These nodes settle using internal physics settings while r
 fixed. Rebuilding after changing a room coordinate or a placement reference updates nearby-node
 starting positions. Automatically settled coordinates are not saved back to JSON.
 
-Node dragging is disabled in the generated viewer. Panning, zooming, selection, tooltips, and character visibility remain
+Node dragging is disabled in the generated viewer. Panning, zooming, detail panels, tooltips, and character visibility remain
 available. Visibility changes do not move rooms. Physics and automatic layout settings are not
 editable in `graphOptions.json`; edge smoothing supports only static curve types.
 
@@ -210,14 +237,15 @@ also be removed from graph options.
 | `name`                 | Yes         | Unique character name and displayed label.                                                                                                                     |
 | `ancestry`             | Yes         | Ancestry shown in the tooltip.                                                                                                                                |
 | `class`                | No          | Class shown in the tooltip.                                                                                                                                   |
-| `physical_description` | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
-| `personality`          | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
-| `other_details`        | No          | Trusted HTML shown in the tooltip.                                                                                                                            |
+| `physical_description` | No          | Trusted HTML shown only in the details panel. |
+| `personality`          | No          | Trusted HTML shown only in the details panel. |
+| `other_details`        | No          | Trusted HTML shown only in the details panel. |
 | `location`             | Conditional | Existing room ID. Exactly one of `location` or `group` is required.                                                                                           |
 | `group`                | Conditional | Existing character-group ID. Exactly one of `location` or `group` is required.                                                                                |
 | `defaultPosition`      | No          | Starting coordinates before physics, for example `{"x": -1200, "y": 0}`. Omit or use `null` for automatic placement. |
 | `color`                | No          | CSS node color.                                                                                                                                               |
 | `shape`                | No          | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `ellipse`. |
+| `images`               | No          | Ordered pictures, as described below. |
 
 ### Character Groups
 
@@ -229,6 +257,9 @@ also be removed from graph options.
 | `defaultPosition` | No | Starting coordinates before physics, for example `{"x": -1200, "y": 0}`. Omit or use `null` for automatic placement. |
 | `color`    | No       | CSS node color.                                                                                                                                              |
 | `shape`    | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `circle`. |
+| `notes`    | No       | Trusted HTML shown in hover previews and the details panel. |
+| `details`  | No       | Trusted HTML shown only in the details panel. |
+| `images`   | No       | Ordered pictures, as described below. |
 
 ### Connections
 
@@ -240,9 +271,49 @@ also be removed from graph options.
 | `direction` | No       | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
 | `name`      | No       | Connection label shown in the tooltip.                                            |
 | `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
+| `details`   | No       | Trusted HTML shown only in the details panel. |
+| `images`    | No       | Ordered pictures, as described below. |
 
 Connections may use the reserved room ID `unknown` in `from` or `to`. Each reference creates a
 separate virtual node named **Unknown room** on the graph.
+Clicking an Unknown Room shows its appearance and owning connection's information.
+Character/group attachment edges open the attached object's details.
+
+### Pictures
+
+Rooms, characters, character groups, and connections accept an optional ordered
+`images` array. Only `src` is required; `alt` and `caption` default to empty text.
+Captions and alt text are plain text, even when they contain HTML-looking markup.
+
+```json
+"images": [
+  {
+    "src": "images/portrait.jpg",
+    "alt": "A character wearing silver armor",
+    "caption": "Portrait"
+  },
+  {"src": "https://example.com/another-view.png"}
+]
+```
+
+Local paths resolve relative to the map JSON file, including when using `--input`.
+For `data/map_data.json`, `images/portrait.jpg` means `data/images/portrait.jpg`.
+Use forward slashes. Files must be within the JSON directory or its subdirectories;
+absolute paths and symlinks escaping that directory are rejected. Supported local
+formats are PNG, JPEG, GIF, WebP, SVG, AVIF, BMP, and ICO.
+
+Validation and builds report missing or unsupported local pictures with their object
+and image index. The editor can still preview and edit a map with missing pictures;
+rebuilding reports the error and retains the previous HTML. Unavailable hosted
+pictures show a fallback without preventing the rest of the panel from opening.
+Hosted HTTP/HTTPS pictures load directly in the browser and are not downloaded by builds.
+
+Builds copy local pictures into `assets/images/` beside the HTML using immutable,
+content-based filenames, deduplicating repeated pictures. Authored JSON paths remain
+unchanged. Copy the HTML **and its assets folder** when sharing a built map. Commit
+local source pictures alongside the JSON for GitHub Pages builds; the existing
+deployment publishes the copied assets in `dist`. Older assets are retained so a
+failed rebuild cannot break pictures used by the previous HTML.
 
 ### Connection Statuses
 

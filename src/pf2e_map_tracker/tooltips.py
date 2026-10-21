@@ -36,6 +36,8 @@ def character_group_tooltips(
     members: list[str],
 ) -> tuple[str, str]:
     base = f"<b>{group.name}</b><br><br><b>Location:</b> {location_name}"
+    if group.notes:
+        base += f"<br><br><b>Notes:</b><br>{_format_multiline(group.notes)}"
     member_list = "<br>".join(members) if members else "None"
     return base, f"{base}<br><br><b>Members:</b><br>{member_list}"
 
@@ -49,14 +51,6 @@ def character_tooltip(character: Character, placement_name: str) -> str:
     else:
         parts.append(f"<br><b>Group:</b> {placement_name}")
 
-    details = (
-        (character.physical_description, "Physical Description"),
-        (character.personality, "Personality"),
-        (character.other_details, "Other Details"),
-    )
-    for value, label in details:
-        if value:
-            parts.append(f"<br><br><b>{label}:</b><br>{_format_multiline(value)}")
     return "".join(parts)
 
 

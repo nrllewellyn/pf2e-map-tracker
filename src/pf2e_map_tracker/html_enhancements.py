@@ -30,8 +30,11 @@ def inject_enhancements(html_path: Path, default_view: DefaultView | None = None
         }
     )
     view_info = json.dumps(default_view.model_dump() if default_view is not None else None)
+    stylesheet = (
+        files("pf2e_map_tracker.resources").joinpath("viewer.css").read_text(encoding="utf-8")
+    )
     injection = (
-        f"{INJECTION_MARKER}\n<script>\n"
+        f"{INJECTION_MARKER}\n<style>{stylesheet}</style>\n<script>\n"
         f"const PF2E_MAP_TRACKER_BUILD = {build_info};\n"
         f"const PF2E_MAP_TRACKER_DEFAULT_VIEW = {view_info};\n"
         f"{javascript}\n</script>"

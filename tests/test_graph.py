@@ -308,7 +308,9 @@ def test_generate_graph_injects_enhancements_once(tmp_path: Path) -> None:
     content = output.read_text(encoding="utf-8")
     assert content.count(INJECTION_MARKER) == 1
     assert "setupCharacterVisibility" in content
-    assert "setupNodeSelectorLabels" in content
+    assert "setupNodeSelectorLabels" not in content
+    assert 'id="select-node"' not in content
+    assert "setupDetails" in content
     assert "Valeros" in content
 
 
@@ -337,7 +339,10 @@ def test_trusted_html_is_preserved_in_tooltips() -> None:
     )
     room = Room(id="kitchen", name="Kitchen", position={"x": 0, "y": 0}, notes="<p>trusted</p>")
 
-    assert "<b>trusted</b>" in character_tooltip(character, "Kitchen")
+    assert "<b>trusted</b>" not in character_tooltip(character, "Kitchen")
+    data = MapData(rooms=[room], characters=[character])
+    node = next(node for node in build_network(data).nodes if node["node_type"] == "character")
+    assert node["detail"]["fields"]["other_details"] == "<b>trusted</b>"
     assert "<p>trusted</p>" in room_tooltips(room, [], [])[0]
 
 

@@ -9,15 +9,19 @@ from importlib.resources import files
 from pathlib import Path
 from threading import RLock
 from typing import Any
+from urllib.parse import urlencode
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, ValidationError
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from pf2e_map_tracker.graph import build_network, write_graph
+from pf2e_map_tracker.images import IMAGE_TYPES, is_remote_image, resolve_local_image
+from pf2e_map_tracker.io import parse_json
 from pf2e_map_tracker.models import MapData
+from pf2e_map_tracker.presentation import resolve_network_images
 
 
 class DraftRequest(BaseModel):
@@ -41,9 +45,16 @@ def dump_map(data: MapData) -> dict[str, Any]:
     return data.model_dump(mode="json", by_alias=True, exclude_unset=True)
 
 
-def graph_payload(data: MapData) -> dict[str, Any]:
+def graph_payload(data: MapData, *, image_root: Path | None = None) -> dict[str, Any]:
     """Use the shared renderer, with source references only on the editor payload."""
     network = build_network(data)
+    if image_root is not None:
+        resolve_network_images(
+            network,
+            lambda source: (
+                source if is_remote_image(source) else "/api/images?" + urlencode({"src": source})
+            ),
+        )
     references = {room.id: {"kind": "rooms", "index": i} for i, room in enumerate(data.rooms)}
     references.update(
         {
@@ -105,13 +116,13 @@ def _atomic_write(path: Path, content: bytes, expected_revision: str) -> None:
         temporary.unlink(missing_ok=True)
 
 
-def _atomic_build(data: MapData, output: Path) -> None:
+def _atomic_build(data: MapData, output: Path, *, image_root: Path | None = None) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     fd, name = tempfile.mkstemp(prefix=f".{output.name}-", suffix=".html", dir=output.parent)
     os.close(fd)
     temporary = Path(name)
     try:
-        write_graph(data, temporary)
+        write_graph(data, temporary, image_root=image_root)
         _replace_file(temporary, output)
     finally:
         temporary.unlink(missing_ok=True)
@@ -169,7 +180,7 @@ def create_app(input_path: Path, output_path: Path) -> FastAPI:
     def load():
         with lock:
             content = input_path.read_bytes()
-            data = MapData.model_validate_json(content)
+            data = MapData.model_validate(parse_json(content.decode("utf-8"), input_path))
             return {
                 "data": dump_map(data),
                 "revision": revision(content),
@@ -181,7 +192,17 @@ def create_app(input_path: Path, output_path: Path) -> FastAPI:
     @app.post("/api/preview")
     def preview(body: DraftRequest):
         data = MapData.model_validate(body.data)
-        return {"data": dump_map(data), "graph": graph_payload(data)}
+        return {"data": dump_map(data), "graph": graph_payload(data, image_root=input_path.parent)}
+
+    @app.get("/api/images")
+    def image(src: str):
+        try:
+            path = resolve_local_image(src, input_path.parent)
+        except FileNotFoundError:
+            return JSONResponse({"message": "Image unavailable."}, status_code=404)
+        except (ValueError, OSError):
+            return JSONResponse({"message": "Invalid local image path."}, status_code=400)
+        return FileResponse(path, media_type=IMAGE_TYPES[path.suffix.lower()])
 
     def save(body: SaveRequest):
         data = MapData.model_validate(body.data)
@@ -210,7 +231,7 @@ def create_app(input_path: Path, output_path: Path) -> FastAPI:
                 return result
             data, saved = result
             try:
-                _atomic_build(data, output_path)
+                _atomic_build(data, output_path, image_root=input_path.parent)
             except Exception as error:
                 # Saving has already succeeded. Even an unexpected renderer failure must
                 # return the new revision so the browser can retry without a false conflict.

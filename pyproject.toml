@@ -32,7 +32,7 @@ pf2e-map-tracker = "pf2e_map_tracker.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-pf2e_map_tracker = ["resources/*.json", "resources/*.js", "resources/editor/*"]
+pf2e_map_tracker = ["resources/*.json", "resources/*.js", "resources/*.css", "resources/editor/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

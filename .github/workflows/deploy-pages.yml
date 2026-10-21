@@ -40,8 +40,8 @@ jobs:
           pytest
           pf2e-map-tracker validate
 
-      - name: Run editor browser tests
-        run: pytest tests/test_editor_browser.py --run-editor-browser
+      - name: Run browser tests
+        run: pytest tests/test_editor_browser.py tests/test_viewer_browser.py --run-browser
 
       - name: Build map
         run: |

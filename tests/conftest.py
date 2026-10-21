@@ -8,9 +8,10 @@ import pytest
 def pytest_addoption(parser):
     parser.addoption(
         "--run-editor-browser",
+        "--run-browser",
         action="store_true",
         default=False,
-        help="Run editor browser tests (requires Playwright Chromium).",
+        help="Run editor and viewer browser tests (requires Playwright Chromium).",
     )
 
 

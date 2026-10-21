@@ -304,6 +304,21 @@ def test_invalid_input_is_reported_without_changes(session, content):
     assert source.read_bytes() == content
 
 
+def test_json_syntax_error_identifies_file_and_location(session):
+    client, source, _ = session
+    content = '{\n  "rooms": [}\n}\n'
+    source.write_text(content, encoding="utf-8")
+
+    response = client.get("/api/map")
+
+    assert response.status_code == 422
+    message = response.json()["message"]
+    assert f"Invalid JSON in {source}" in message
+    assert "Expecting value (line 2, column 13)" in message
+    assert '2 |   "rooms": [}\n  |             ^' in message
+    assert source.read_text(encoding="utf-8") == content
+
+
 def test_unreadable_input_is_reported(session):
     client, source, _ = session
     source.unlink()

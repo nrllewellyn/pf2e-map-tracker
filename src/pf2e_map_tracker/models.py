@@ -12,6 +12,8 @@ from pydantic import (
     model_validator,
 )
 
+from pf2e_map_tracker.images import validate_image_source
+
 NonEmptyString = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 MapId = Annotated[str, StringConstraints(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")]
 UNKNOWN_ROOM_ID = "unknown"
@@ -51,6 +53,18 @@ class DefaultView(StrictModel):
     scale: float = Field(strict=True, gt=0, allow_inf_nan=False)
 
 
+class MapImage(StrictModel):
+    src: NonEmptyString
+    alt: str = ""
+    caption: str = ""
+
+    @field_validator("src")
+    @classmethod
+    def validate_source(cls, value: str) -> str:
+        validate_image_source(value)
+        return value
+
+
 class Room(StrictModel):
     id: MapId
     name: NonEmptyString
@@ -58,6 +72,8 @@ class Room(StrictModel):
     color: str | None = None
     shape: NodeShape = NodeShape.BOX
     notes: str = ""
+    details: str = ""
+    images: list[MapImage] = Field(default_factory=list)
 
     @field_validator("id")
     @classmethod
@@ -74,6 +90,9 @@ class CharacterGroup(StrictModel):
     default_position: Position | None = Field(default=None, alias="defaultPosition")
     color: str | None = None
     shape: NodeShape = NodeShape.CIRCLE
+    notes: str = ""
+    details: str = ""
+    images: list[MapImage] = Field(default_factory=list)
 
 
 class Character(StrictModel):
@@ -88,6 +107,7 @@ class Character(StrictModel):
     default_position: Position | None = Field(default=None, alias="defaultPosition")
     color: str | None = None
     shape: NodeShape = NodeShape.ELLIPSE
+    images: list[MapImage] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def validate_placement(self) -> "Character":
@@ -110,6 +130,8 @@ class Connection(StrictModel):
     direction: ConnectionDirection = ConnectionDirection.BIDIRECTIONAL
     name: str = ""
     notes: str = ""
+    details: str = ""
+    images: list[MapImage] = Field(default_factory=list)
 
 
 class MapData(StrictModel):

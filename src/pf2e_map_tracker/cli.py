@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from pf2e_map_tracker.graph import generate_graph
+from pf2e_map_tracker.images import local_image_files
 from pf2e_map_tracker.io import load_graph_options, load_map_data
 from pf2e_map_tracker.models import GraphOptions, MapData
 
@@ -43,7 +44,8 @@ def main(argv: list[str] | None = None) -> int:
             output = generate_graph(args.input, args.output)
             print(f"Graph saved to: {output}")
         elif args.command == "validate":
-            load_map_data(args.input)
+            data = load_map_data(args.input)
+            local_image_files(data, args.input.resolve().parent)
             load_graph_options()
             print(f"Valid map data: {args.input}")
         elif args.command == "edit":

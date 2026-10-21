@@ -7,8 +7,10 @@ from pathlib import Path
 from pyvis.network import Network
 
 from pf2e_map_tracker.html_enhancements import inject_enhancements
+from pf2e_map_tracker.images import publish_images
 from pf2e_map_tracker.io import load_graph_options, load_map_data
 from pf2e_map_tracker.models import UNKNOWN_ROOM_ID, ConnectionDirection, MapData
+from pf2e_map_tracker.presentation import enrich_network, resolve_network_images
 from pf2e_map_tracker.tooltips import (
     character_group_tooltips,
     character_tooltip,
@@ -46,12 +48,14 @@ NO_ARROWS = {"to": {"enabled": False}, "from": {"enabled": False}}
 
 def generate_graph(input_path: Path, output_path: Path) -> Path:
     data = load_map_data(input_path)
-    return write_graph(data, output_path)
+    return write_graph(data, output_path, image_root=input_path.resolve().parent)
 
 
-def write_graph(data: MapData, output_path: Path) -> Path:
+def write_graph(data: MapData, output_path: Path, *, image_root: Path | None = None) -> Path:
     """Render a validated snapshot, including the standalone viewer controls."""
     network = build_network(data)
+    image_urls = publish_images(data, image_root or Path.cwd(), output_path.parent)
+    resolve_network_images(network, lambda source: image_urls.get(source, source))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(network.generate_html(notebook=False), encoding="utf-8")
     inject_enhancements(output_path, data.default_view)
@@ -66,7 +70,7 @@ def build_network(data: MapData) -> Network:
         bgcolor="#222222",
         font_color="white",
         notebook=False,
-        select_menu=True,
+        select_menu=False,
         filter_menu=False,
         cdn_resources="remote",
     )
@@ -80,10 +84,13 @@ def build_network(data: MapData) -> Network:
     _add_connections(network, data)
     _add_placement_edges(network, data)
     _seed_positions(network, data)
+    enrich_network(network, data)
     options = load_graph_options().model_dump(by_alias=True)
     # Room coordinates and satellite settling are application behavior, not editable options.
     options["layout"] = {"improvedLayout": False, "hierarchical": {"enabled": False}}
     options["interaction"]["dragNodes"] = False
+    options["interaction"]["selectable"] = False
+    options["interaction"]["selectConnectedEdges"] = False
     options["physics"] = {
         "enabled": True,
         "solver": "barnesHut",

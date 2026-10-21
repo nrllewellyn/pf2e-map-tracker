@@ -15,7 +15,12 @@
         "y": -750.0
       },
       "color": "#ff8800",
-      "notes": "Arrival area"
+      "notes": "Arrival area",
+      "images": [
+        {
+          "src": "images/rooms/TeleportRoom.png"
+        }
+      ]
     },
     {
       "id": "main-corridor",
@@ -25,7 +30,12 @@
         "y": -500.0
       },
       "color": "#757575",
-      "notes": "Corridor that appears to run the length of the ship"
+      "notes": "Corridor that appears to run the length of the ship",
+      "images": [
+        {
+          "src": "images/rooms/Corridor.png"
+        }
+      ]
     },
     {
       "id": "workshop",
@@ -34,7 +44,12 @@
         "x": -750.0,
         "y": -500.0
       },
-      "notes": "Well-equipped workshop"
+      "notes": "Well-equipped workshop",
+      "images": [
+        {
+          "src": "images/rooms/Workshop.png"
+        }
+      ]
     },
     {
       "id": "forest",
@@ -43,7 +58,16 @@
         "x": -500.0,
         "y": -250.0
       },
-      "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>"
+      "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>",
+      "details": "A flock of house drakes have moved into this room, relocated from The Lighthouse.",
+      "images": [
+        {
+          "src": "images/rooms/Forest1.png"
+        },
+        {
+          "src": "images/rooms/Forest2.png"
+        }
+      ]
     },
     {
       "id": "small-greenhouse",
@@ -81,7 +105,17 @@
         "x": -750.0,
         "y": 0.0
       },
-      "notes": "Theater that reads the audience's memories and displays them on a screen."
+      "notes": "Theater that reads the audience's memories and displays them on a screen.",
+      "images": [
+        {
+          "src": "images/rooms/MemoryTheater-ScreenOff.png",
+          "caption": "Memory Theater: Screen Off"
+        },
+        {
+          "src": "images/rooms/MemoryTheater-ScreenOn.png",
+          "caption": "Memory Theater: Screen On"
+        }
+      ]
     },
     {
       "id": "orrery",
@@ -118,7 +152,12 @@
         "x": 0.0,
         "y": 0.0
       },
-      "notes": "Memories of those left behind"
+      "notes": "Memories of those left behind",
+      "images": [
+        {
+          "src": "images/rooms/TheHangingRegistry.png"
+        }
+      ]
     },
     {
       "id": "porcelain-passageways",
@@ -127,7 +166,15 @@
         "x": 0.0,
         "y": -250.0
       },
-      "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls."
+      "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls.",
+      "images": [
+        {
+          "src": "images/rooms/ThePorcelainPassages2.png"
+        },
+        {
+          "src": "images/rooms/ThePorcelainPassages1.png"
+        }
+      ]
     },
     {
       "id": "quartermasters-bazaar",
@@ -136,7 +183,22 @@
         "x": 250.0,
         "y": -250.0
       },
-      "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point."
+      "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point.",
+      "images": [
+        {
+          "src": "images/rooms/TheQuartermastersBazaar1.png"
+        },
+        {
+          "src": "images/rooms/TheQuartermastersBazaar2.png"
+        },
+        {
+          "src": "images/rooms/TheQuartermastersBazaar-MysticalCuisineDispenser.png"
+        },
+        {
+          "src": "images/rooms/TheQuartermastersBazaar-KlebShop.png",
+          "caption": "Kleb's Shop"
+        }
+      ]
     },
     {
       "id": "the-crystal-mug",
@@ -145,7 +207,25 @@
         "x": -250.0,
         "y": 250.0
       },
-      "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern."
+      "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.",
+      "images": [
+        {
+          "src": "images/rooms/TheCrystalMug.png",
+          "caption": "Main Room"
+        },
+        {
+          "src": "images/rooms/TheCrystalMug-Bartender.png",
+          "caption": "Torren Alderforge at the Bar"
+        },
+        {
+          "src": "images/rooms/TheCrystalMug-Centerpiece.png",
+          "caption": "The Bar's Centerpiece"
+        },
+        {
+          "src": "images/rooms/TheCrystalMug-Lobby.png",
+          "caption": "The Lobby"
+        }
+      ]
     },
     {
       "id": "lighthouse",
@@ -192,7 +272,12 @@
         "y": 250.0
       },
       "color": "#ff8800",
-      "notes": "A small teleporter room, just off the Crystal Mug."
+      "notes": "A small teleporter room, just off the Crystal Mug.",
+      "images": [
+        {
+          "src": "images/rooms/CrystalMugTeleportRoom.png"
+        }
+      ]
     },
     {
       "id": "orthos",
@@ -230,20 +315,32 @@
   ],
   "characters": [
     {
-      "name": "Arianna Isenhart",
+      "name": "Ariana Isenhart",
       "ancestry": "Human",
       "class": "Inventor",
       "physical_description": "Muscular, soot-streaked arms, hair pulled into a practical bun; always carrying a toolkit and a whetstone.",
       "personality": "Precise, disciplined, quietly confident; speaks little but commands respect with her skill.",
       "other_details": "Travels with Aurethion. Acts an armorer--assists in keeping his gear maintained, as well as making minor adjustments.",
-      "group": "base-camp"
+      "group": "base-camp",
+      "images": [
+        {
+          "src": "images/npcs/followers/ArianaIsenhart.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Arvek (Arvie) Spotsnout-Smith",
       "ancestry": "Ratfolk",
       "class": "Inventor",
       "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
-      "location": "security"
+      "location": "security",
+      "images": [
+        {
+          "src": "images/pcs/ArvieAndConstruct.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Aurethion",
@@ -252,7 +349,13 @@
       "physical_description": "Tall and imposing, partially draconic with gleaming scales integrated into custom-forged plate armor.",
       "personality": "Honorable to a fault and protective almost to excess; struggles between draconic pride and knightly humility.",
       "other_details": "Serves the god Kasjsharux.",
-      "location": "cryogenic-prison"
+      "location": "cryogenic-prison",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/Aurethion.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Britt Underfoot",
@@ -260,7 +363,26 @@
       "class": "Rogue",
       "physical_description": "Small and nimble, with quick fingers and bright green eyes; wears light leather armor and a utility belt full of tools.",
       "personality": "Curious, cheerful, and slightly mischievous; always the first to explore a new ruin or tunnel.",
-      "location": "cryogenic-prison"
+      "location": "cryogenic-prison",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/BrittUnderfoot.png",
+          "caption": "Portrait"
+        }
+      ]
+    },
+    {
+      "name": "Elias Windhook",
+      "ancestry": "Human",
+      "physical_description": "An elderly man, dressed in fisherman's garb; carries a fishing pole and tacklebox",
+      "personality": "Cheerful, friendly, relaxed",
+      "location": "lighthouse",
+      "images": [
+        {
+          "src": "images/npcs/EliasWindhook.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Fennick Glimmerfoot",
@@ -269,7 +391,13 @@
       "physical_description": "Tiny, radiant, greenish hair with floral accents; carries a small flute.",
       "personality": "Cheerful, whimsical, loves playing pranks and keeping the group laughing.",
       "other_details": "Travels with Britt Underfoot. Companion and morale booster; helps make long expeditions fun and engaging.",
-      "group": "researchers"
+      "group": "researchers",
+      "images": [
+        {
+          "src": "images/npcs/followers/FennickGlimmerfoot.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Ganizadi Glyphroot",
@@ -277,7 +405,13 @@
       "class": "Oracle",
       "physical_description": "Luminous pale blue core encased in a dark oak wooden exoskeleton, deeply carved with symbols and glyphs representing language and knowledge. Fragments of paper and ink float subtly around the core.",
       "personality": "Slightly eccentric and intensely focused on patterns in language and history. Speaks in layered metaphors, enjoys unraveling ancient texts, and delights in sharing philosophical insights.",
-      "location": "orthos"
+      "location": "orthos",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/GanizadiGlyphroot.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Hilda Stoutbrew",
@@ -286,13 +420,25 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Thalra Brewmantle. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "group": "base-camp"
+      "group": "base-camp",
+      "images": [
+        {
+          "src": "images/npcs/followers/HildaStoutbrew.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Krigah, Son of Oman",
       "ancestry": "Minotaur",
       "class": "Sorcerer",
-      "group": "the-party"
+      "group": "the-party",
+      "images": [
+        {
+          "src": "images/pcs/Krigah.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Lunexa Duskweaver",
@@ -301,7 +447,13 @@
       "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
       "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
       "other_details": "Travels with Runeweaver. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
-      "group": "base-camp"
+      "group": "base-camp",
+      "images": [
+        {
+          "src": "images/npcs/followers/LunexaDuskweaver.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Lyria Moonthread",
@@ -310,19 +462,37 @@
       "physical_description": "Slender, dark hair tied back, robes slightly too long; carries notebooks, quills, and a small crystal orb.",
       "personality": "Inquisitive, attentive, patient; fascinated by Veylorin's spells and constantly takes notes.",
       "other_details": "Travels with Veylorin Starweaver. Apprentice; learns arcane theory and assists with spell research.",
-      "group": "the-party"
+      "group": "the-party",
+      "images": [
+        {
+          "src": "images/npcs/followers/LyriaMoonthread.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Mallow Mistnook",
       "ancestry": "Gnome",
       "class": "Kineticist",
-      "group": "the-party"
+      "group": "the-party",
+      "images": [
+        {
+          "src": "images/pcs/MallowMistnook.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Merora",
       "ancestry": "Dwarf",
       "class": "Cleric",
-      "group": "the-party"
+      "group": "the-party",
+      "images": [
+        {
+          "src": "images/pcs/Merora.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Mira Brightleaf",
@@ -331,7 +501,13 @@
       "physical_description": "Youthful, luminous purple core encased in a wooden exoskeleton; carries a small lyre and floating sheets of notes.",
       "personality": "Cheerful, encouraging, and talkative; keeps the group engaged during long research sessions.",
       "other_details": "Travels with Ganizadi. Companion and morale booster; prevents Ganizadi from becoming too socially isolated while helping with note-taking.",
-      "group": "researchers"
+      "group": "researchers",
+      "images": [
+        {
+          "src": "images/npcs/followers/MiraBrightleaf.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Runeweaver",
@@ -340,7 +516,13 @@
       "physical_description": "Tall metallic frame with reinforced plating and tool mounts along the limbs. Integrated stabilizers help maintain balance under heavy loads. Optical sensors glow softly in dim light.",
       "personality": "Stoic, methodical, and extremely precise. Constantly tests innovations under stress to improve performance and is deeply protective of allies in battle.",
       "other_details": "Innovation: Reinforced Exosuit, a personal armor enhancement that deploys stabilizing braces and adaptive shields to improve defense and mobility.",
-      "location": "cryogenic-prison"
+      "location": "cryogenic-prison",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/Runeweaver.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Rurik Pebbleleaf",
@@ -349,7 +531,13 @@
       "physical_description": "Plant-like, dwarf-height humanoid; leafy hair and a small satchel of scrolls and ink bottles.",
       "personality": "Methodical and loyal; loves organizing Ganizadi's research, taking meticulous notes, and cross-referencing texts.",
       "other_details": "Travels with Ganizadi. Junior apprentice; shadows Ganizadi during research, learning analysis and pattern recognition.",
-      "group": "researchers"
+      "group": "researchers",
+      "images": [
+        {
+          "src": "images/npcs/followers/RurikPebbleleaf.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Sentinel Varr",
@@ -358,7 +546,13 @@
       "physical_description": "Human-sized; made of bronze-colored metal with glowing blue components; the symbol of ship security is built into his chassis",
       "personality": "Serious; protective of the ship; strongly dislikes chaos in all forms",
       "other_details": "Rescued from the brig in Security. Was confined there for \"several centuries\".",
-      "location": "main-corridor"
+      "location": "main-corridor",
+      "images": [
+        {
+          "src": "images/npcs/SentinelVarr.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Sir Greg*",
@@ -367,7 +561,17 @@
       "physical_description": "Gleaming, excessively gold-trimmed armor; a flowing crimson cape that billows without wind; perfectly styled hair he fixes mid-fight; and a cosmetically glowing longsword. Maintains a striking heroic pose at all times.",
       "personality": "Speaks in grand declarations, interrupts others to monologue, interprets disagreement as villainy, and escalates immediately to violence. Cannot admit defeat, insisting every loss was merely a test.",
       "other_details": "*Champion of Light, Scourge of Darkness, Hero of Destiny",
-      "location": "current-location-unknown"
+      "location": "current-location-unknown",
+      "images": [
+        {
+          "src": "images/npcs/SirGreg.png",
+          "caption": "Portrait"
+        },
+        {
+          "src": "images/npcs/SirGreg_ActionPose.png",
+          "caption": "Action Pose"
+        }
+      ]
     },
     {
       "name": "Tahlok Shardframe",
@@ -376,13 +580,25 @@
       "physical_description": "Sleek metallic body, small glowing nodes, tool compartments along limbs; optical sensors blink softly.",
       "personality": "Methodical and precise; logs experimental data carefully and assists Runeweaver with calculations.",
       "other_details": "Travels with Runeweaver. Apprentice and assistant; helps with schematics, diagrams, and small technical tests.",
-      "group": "researchers"
+      "group": "researchers",
+      "images": [
+        {
+          "src": "images/npcs/followers/TahlokShardframe.jpg",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Thaddeus",
       "ancestry": "Orc",
       "class": "Fighter",
-      "group": "the-party"
+      "group": "the-party",
+      "images": [
+        {
+          "src": "images/pcs/Thaddeus.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Thalra Brewmantle",
@@ -390,7 +606,13 @@
       "class": "Cleric",
       "physical_description": "Stocky and strong, with auburn hair braided with golden beads. Wears chainmail and a pendant engraved with Helkara's holy symbols. Carries a reinforced battle tankard that doubles as a weapon and a small satchel of healing supplies.",
       "personality": "Warm, nurturing, jovial, and steadfast; protective of her allies and always ready with a healing word or frothy mug of ale to lift spirits.",
-      "location": "cryogenic-prison"
+      "location": "cryogenic-prison",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/ThalraBrewmantle.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Tink Gearwhistle",
@@ -399,7 +621,13 @@
       "physical_description": "Small, copper hair sticking out of a messy cap; always carrying tiny tools and vials.",
       "personality": "Eager, excitable, curious; constantly experimenting under Britt's guidance.",
       "other_details": "Travels with Britt Underfoot. Apprentice and assistant; helps Britt prepare tools, maps, and traps.",
-      "group": "base-camp"
+      "group": "base-camp",
+      "images": [
+        {
+          "src": "images/npcs/followers/TinkGearwhistle.png",
+        "caption": "Portrai t"
+        }
+      ]
     },
     {
       "name": "Torren Alderforge",
@@ -408,7 +636,13 @@
       "physical_description": "Broad-shouldered and powerfully built. He is bald, with a full, meticulously maintained beard touched by dignified streaks of gray. Magical tattoos formed from luminous crystal trace across his skin, glowing softly and occasionally shifting patterns.",
       "personality": "Friendly, outgoing, and effortlessly welcoming, with a talent for making strangers feel like regulars. He genuinely cares for his patrons and readily offers advice, comfort, or a discreet favor. Beneath his warmth lies a practical business owner who understands that generosity has limits and even a timeless tavern must turn a profit.",
       "other_details": "Proprietor and bartender of The Crystal Mug, an enigmatic tavern that appears in different places and eras. He remembers countless patrons, cultures, and events, though he carefully avoids revealing knowledge that could disrupt history. No matter where The Crystal Mug appears, Torren is always behind the bar, polishing a glass and ready to greet whoever walks through its door.",
-      "location": "the-crystal-mug"
+      "location": "the-crystal-mug",
+      "images": [
+        {
+          "src": "images/npcs/TorrenAlderforge.png",
+          "caption": "Portrait"
+        }
+      ]
     },
     {
       "name": "Veylorin Starweaver",
@@ -416,7 +650,13 @@
       "class": "Wizard",
       "physical_description": "Tall and slender, with silver-white hair cascading over a deep blue robe adorned with arcane sigils. Carries a glowing magical staff, and three shimmering Aeon stones orbit his head, faintly illuminating his face.",
       "personality": "Brilliant, focused, and precise; loves experimentation and mastering destructive magic, though somewhat absent-minded socially. Analytical and strategic in combat, often serving as the party's magical powerhouse.",
-      "location": "cryogenic-prison"
+      "location": "cryogenic-prison",
+      "images": [
+        {
+          "src": "images/npcs/high-level-adventurers/VeylorinStarweaver.png",
+          "caption": "Portrait"
+        }
+      ]
     }
   ],
   "character_groups": [
@@ -438,7 +678,13 @@
       "id": "the-party",
       "name": "The Party",
       "location": "security",
-      "color": "#d62000"
+      "color": "#d62000",
+      "images": [
+        {
+          "src": "images/pcs/Party 2.png",
+          "caption": "Portrait"
+        }
+      ]
     }
   ],
   "connections": [

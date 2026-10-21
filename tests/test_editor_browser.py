@@ -92,6 +92,69 @@ def add(page, kind):
     page.get_by_role("button", name="Add", exact=True).click()
 
 
+def test_edit_pictures_and_new_fields_save_rebuild_reload(page, editor_server):
+    picture = editor_server["source"].parent / "picture.svg"
+    picture.write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100">'
+        '<rect width="200" height="100" fill="blue"/></svg>',
+        encoding="utf-8",
+    )
+    for kind in ("rooms", "character_groups", "characters", "connections"):
+        choose(page, kind)
+        if kind != "characters":
+            page.locator("#field-details").fill(f"<b>{kind} detailed text</b>")
+        if kind == "character_groups":
+            page.locator("#field-notes").fill("Group hover note")
+        page.get_by_role("button", name="Add picture", exact=True).click()
+        page.locator("#image-0-src").fill("picture.svg")
+        page.locator("#image-0-alt").fill(f"{kind} alternative text")
+        page.locator("#image-0-caption").fill("<b>Plain caption</b>")
+        page.wait_for_function("document.querySelector('.image-preview').naturalWidth > 0")
+        page.get_by_role("button", name="Add picture", exact=True).click()
+        page.locator("#image-1-src").fill("https://invalid.example/missing.png")
+        page.locator(".image-entry").nth(1).get_by_role(
+            "button", name="Move up", exact=True
+        ).click()
+        assert page.locator("#image-0-src").input_value() == "https://invalid.example/missing.png"
+        page.locator(".image-entry").nth(0).get_by_role(
+            "button", name="Move down", exact=True
+        ).click()
+        page.locator(".image-entry").nth(1).get_by_role(
+            "button", name="Remove picture", exact=True
+        ).click()
+        apply(page)
+        assert page.locator("#image-0-src").input_value() == "picture.svg"
+    page.get_by_role("button", name="Rebuild graph", exact=True).click()
+    wait_idle(page)
+    saved = json.loads(editor_server["source"].read_text(encoding="utf-8"))
+    for kind in ("rooms", "character_groups", "characters", "connections"):
+        assert saved[kind][0]["images"] == [
+            {
+                "src": "picture.svg",
+                "alt": f"{kind} alternative text",
+                "caption": "<b>Plain caption</b>",
+            }
+        ]
+        if kind != "characters":
+            assert saved[kind][0]["details"] == f"<b>{kind} detailed text</b>"
+    assert saved["character_groups"][0]["notes"] == "Group hover note"
+    assert len(list((editor_server["output"].parent / "assets/images").glob("*.svg"))) == 1
+    page.reload()
+    page.wait_for_function("window.mapEditor?.network && !window.mapEditor.busy")
+    choose(page, "character_groups")
+    assert page.locator("#field-notes").input_value() == "Group hover note"
+    assert page.locator("#image-0-caption").input_value() == "<b>Plain caption</b>"
+    assert page.evaluate("mapEditor.network.selectionHandler.options.selectable") is True
+    page.locator("#image-0-src").fill("missing.svg")
+    apply(page)
+    page.evaluate("""() => mapEditor.network.emit('hoverNode', {
+        node: 'party', event: {clientX: 400, clientY: 300}
+    })""")
+    page.locator("#graph-tooltip").content_frame.get_by_text(
+        "Image unavailable", exact=True
+    ).wait_for()
+
+
 def test_capture_default_view_preserves_form_and_reopens_editor_and_viewer(
     page, editor_server, monkeypatch, browser
 ):

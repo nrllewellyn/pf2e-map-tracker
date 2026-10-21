@@ -85,6 +85,13 @@
         "shape": {
           "$ref": "#/$defs/NodeShape",
           "default": "ellipse"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Images",
+          "type": "array"
         }
       },
       "required": [
@@ -138,6 +145,23 @@
         "shape": {
           "$ref": "#/$defs/NodeShape",
           "default": "circle"
+        },
+        "notes": {
+          "default": "",
+          "title": "Notes",
+          "type": "string"
+        },
+        "details": {
+          "default": "",
+          "title": "Details",
+          "type": "string"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Images",
+          "type": "array"
         }
       },
       "required": [
@@ -179,6 +203,18 @@
           "default": "",
           "title": "Notes",
           "type": "string"
+        },
+        "details": {
+          "default": "",
+          "title": "Details",
+          "type": "string"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Images",
+          "type": "array"
         }
       },
       "required": [
@@ -259,6 +295,31 @@
       "title": "DefaultView",
       "type": "object"
     },
+    "MapImage": {
+      "additionalProperties": false,
+      "properties": {
+        "src": {
+          "minLength": 1,
+          "title": "Src",
+          "type": "string"
+        },
+        "alt": {
+          "default": "",
+          "title": "Alt",
+          "type": "string"
+        },
+        "caption": {
+          "default": "",
+          "title": "Caption",
+          "type": "string"
+        }
+      },
+      "required": [
+        "src"
+      ],
+      "title": "MapImage",
+      "type": "object"
+    },
     "NodeShape": {
       "enum": [
         "ellipse",
@@ -331,6 +392,18 @@
           "default": "",
           "title": "Notes",
           "type": "string"
+        },
+        "details": {
+          "default": "",
+          "title": "Details",
+          "type": "string"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Images",
+          "type": "array"
         }
       },
       "required": [

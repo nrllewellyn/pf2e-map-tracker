@@ -6,22 +6,24 @@
     const state = {data: null, saved: '', revision: '', schema: null, selection: null,
         formDirty: false, busy: false, conflict: false, network: null, nodes: null, edges: null};
     window.mapEditor = state;
+    let draftImages = [];
+    let tooltipGeneration = 0;
     const definitions = {rooms: 'Room', character_groups: 'CharacterGroup', characters: 'Character',
         connections: 'Connection', connectionStatus: 'ConnectionStatus'};
     const fields = {
-        rooms: ['id', 'name', 'position', 'color', 'shape', 'notes'],
-        character_groups: ['id', 'name', 'location', 'defaultPosition', 'color', 'shape'],
+        rooms: ['id', 'name', 'position', 'color', 'shape', 'notes', 'details', 'images'],
+        character_groups: ['id', 'name', 'location', 'defaultPosition', 'color', 'shape', 'notes', 'details', 'images'],
         characters: ['name', 'ancestry', 'class', 'placement', 'defaultPosition', 'color', 'shape',
-            'physical_description', 'personality', 'other_details'],
-        connections: ['from', 'to', 'status', 'direction', 'name', 'notes'],
+            'physical_description', 'personality', 'other_details', 'images'],
+        connections: ['from', 'to', 'status', 'direction', 'name', 'notes', 'details', 'images'],
         connectionStatus: ['id', 'description', 'display_color', 'line_style']
     };
     const fieldLabels = {id: 'ID', name: 'Name', ancestry: 'Ancestry', class: 'Class', location: 'Room',
         group: 'Group', color: 'Color', shape: 'Shape', notes: 'Notes (HTML)', from: 'From room',
         to: 'To room', status: 'Connection status', direction: 'Direction', description: 'Description',
         display_color: 'Line color', line_style: 'Line style', physical_description: 'Physical description (HTML)',
-        personality: 'Personality (HTML)', other_details: 'Other details (HTML)'};
-    const htmlFields = new Set(['notes', 'physical_description', 'personality', 'other_details']);
+        personality: 'Personality (HTML)', other_details: 'Other details (HTML)', details: 'Details (HTML, detailed view only)'};
+    const htmlFields = new Set(['notes', 'details', 'physical_description', 'personality', 'other_details']);
     const draggableKinds = new Set(['rooms', 'character_groups', 'characters']);
 
     function notice(message, error = false) {
@@ -119,6 +121,86 @@
     function htmlDocument(html) {
         return `<html><head><meta charset="utf-8"><style>body{font:13px/1.5 system-ui;color:#e7edf6;background:#222;padding:8px;margin:0;overflow-wrap:anywhere}a{color:#70d6c7}img{max-width:100%}</style></head><body>${html}</body></html>`;
     }
+    function imageUrl(source) {
+        return /^https?:\/\//i.test(source) ? source : '/api/images?' + new URLSearchParams({src: source});
+    }
+    function renderImages(images) {
+        draftImages = clone(images || []);
+        const container = document.createElement('fieldset');
+        container.id = 'field-images';
+        const legend = document.createElement('legend');
+        legend.textContent = 'Pictures';
+        const help = document.createElement('p');
+        help.className = 'muted';
+        help.textContent = 'Use an HTTP/HTTPS URL or a file path relative to the map JSON directory. The first picture appears on hover.';
+        const rows = document.createElement('div');
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.id = 'add-image';
+        add.textContent = 'Add picture';
+        function draw() {
+            rows.replaceChildren();
+            draftImages.forEach((picture, index) => {
+                const row = document.createElement('div');
+                row.className = 'image-entry';
+                const preview = document.createElement('img');
+                preview.className = 'image-preview';
+                const fallback = document.createElement('span');
+                fallback.className = 'muted';
+                fallback.textContent = 'Image unavailable';
+                function updatePreview() {
+                    preview.hidden = !picture.src;
+                    fallback.hidden = false;
+                    preview.onload = () => { preview.hidden = false; fallback.hidden = true; };
+                    preview.onerror = () => { preview.hidden = true; fallback.hidden = false; };
+                    preview.alt = picture.alt || `Picture ${index + 1}`;
+                    if (picture.src) preview.src = imageUrl(picture.src);
+                }
+                for (const [key, title] of [['src', 'Image source'], ['alt', 'Alt text'], ['caption', 'Caption']]) {
+                    const label = document.createElement('label');
+                    label.className = 'field';
+                    label.textContent = title;
+                    const input = document.createElement('input');
+                    input.id = `image-${index}-${key}`;
+                    input.value = picture[key] || '';
+                    input.required = key === 'src';
+                    input.addEventListener('input', () => {
+                        picture[key] = input.value;
+                        if (key === 'src') updatePreview();
+                        if (key === 'alt') preview.alt = picture.alt;
+                    });
+                    label.append(input);
+                    row.append(label);
+                }
+                row.append(preview, fallback);
+                const actions = document.createElement('div');
+                actions.className = 'image-actions';
+                for (const [title, offset] of [['Move up', -1], ['Move down', 1], ['Remove picture', 0]]) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.textContent = title;
+                    button.disabled = offset !== 0 && (index + offset < 0 || index + offset >= draftImages.length);
+                    button.addEventListener('click', () => {
+                        if (offset === 0) draftImages.splice(index, 1);
+                        else [draftImages[index], draftImages[index + offset]] = [draftImages[index + offset], draftImages[index]];
+                        draw(); markFormDirty();
+                    });
+                    actions.append(button);
+                }
+                row.append(actions);
+                rows.append(row);
+                updatePreview();
+            });
+        }
+        add.addEventListener('click', () => {
+            draftImages.push({src: '', alt: '', caption: ''});
+            draw(); markFormDirty();
+            $(`image-${draftImages.length - 1}-src`).focus();
+        });
+        container.append(legend, help, rows, add);
+        $('fields').append(container);
+        draw();
+    }
     function choiceValues(field) {
         if (['location', 'from', 'to'].includes(field)) {
             const rooms = (state.data.rooms || []).map(item => [item.id, `${item.name} (${item.id})`]);
@@ -197,7 +279,8 @@
         $('form-errors').textContent = '';
         $('fields').replaceChildren();
         for (const field of fields[kind]) {
-            if (field === 'position' || field === 'defaultPosition') {
+            if (field === 'images') renderImages(object.images);
+            else if (field === 'position' || field === 'defaultPosition') {
                 const optional = field === 'defaultPosition';
                 if (optional) {
                     const help = document.createElement('p');
@@ -261,7 +344,9 @@
         const object = index === null ? {} : clone(state.data[kind][index]);
         const required = state.schema.$defs[definitions[kind]].required;
         for (const field of fields[kind]) {
-            if (field === 'position' || field === 'defaultPosition') {
+            if (field === 'images') {
+                if (draftImages.length || object.images) object.images = clone(draftImages);
+            } else if (field === 'position' || field === 'defaultPosition') {
                 if (field === 'defaultPosition' && $('field-x').value === '' && $('field-y').value === '') {
                     delete object.defaultPosition;
                     continue;
@@ -322,9 +407,22 @@
     function showTooltip(html, event) {
         if (!html) return;
         const tooltip = $('graph-tooltip');
-        tooltip.srcdoc = htmlDocument(html.replace(/\n/g, '<br>'));
-        tooltip.style.left = `${Math.max(5, Math.min(event.clientX + 16, innerWidth - 350))}px`;
-        tooltip.style.top = `${Math.max(5, Math.min(event.clientY + 16, innerHeight - 210))}px`;
+        const generation = ++tooltipGeneration;
+        const content = document.createElement('template');
+        content.innerHTML = html.replace(/\n/g, '<br>');
+        tooltip.srcdoc = htmlDocument(content.innerHTML);
+        for (const image of content.content.querySelectorAll('.pf2e-tooltip-image')) {
+            // The tooltip iframe is sandboxed, so image error handling stays in its parent.
+            const probe = new Image();
+            probe.onerror = () => {
+                if (generation !== tooltipGeneration || tooltip.hidden) return;
+                image.replaceWith(document.createTextNode('Image unavailable'));
+                tooltip.srcdoc = htmlDocument(content.innerHTML);
+            };
+            probe.src = image.getAttribute('src');
+        }
+        tooltip.style.left = `${Math.max(5, Math.min(event.clientX + 16, innerWidth - tooltip.offsetWidth - 5))}px`;
+        tooltip.style.top = `${Math.max(5, Math.min(event.clientY + 16, innerHeight - tooltip.offsetHeight - 5))}px`;
         tooltip.hidden = false;
     }
     function applyVisibility() {
@@ -365,6 +463,8 @@
         });
         const options = clone(graph.options);
         options.interaction.dragNodes = true;
+        options.interaction.selectable = true;
+        options.interaction.selectConnectedEdges = true;
         options.interaction.multiselect = false;
         // Satellite settling must not zoom the canvas while the author is editing.
         options.physics.stabilization.fit = false;
