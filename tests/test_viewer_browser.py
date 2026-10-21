@@ -161,6 +161,40 @@ def click_node(page, node_id):
     page.wait_for_selector("#map-details[open]")
 
 
+def test_map_frame_and_canvas_fill_window_after_resize(viewer, tmp_path):
+    page = viewer
+    for width, height in [(2854, 1600), (1600, 2400), (390, 700), (1200, 360)]:
+        view = page.evaluate("({position: network.getViewPosition(), scale: network.getScale()})")
+        page.set_viewport_size({"width": width, "height": height})
+        page.wait_for_function(
+            """() => {
+                const graph = document.getElementById('mynetwork').getBoundingClientRect();
+                const canvas = document.querySelector('#mynetwork canvas').getBoundingClientRect();
+                return Math.abs(graph.bottom - innerHeight) <= 2
+                    && canvas.bottom <= graph.bottom && graph.bottom - canvas.bottom <= 2;
+            }""",
+            timeout=5000,
+        )
+        bounds = page.evaluate("""() => {
+            const graph = document.getElementById('mynetwork').getBoundingClientRect();
+            const toolbar = document.getElementById('map-toolbar').getBoundingClientRect();
+            const canvas = document.querySelector('#mynetwork canvas').getBoundingClientRect();
+            return {graphTop: graph.top, toolbarBottom: toolbar.bottom,
+                canvasRight: canvas.right, canvasBottom: canvas.bottom,
+                scrollWidth: document.documentElement.scrollWidth,
+                scrollHeight: document.documentElement.scrollHeight};
+        }""")
+        assert bounds["graphTop"] == pytest.approx(bounds["toolbarBottom"], abs=1)
+        assert bounds["canvasRight"] <= width
+        assert bounds["canvasBottom"] <= height
+        assert bounds["scrollWidth"] <= width
+        assert bounds["scrollHeight"] <= height
+        assert page.evaluate("network.getViewPosition()") == pytest.approx(view["position"])
+        assert page.evaluate("network.getScale()") == pytest.approx(view["scale"])
+        if width == 2854:
+            page.screenshot(path=str(tmp_path / "large-window.png"))
+
+
 def test_click_details_replaces_highlighting_and_gallery_is_contained(viewer):
     page = viewer
     assert page.locator("#select-node").count() == 0

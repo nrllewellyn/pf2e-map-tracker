@@ -64,22 +64,21 @@
         toolbar.id = 'map-toolbar';
         toolbar.innerHTML = `<label for="character-visibility">Character Visibility
             <select id="character-visibility" aria-label="Character Visibility">
-              <option value="hidden">Hidden</option><option value="groups_only" selected>Groups Only</option>
-              <option value="show_all">Show All</option>
+              <option value="hidden">Hidden</option><option value="groups_only">Groups Only</option>
+              <option value="show_all" selected>Show All</option>
             </select></label>
             <div id="map-build-info"><div id="program-version"></div><div id="build-date"></div></div>`;
         const graph = document.getElementById('mynetwork');
         graph.before(toolbar);
         function sizeGraph() {
             const view = {position: network.getViewPosition(), scale: network.getScale()};
-            const height = Math.max(240, innerHeight - toolbar.getBoundingClientRect().height - 4);
-            network.setSize('100%', height + 'px');
+            network.setSize(graph.clientWidth + 'px', graph.clientHeight + 'px');
             network.moveTo({...view, animation: false});
         }
-        sizeGraph();
-        addEventListener('resize', sizeGraph);
         document.getElementById('program-version').textContent = 'Version ' + PF2E_MAP_TRACKER_BUILD.version;
         document.getElementById('build-date').textContent = 'Built ' + PF2E_MAP_TRACKER_BUILD.builtAt;
+        sizeGraph();
+        addEventListener('resize', sizeGraph);
         const select = document.getElementById('character-visibility');
         select.addEventListener('change', event => setCharacterVisibility(event.target.value));
         setCharacterVisibility(select.value);
