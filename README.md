@@ -3,6 +3,9 @@
 Generate a standalone interactive HTML map for a PF2e campaign. Rooms, connections,
 characters, and character groups are defined in JSON and rendered with PyVis.
 
+## AI Disclaimer
+The majority of the code in this repository was written by AI or with AI assistance. Please do not use this repository as an example of industry-standard Python or best practices.
+
 ## Setup
 
 Python 3.11 or newer is required.
