@@ -444,9 +444,9 @@
       "name": "Lunexa Duskweaver",
       "ancestry": "Fetchling",
       "class": "Oracle",
-      "physical_description": "Young, round-cheeked, auburn hair in a short braid; simple tunic with Helkara’s holy symbol pinned on. Always carrying a small flask of ale and a satchel of healing herbs.",
-      "personality": "Eager, respectful, and a little clumsy; devoted to learning brewing, healing, and hospitality from Thalra. Loves seeing others smile and is quick to help with chores or small tasks.",
-      "other_details": "Travels with Runeweaver. Acolyte and apprentice cleric; learns rituals, healing techniques, and the holy ways of Helkara directly from Thalra.",
+      "physical_description": "Shadow-touched humanoid with faint gray skin; carries floating notepads and quills.",
+      "personality": "Quiet, thoughtful, and creative; excels at observing patterns in Runeweaver’s work.",
+      "other_details": "Travels with Runeweaver. Record-keeper; documents experiments and provides subtle insight to improve workflow.",
       "group": "base-camp",
       "images": [
         {
