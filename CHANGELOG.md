@@ -2,6 +2,11 @@
 
 This changelog will only be updated for software changes, and does not track changes to map data or image files. 
 
+## 0.2.2
+
+### Fixed
+- Automated tests for small screens failing
+
 ## 0.2.1
 
 ### Added:

@@ -143,6 +143,13 @@ def viewer(browser, tmp_path, monkeypatch):
 
 
 def node_point(page, node_id):
+    # Viewport changes return before the viewer's resize handler updates the canvas.
+    page.wait_for_function("""() => {
+        const graph = document.getElementById('mynetwork');
+        const canvas = graph.querySelector('canvas');
+        return canvas.clientWidth === graph.clientWidth
+            && canvas.clientHeight === graph.clientHeight;
+    }""")
     return page.evaluate(
         """id => {
         const point = network.canvasToDOM(network.getPositions([id])[id]);
