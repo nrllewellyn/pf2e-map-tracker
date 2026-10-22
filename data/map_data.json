@@ -239,7 +239,12 @@
         "x": 250.0,
         "y": 0.0
       },
-      "notes": "A lighthouse floating above the clouds."
+      "notes": "A lighthouse floating above the clouds.",
+      "images": [
+        {
+          "src": "images/rooms/Lighthouse.png"
+        }
+      ]
     },
     {
       "id": "sky-void",
