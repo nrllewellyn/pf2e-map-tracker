@@ -77,7 +77,12 @@
         "y": 250.0
       },
       "color": "#4CAF50",
-      "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here."
+      "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here.",
+        "images": [
+        {
+          "src": "images/rooms/SmallGreenhouse.png"
+        }
+      ]
     },
     {
       "id": "crystal-growth-lab",
