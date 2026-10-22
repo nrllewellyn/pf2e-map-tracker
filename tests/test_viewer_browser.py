@@ -316,9 +316,12 @@ def test_full_screen_image_returns_to_gallery_with_focus_and_selection(viewer, v
         assert not preview.is_visible()
         assert page.locator("#map-details").is_visible()
         assert trigger.evaluate("button => button === document.activeElement")
-        assert page.get_by_role("button", name=f"Show image {index}", exact=True).get_attribute(
-            "aria-pressed"
-        ) == "true"
+        assert (
+            page.get_by_role("button", name=f"Show image {index}", exact=True).get_attribute(
+                "aria-pressed"
+            )
+            == "true"
+        )
         # Reopen from the keyboard; Escape must close only the top dialog.
         page.keyboard.press("Enter")
         assert preview.is_visible()
