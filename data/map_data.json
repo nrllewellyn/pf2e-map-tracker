@@ -263,7 +263,12 @@
         "x": 500.0,
         "y": -250.0
       },
-      "notes": "A cozy inn floating above the clouds"
+      "notes": "A cozy inn floating above the clouds",
+      "images": [
+        {
+          "src": "images/rooms/GryphonRoostInn.jpg"
+        }
+      ]
     },
     {
       "id": "the-webbed-dungeon",
