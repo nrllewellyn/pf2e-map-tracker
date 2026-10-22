@@ -38,7 +38,8 @@ def viewer(browser, tmp_path, monkeypatch):
 
     monkeypatch.setattr(graph, "build_network", offline_build)
     (tmp_path / "first.svg").write_text(SVG, encoding="utf-8")
-    (tmp_path / "second.svg").write_text(SVG.replace("blue", "green"), encoding="utf-8")
+    portrait = SVG.replace('width="400" height="200"', 'width="200" height="800"')
+    (tmp_path / "second.svg").write_text(portrait.replace("blue", "green"), encoding="utf-8")
     images = [
         {"src": "first.svg", "alt": "Wide room", "caption": "<b>Plain caption</b>"},
         {"src": "second.svg", "alt": "Another view", "caption": "Second picture"},
@@ -278,6 +279,61 @@ def test_room_appearance_draws_default_and_supported_shapes(viewer, shape):
     )
 
 
+@pytest.mark.parametrize("viewport", [(1400, 1000), (390, 700)])
+def test_full_screen_image_returns_to_gallery_with_focus_and_selection(viewer, viewport):
+    page = viewer
+    width, height = viewport
+    page.set_viewport_size({"width": width, "height": height})
+    page.evaluate("network.moveTo({position: {x: 0, y: 0}, scale: 0.5, animation: false})")
+    click_node(page, "hall")
+    trigger = page.get_by_role("button", name="View image full screen", exact=True)
+    preview = page.get_by_role("dialog", name="Full-screen image preview", exact=True)
+    enlarged = page.locator("#map-image-preview-image")
+    for index in (1, 2):
+        page.get_by_role("button", name=f"Show image {index}", exact=True).click()
+        page.wait_for_function("document.getElementById('map-detail-image').naturalWidth > 0")
+        trigger.click()
+        preview.wait_for(state="visible")
+        page.wait_for_function(
+            "document.getElementById('map-image-preview-image').naturalWidth > 0"
+        )
+        assert enlarged.evaluate("img => img.src") == page.locator("#map-detail-image").evaluate(
+            "img => img.src"
+        )
+        assert enlarged.get_attribute("alt") == page.locator("#map-detail-image").get_attribute(
+            "alt"
+        )
+        bounds = preview.bounding_box()
+        assert bounds == {"x": 0, "y": 0, "width": width, "height": height}
+        image = enlarged.bounding_box()
+        assert image["x"] >= 0 and image["x"] + image["width"] <= width
+        assert image["y"] >= 0 and image["y"] + image["height"] <= height
+        ratio = enlarged.evaluate("img => img.naturalWidth / img.naturalHeight")
+        assert image["width"] / image["height"] == pytest.approx(ratio, rel=0.01)
+        enlarged.click()
+        assert preview.is_visible()
+        page.mouse.click(1, 1)
+        assert not preview.is_visible()
+        assert page.locator("#map-details").is_visible()
+        assert trigger.evaluate("button => button === document.activeElement")
+        assert page.get_by_role("button", name=f"Show image {index}", exact=True).get_attribute(
+            "aria-pressed"
+        ) == "true"
+        # Reopen from the keyboard; Escape must close only the top dialog.
+        page.keyboard.press("Enter")
+        assert preview.is_visible()
+        page.keyboard.press("Tab")
+        assert preview.evaluate("dialog => dialog.contains(document.activeElement)")
+        page.keyboard.press("Escape")
+        assert not preview.is_visible()
+        assert page.locator("#map-details").is_visible()
+    trigger.click()
+    page.get_by_role("button", name="Close image", exact=True).click()
+    assert not preview.is_visible()
+    page.keyboard.press("Escape")
+    assert not page.locator("#map-details").is_visible()
+
+
 def test_hover_preview_and_detailed_character_group_fields(viewer):
     page = viewer
     point = node_point(page, "hall")
@@ -345,6 +401,11 @@ def test_connections_parallel_metadata_unknown_nodes_and_attachment_edges(viewer
     assert "ID" not in page.locator("#map-detail-fields dt").all_text_contents()
     assert page.locator(".map-dialog-actions .map-line-preview").count() == 1
     assert "#cc8822" not in page.locator("#map-details").inner_text()
+    page.get_by_role("button", name="View image full screen", exact=True).click()
+    assert page.locator("#map-image-preview").is_visible()
+    page.mouse.click(1, 1)
+    assert not page.locator("#map-image-preview").is_visible()
+    assert page.locator("#map-detail-title").inner_text() == "Passage"
     page.keyboard.press("Escape")
     # Overlapping parallel paths still retain independent source records.
     page.evaluate("""() => {

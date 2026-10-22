@@ -147,11 +147,13 @@
         function selectImage(index) {
             const picture = images[index];
             const image = document.getElementById('map-detail-image');
+            const openImage = document.getElementById('map-detail-image-open');
             const fallback = document.getElementById('map-image-fallback');
+            openImage.hidden = false;
             image.hidden = false;
             fallback.hidden = true;
-            image.onload = () => { image.hidden = false; fallback.hidden = true; };
-            image.onerror = () => { image.hidden = true; fallback.hidden = false; };
+            image.onload = () => { openImage.hidden = false; image.hidden = false; fallback.hidden = true; };
+            image.onerror = () => { openImage.hidden = true; image.hidden = true; fallback.hidden = false; };
             image.alt = picture.alt || `Image ${index + 1}`;
             image.src = picture.url;
             const caption = document.getElementById('map-detail-caption');
@@ -176,6 +178,31 @@
         });
         if (images.length) selectImage(0);
     }
+    function setupImagePreview() {
+        const preview = document.createElement('dialog');
+        preview.id = 'map-image-preview';
+        preview.setAttribute('aria-label', 'Full-screen image preview');
+        preview.innerHTML = `<button id="map-image-preview-close" type="button" autofocus>Close image</button>
+            <img id="map-image-preview-image" alt="">`;
+        document.body.append(preview);
+        document.getElementById('map-detail-image-open').addEventListener('click', () => {
+            const image = document.getElementById('map-detail-image');
+            if (image.hidden) return;
+            const enlarged = document.getElementById('map-image-preview-image');
+            enlarged.alt = image.alt;
+            enlarged.src = image.src;
+            preview.showModal();
+        });
+        const close = document.getElementById('map-image-preview-close');
+        close.addEventListener('click', () => preview.close());
+        preview.addEventListener('keydown', event => {
+            if (event.key === 'Tab') { event.preventDefault(); close.focus(); }
+        });
+        preview.addEventListener('click', event => {
+            if (event.target === preview) preview.close();
+        });
+        dialog.addEventListener('close', () => { if (preview.open) preview.close(); });
+    }
     function setupDetails() {
         dialog = document.createElement('dialog');
         dialog.id = 'map-details';
@@ -185,10 +212,13 @@
             <button id="map-detail-close" type="button" autofocus>Close</button></div></div>
             <div class="map-dialog-body"><section aria-label="Object information">
             <div id="map-detail-fields"></div></section><section id="map-detail-gallery" aria-label="Pictures">
-            <figure id="map-detail-figure"><img id="map-detail-image" alt=""><div id="map-image-fallback" hidden>Image unavailable</div>
+            <figure id="map-detail-figure"><button id="map-detail-image-open" type="button"
+            aria-label="View image full screen" title="View image full screen"><img id="map-detail-image" alt=""></button>
+            <div id="map-image-fallback" hidden>Image unavailable</div>
             <figcaption id="map-detail-caption"></figcaption></figure><div id="map-gallery-thumbnails"></div>
             <div id="map-image-metadata" class="map-image-metadata"></div></section></div>`;
         document.body.append(dialog);
+        setupImagePreview();
         document.getElementById('map-detail-close').addEventListener('click', () => dialog.close());
         dialog.addEventListener('keydown', event => {
             if (event.key !== 'Tab') return;

@@ -150,7 +150,9 @@ with a count of additional pictures. Click to open a read-only details panel wit
 fields, referenced room/group names, and a full picture gallery. IDs and saved
 coordinates and empty fields are omitted from the panel. A colored node
 shape or connection-line preview appears beside **Close**; shape names and color
-codes are omitted from the text. Choose gallery thumbnails to switch pictures. Images preserve
+codes are omitted from the text. Choose gallery thumbnails to switch pictures. Click
+the main picture to open a full-screen preview. Click outside the picture, choose
+**Close image**, or press Escape to return to the details panel. Images preserve
 their proportions and fit the screen. Close the panel with **Close**, Escape, or
 a click on the backdrop. Clicking no longer selects or dims graph objects.
 
