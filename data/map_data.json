@@ -590,6 +590,10 @@
         {
           "src": "images/npcs/SirGreg_ActionPose.png",
           "caption": "Action Pose"
+        },
+        {
+          "src": "images/npcs/SirGreg_Retreat.png",
+          "caption": "Merciful Withdrawal!"
         }
       ]
     },
