@@ -244,7 +244,7 @@
         "x": 250.0,
         "y": 0.0
       },
-      "notes": "A lighthouse floating above the clouds.",
+      "notes": "A lighthouse floating above the clouds.<br>Connected to The Gryphon Roost Inn by a beam of arcane energy.",
       "images": [
         {
           "src": "images/rooms/Lighthouse.png"
@@ -268,7 +268,7 @@
         "x": 500.0,
         "y": -250.0
       },
-      "notes": "A cozy inn floating above the clouds",
+      "notes": "A cozy inn floating above the clouds.<br>Connected to the Lighthouse by a beam of arcane energy.",
       "images": [
         {
           "src": "images/rooms/GryphonRoostInn.jpg"
@@ -434,6 +434,19 @@
       ]
     },
     {
+      "name": "Gideon",
+      "ancestry": "Poppet",
+      "physical_description": "A small, elderly-looking poppet wizard with piercing blue eyes, bushy gray eyebrows, and a long silver-gray beard. Wears a blue robe and oversized pointed hat adorned with stars and crescent moons. Carries a flame-tipped wooden staff and keeps magical trinkets on his belt.",
+      "personality": "Eccentric artificer. Obsessed with magical constructs and devices.",
+      "location": "gryphon-roost-inn",
+      "images": [
+        {
+          "src": "images/npcs/Gideon.png",
+          "caption": "Portrait"
+        }
+      ]
+    },
+    {
       "name": "Hilda Stoutbrew",
       "ancestry": "Dwarf",
       "class": "Cleric",
@@ -580,7 +593,7 @@
       "class": "Unknown",
       "physical_description": "Gleaming, excessively gold-trimmed armor; a flowing crimson cape that billows without wind; perfectly styled hair he fixes mid-fight; and a cosmetically glowing longsword. Maintains a striking heroic pose at all times.",
       "personality": "Speaks in grand declarations, interrupts others to monologue, interprets disagreement as villainy, and escalates immediately to violence. Cannot admit defeat, insisting every loss was merely a test.",
-      "other_details": "*Champion of Light, Scourge of Darkness, Hero of Destiny",
+      "other_details": "*Champion of Light, Scourge of Darkness, Hero of Destiny, Unquestioned Victor, Bearer of Eternal Triumph. Remember it well, villain!",
       "location": "current-location-unknown",
       "images": [
         {
@@ -594,6 +607,10 @@
         {
           "src": "images/npcs/SirGreg_Retreat.png",
           "caption": "Merciful Withdrawal!"
+        },
+        {
+          "src": "images/npcs/SirGreg_HeroicLanding.png",
+          "caption": "Heroic Landing!"
         }
       ]
     },
@@ -639,6 +656,19 @@
       ]
     },
     {
+      "name": "Tilly",
+      "ancestry": "Poppet",
+      "physical_description": "Small, doll-like poppet with a body woven from tightly braided straw and twine, rosy cheeks, expressive dark eyes, and lavender-silver hair styled into two long, thick braids. Wears a crimson robe adorned with turquoise geometric embroidery and tassels, a teal scarf fastened with golden bells, and two knitting-needle-like antennae protruding from the top of her head.",
+      "personality": "Shy but friendly, speaks with a stammer; loves cooking",
+      "location": "gryphon-roost-inn",
+      "images": [
+        {
+          "src": "images/npcs/Tilly.png",
+        "caption": "Portrait"
+        }
+      ]
+    },
+    {
       "name": "Tink Gearwhistle",
       "ancestry": "Gnome",
       "class": "Alchemist",
@@ -649,7 +679,7 @@
       "images": [
         {
           "src": "images/npcs/followers/TinkGearwhistle.png",
-        "caption": "Portrai t"
+        "caption": "Portrait"
         }
       ]
     },
