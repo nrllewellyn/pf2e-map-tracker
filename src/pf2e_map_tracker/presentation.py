@@ -15,9 +15,7 @@ def previous_occupant_details(data: MapData, resolve: Callable[[str], str]) -> l
     for occupant in data.previous_occupants:
         fields = occupant.model_dump(mode="json")
         for key in ("example_sign_images", "example_member_images"):
-            fields[key] = [
-                {**picture, "url": resolve(picture["src"])} for picture in fields[key]
-            ]
+            fields[key] = [{**picture, "url": resolve(picture["src"])} for picture in fields[key]]
         result.append(fields)
     return result
 

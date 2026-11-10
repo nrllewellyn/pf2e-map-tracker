@@ -131,7 +131,8 @@ def test_sign_collections_must_be_arrays(sign_data, field):
 @pytest.mark.parametrize("collection", ["signs", "previous_occupants"])
 def test_new_records_reject_unknown_fields(sign_data, collection):
     records = (
-        sign_data[collection] if collection == "previous_occupants"
+        sign_data[collection]
+        if collection == "previous_occupants"
         else sign_data["connections"][0][collection]
     )
     records[0]["typo"] = "bad field"
@@ -182,9 +183,9 @@ def test_inhabitant_images_publish_with_original_metadata_and_validate_paths(
 
 
 def test_inhabitant_html_is_encoded_safely_inside_generated_script(sign_data, tmp_path):
-    sign_data["previous_occupants"][0]["demeanor"] = '</script><p>Unusual 🛡️</p>'
+    sign_data["previous_occupants"][0]["demeanor"] = "</script><p>Unusual 🛡️</p>"
     output = write_graph(MapData.model_validate(sign_data), tmp_path / "map.html")
     html = output.read_text(encoding="utf-8")
     payload = html.split("const PF2E_MAP_TRACKER_PREVIOUS_OCCUPANTS = ", 1)[1].split(";\n", 1)[0]
     assert "</script>" not in payload
-    assert json.loads(payload)[0]["demeanor"] == '</script><p>Unusual 🛡️</p>'
+    assert json.loads(payload)[0]["demeanor"] == "</script><p>Unusual 🛡️</p>"

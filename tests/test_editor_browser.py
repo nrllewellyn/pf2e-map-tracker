@@ -45,9 +45,9 @@ def editor_server(tmp_path, browser):
     listener = socket.socket()
     listener.bind(("127.0.0.1", 0))
     port = listener.getsockname()[1]
-    server = uvicorn.Server(uvicorn.Config(
-        create_app(source, output), log_level="error", timeout_graceful_shutdown=2
-    ))
+    server = uvicorn.Server(
+        uvicorn.Config(create_app(source, output), log_level="error", timeout_graceful_shutdown=2)
+    )
     thread = threading.Thread(target=server.run, kwargs={"sockets": [listener]}, daemon=True)
     thread.start()
     deadline = time.monotonic() + 10
@@ -533,91 +533,95 @@ def test_graph_hotkeys_do_not_intercept_select_controls(page):
 
 
 def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, editor_server):
-    picture = editor_server['source'].parent / 'example.svg'
+    picture = editor_server["source"].parent / "example.svg"
     picture.write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100">'
-        '<rect width="200" height="100" fill="blue"/></svg>', encoding='utf-8'
+        '<rect width="200" height="100" fill="blue"/></svg>',
+        encoding="utf-8",
     )
-    add(page, 'previous_occupants')
-    page.locator('#field-name').fill('Old Wardens')
-    page.locator('#field-language').fill('Dwarven')
-    page.get_by_label('Lettering (HTML)', exact=True).fill('Angular runes')
-    page.get_by_label('Language oddities (HTML)', exact=True).fill('<b>Runes feel warm</b>')
-    page.locator('#field-signage_physical_form').fill('Stone plaques')
-    page.locator('#field-communication_quirks').fill('Warnings first')
-    page.locator('#field-known_ancestries').fill('Dwarf\nHuman')
-    page.locator('#field-common_appearance').fill('Brass badges')
-    page.locator('#field-demeanor').fill('Stern')
-    for field in ['example_sign_images', 'example_member_images']:
-        page.locator(f'#add-{field}').click()
-        page.locator(f'#{field}-0-src').fill('example.svg')
-        page.locator(f'#{field}-0-alt').fill(field)
+    add(page, "previous_occupants")
+    page.locator("#field-name").fill("Old Wardens")
+    page.locator("#field-language").fill("Dwarven")
+    page.get_by_label("Lettering (HTML)", exact=True).fill("Angular runes")
+    page.get_by_label("Language oddities (HTML)", exact=True).fill("<b>Runes feel warm</b>")
+    page.locator("#field-signage_physical_form").fill("Stone plaques")
+    page.locator("#field-communication_quirks").fill("Warnings first")
+    page.locator("#field-known_ancestries").fill("Dwarf\nHuman")
+    page.locator("#field-common_appearance").fill("Brass badges")
+    page.locator("#field-demeanor").fill("Stern")
+    for field in ["example_sign_images", "example_member_images"]:
+        page.locator(f"#add-{field}").click()
+        page.locator(f"#{field}-0-src").fill("example.svg")
+        page.locator(f"#{field}-0-alt").fill(field)
     apply(page)
-    assert page.evaluate('mapEditor.data.previous_occupants[0].id') == 'old-wardens'
-    choose(page, 'connections')
-    page.get_by_role('button', name='Add sign', exact=True).click()
-    assert page.locator('#sign-0-side').input_value() == ''
-    page.locator('#sign-0-group').select_option('old-wardens')
-    page.locator('#sign-0-description').fill('<b>Chipped plaque</b>')
-    page.locator('#sign-0-translation').fill('Archive. Keep closed.')
-    page.locator('#sign-0-side').select_option('destination')
-    original = editor_server['source'].read_bytes()
-    for field in ['group', 'side', 'description', 'translation']:
-        control = page.locator(f'#sign-0-{field}')
+    assert page.evaluate("mapEditor.data.previous_occupants[0].id") == "old-wardens"
+    choose(page, "connections")
+    page.get_by_role("button", name="Add sign", exact=True).click()
+    assert page.locator("#sign-0-side").input_value() == ""
+    page.locator("#sign-0-group").select_option("old-wardens")
+    page.locator("#sign-0-description").fill("<b>Chipped plaque</b>")
+    page.locator("#sign-0-translation").fill("Archive. Keep closed.")
+    page.locator("#sign-0-side").select_option("destination")
+    original = editor_server["source"].read_bytes()
+    for field in ["group", "side", "description", "translation"]:
+        control = page.locator(f"#sign-0-{field}")
         value = control.input_value()
-        if field in ['group', 'side']:
-            control.select_option('')
+        if field in ["group", "side"]:
+            control.select_option("")
         else:
-            control.fill('')
-        page.get_by_role('button', name='Save', exact=True).click()
+            control.fill("")
+        page.get_by_role("button", name="Save", exact=True).click()
         wait_idle(page)
-        assert editor_server['source'].read_bytes() == original
-        assert not control.evaluate('input => input.checkValidity()')
-        if field in ['group', 'side']:
+        assert editor_server["source"].read_bytes() == original
+        assert not control.evaluate("input => input.checkValidity()")
+        if field in ["group", "side"]:
             control.select_option(value)
         else:
             control.fill(value)
-    page.get_by_role('button', name='Add sign', exact=True).click()
-    page.locator('#sign-1-group').select_option('old-wardens')
-    page.locator('#sign-1-side').select_option('source')
-    page.locator('#sign-1-description').fill('Paper note')
-    page.locator('#sign-1-translation').fill('Second sign')
+    page.get_by_role("button", name="Add sign", exact=True).click()
+    page.locator("#sign-1-group").select_option("old-wardens")
+    page.locator("#sign-1-side").select_option("source")
+    page.locator("#sign-1-description").fill("Paper note")
+    page.locator("#sign-1-translation").fill("Second sign")
     apply(page)
-    choose(page, 'previous_occupants')
-    page.locator('#field-id').fill('wardens')
+    choose(page, "previous_occupants")
+    page.locator("#field-id").fill("wardens")
     apply(page)
-    assert page.evaluate('mapEditor.data.connections[0].signs.map(sign => sign.group)') == [
-        'wardens', 'wardens'
+    assert page.evaluate("mapEditor.data.connections[0].signs.map(sign => sign.group)") == [
+        "wardens",
+        "wardens",
     ]
-    page.get_by_role('button', name='Delete', exact=True).click()
-    assert 'dependent objects' in page.locator('#form-errors').inner_text()
-    page.get_by_role('button', name='Rebuild graph', exact=True).click()
+    page.get_by_role("button", name="Delete", exact=True).click()
+    assert "dependent objects" in page.locator("#form-errors").inner_text()
+    page.get_by_role("button", name="Rebuild graph", exact=True).click()
     wait_idle(page)
-    saved = json.loads(editor_server['source'].read_text(encoding='utf-8'))
-    assert saved['previous_occupants'][0]['language_visual_style'] == 'Angular runes'
-    assert saved['previous_occupants'][0]['language_oddities'] == '<b>Runes feel warm</b>'
-    assert saved['previous_occupants'][0]['known_ancestries'] == ['Dwarf', 'Human']
-    assert saved['connections'][0]['signs'][0] == {
-        'group': 'wardens', 'side': 'destination', 'description': '<b>Chipped plaque</b>',
-        'translation': 'Archive. Keep closed.'
+    saved = json.loads(editor_server["source"].read_text(encoding="utf-8"))
+    assert saved["previous_occupants"][0]["language_visual_style"] == "Angular runes"
+    assert saved["previous_occupants"][0]["language_oddities"] == "<b>Runes feel warm</b>"
+    assert saved["previous_occupants"][0]["known_ancestries"] == ["Dwarf", "Human"]
+    assert saved["connections"][0]["signs"][0] == {
+        "group": "wardens",
+        "side": "destination",
+        "description": "<b>Chipped plaque</b>",
+        "translation": "Archive. Keep closed.",
     }
-    assert len(list((editor_server['output'].parent / 'assets/images').glob('*.svg'))) == 1
+    assert len(list((editor_server["output"].parent / "assets/images").glob("*.svg"))) == 1
     page.reload()
-    page.wait_for_function('window.mapEditor?.network && !window.mapEditor.busy')
-    choose(page, 'previous_occupants')
+    page.wait_for_function("window.mapEditor?.network && !window.mapEditor.busy")
+    choose(page, "previous_occupants")
     assert (
-        page.get_by_label('Language oddities (HTML)', exact=True).input_value()
-        == '<b>Runes feel warm</b>'
+        page.get_by_label("Language oddities (HTML)", exact=True).input_value()
+        == "<b>Runes feel warm</b>"
     )
-    choose(page, 'connections')
-    assert page.locator('#sign-0-group').input_value() == 'wardens'
-    assert page.locator('#sign-0-side').input_value() == 'destination'
-    assert page.locator('#sign-1-side').input_value() == 'source'
-    page.locator('.sign-entry').nth(1).get_by_role('button', name='Remove sign', exact=True).click()
+    choose(page, "connections")
+    assert page.locator("#sign-0-group").input_value() == "wardens"
+    assert page.locator("#sign-0-side").input_value() == "destination"
+    assert page.locator("#sign-1-side").input_value() == "source"
+    page.locator(".sign-entry").nth(1).get_by_role("button", name="Remove sign", exact=True).click()
     apply(page)
-    page.get_by_role('button', name='Save', exact=True).click()
+    page.get_by_role("button", name="Save", exact=True).click()
     wait_idle(page)
-    assert len(json.loads(editor_server['source'].read_text())['connections'][0]['signs']) == 1
+    assert len(json.loads(editor_server["source"].read_text())["connections"][0]["signs"]) == 1
 
 
 @pytest.mark.parametrize("keep_picture", [False, True])
