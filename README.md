@@ -60,19 +60,34 @@ pf2e-map-tracker edit --input tests/fixtures/test_data.json --output dist/test-m
 ```
 
 Select a graph node or connection, or search the object list. Use **Add** to create
-a room, group, character, connection, or connection status. Fill out the form and
+a room, group, character, connection, previous inhabitant, or connection status. Fill out the form and
 click **Apply**. HTML fields include a rendered preview; formatting is
 entered as HTML.
 
+Click **Pick on map** beside any room selector, then click a room on the graph.
+This works for connection endpoints, group locations, and character placement.
+Characters placed in a group can also use **Pick on map** to select a group on the
+graph. Other pending form values stay in place. Use **Cancel picking** or Escape to
+leave picking mode; the dropdowns also remain available. Dropdown choices are
+alphabetized by their displayed labels, with prompts and defaults kept first.
+
 Picture controls accept local paths or hosted URLs, alt text, and plain-text captions.
-Use **Add picture**, **Move up**, **Move down**, and **Remove picture** to manage
-the gallery; its first picture appears in hover previews. Detailed text fields have
+Use **Add picture**, **Move up**, and **Move down** to manage the gallery. The **×**
+beside each image source removes that picture, including an empty entry, while
+keeping the rest of the form. The first picture appears in hover previews. Detailed text fields have
 HTML previews and appear only in the generated viewer's details panel.
+
+Previous inhabitants have separate picture controls for example signs and group
+member photos. In connection forms, **Add sign** selects a previous inhabitant
+and records the sign's side, description, and translation. Renaming an inhabitant's
+ID updates its signs; deleting an inhabitant is blocked while signs refer to it.
 
 Drag rooms to arrange them on a 250 px grid in both directions.
 Hold Shift to position freely; Shift can be pressed or released during a drag.
 The grid uses map coordinates, so snapping stays consistent at any zoom level.
 Numeric coordinate fields allow exact positions without snapping.
+Map keyboard shortcuts work while the graph canvas has focus; click the map to use
+them. Text fields and other form controls keep their normal keyboard behavior.
 Drag groups and characters freely to set their default starting position before
 physics settles them. Use **Save** to keep it. Their form shows these coordinates;
 click **Use automatic position**, then **Apply**, to clear the default. Use their
@@ -156,7 +171,18 @@ the main picture to open a full-screen preview. Click outside the picture, choos
 their proportions and fit the screen. Close the panel with **Close**, Escape, or
 a click on the backdrop. Clicking no longer selects or dims graph objects.
 
-The top bar contains character visibility and build information. The local visual
+The top bar contains character visibility, **Additional Information**, and build information.
+Open **Additional Information → Previous Inhabitants** for a compact group listing;
+choose a group name or **Details** for its full description and example pictures
+in a separate panel above the listing. **Close details**, Escape, or a backdrop
+click returns to the same place in the listing.
+Connection hover text reports the number of signs. Connection details show each
+sign's group, language, side (shown as the room name), description, translation, and a
+thumbnail of an example sign. A group name opens its inhabitant record; closing it
+returns to the connection.
+Thumbnails cycle through available examples every 4.5 seconds, except when reduced
+motion is requested. Group listings cycle through both sign and member pictures.
+The local visual
 editor retains click-to-select and dragging for authoring.
 
 ## Trusted HTML
@@ -278,16 +304,82 @@ also be removed from graph options.
 | `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
 | `details`   | No       | Trusted HTML shown only in the details panel. |
 | `images`    | No       | Ordered pictures, as described below. |
+| `signs`     | No       | Array of posted signs. Omitted means no signs. See below. |
 
 Connections may use the reserved room ID `unknown` in `from` or `to`. Each reference creates a
 separate virtual node named **Unknown room** on the graph.
 Clicking an Unknown Room shows its appearance and owning connection's information.
 Character/group attachment edges open the attached object's details.
 
+### Signs and Previous Inhabitants
+
+The optional top-level `previous_occupants` array stores groups that left signs.
+It is displayed as **Previous Inhabitants** and is separate from current character
+groups. Omitted arrays are empty; maps without signs need no migration.
+
+| Group field | Required | Description |
+|-------------|----------|-------------|
+| `id` | Yes | Unique lowercase, hyphen-separated ID used by signs, in a separate namespace from rooms and character groups. |
+| `name` | Yes | Group name. |
+| `language` | No | Language name. |
+| `language_visual_style` | No | Appearance of the writing, displayed as Lettering. |
+| `language_oddities` | No | Unusual language traits, displayed below Lettering in group details. |
+| `signage_physical_form` | No | Sign materials and construction. |
+| `communication_quirks` | No | Distinctive wording or communication habits. |
+| `known_ancestries` | No | Array of ancestry names; entered one per line in the editor. |
+| `common_appearance` | No | Typical group member appearance. |
+| `demeanor` | No | Typical attitude or behavior. |
+| `example_sign_images` | No | Ordered array of sign pictures using the picture format below. |
+| `example_member_images` | No | Ordered array of group member pictures using the same format. |
+
+A connection's `signs` array contains objects with four required, non-empty fields:
+`group` (a previous occupant's ID), `side`, `description`, and `translation`.
+Missing fields, blank text, unknown group IDs, and duplicate previous occupant IDs
+are rejected. Sign fields have no defaults; existing signs must include all four.
+For `side`, `source` means the connection's `from` room, and
+`destination` means its `to` room. This is independent of the connection's travel
+direction. A sign outside a door and one inside it can be separate entries with
+opposite sides. The editor requires an explicit side selection for every new sign.
+Descriptions and translations support trusted HTML and appear only in details.
+
+```json
+"previous_occupants": [
+  {
+    "id": "old-wardens",
+    "name": "Old Wardens",
+    "language": "Dwarven",
+    "language_visual_style": "Angular runes",
+    "language_oddities": "The most important words feel warm to the touch",
+    "signage_physical_form": "Carved stone plaques",
+    "communication_quirks": "Every instruction starts with a warning",
+    "known_ancestries": ["Dwarf"],
+    "common_appearance": "Heavy robes and brass badges",
+    "demeanor": "Stern",
+    "example_sign_images": [{"src": "images/warden-sign.jpg", "alt": "A carved plaque"}],
+    "example_member_images": [{"src": "images/warden.jpg", "alt": "A robed warden"}]
+  }
+]
+```
+
+On a connection:
+
+```json
+"signs": [
+  {
+    "group": "old-wardens",
+    "side": "source",
+    "description": "A chipped stone plaque on the door",
+    "translation": "Warning: Archive. Keep the door closed."
+  }
+]
+```
+
 ### Pictures
 
 Rooms, characters, character groups, and connections accept an optional ordered
-`images` array. Only `src` is required; `alt` and `caption` default to empty text.
+`images` array. Previous inhabitants use the same format and linking rules in
+`example_sign_images` and `example_member_images`. Only `src` is required;
+`alt` and `caption` default to empty text.
 Captions and alt text are plain text, even when they contain HTML-looking markup.
 
 ```json

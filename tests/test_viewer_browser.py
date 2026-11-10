@@ -26,7 +26,7 @@ def browser(request):
 
 
 @pytest.fixture
-def viewer(browser, tmp_path, monkeypatch):
+def viewer(browser, tmp_path, monkeypatch, request):
     from pf2e_map_tracker import graph
 
     original_build = graph.build_network
@@ -77,6 +77,23 @@ def viewer(browser, tmp_path, monkeypatch):
                 "defaultPosition": {"x": 0, "y": 350},
             }
         ],
+        "previous_occupants": [
+            {
+                "id": "wardens",
+                "name": "Old Wardens",
+                "language": "Dwarven",
+                "language_visual_style": "Angular runes",
+                "language_oddities": "<em>Runes feel warm</em>.\nOnly warnings glow.",
+                "signage_physical_form": "Carved stone",
+                "communication_quirks": "Warnings first",
+                "known_ancestries": ["Dwarf", "Human"],
+                "common_appearance": "Brass badges",
+                "demeanor": "Stern but helpful",
+                "example_sign_images": images[:2],
+                "example_member_images": images[1:],
+            },
+            {"id": "scribes", "name": "Scribes", "language": "Common"},
+        ],
         "characters": [
             {
                 "name": "Hero",
@@ -106,6 +123,12 @@ def viewer(browser, tmp_path, monkeypatch):
                 "notes": "Public route",
                 "details": "Secret route",
                 "images": images,
+                "signs": [
+                    {"group": "wardens", "side": "source", "description": "<b>Chipped plaque</b>",
+                     "translation": "Archive. Keep closed."},
+                    {"group": "scribes", "side": "destination",
+                     "description": "Paper note", "translation": "Quiet."},
+                ],
             },
             {
                 "from": "hall",
@@ -124,6 +147,10 @@ def viewer(browser, tmp_path, monkeypatch):
             },
         ],
     }
+    if getattr(request, 'param', None) == 'legacy':
+        del data['previous_occupants']
+        for connection in data['connections']:
+            connection.pop('signs', None)
     source = tmp_path / "map.json"
     source.write_text(json.dumps(data), encoding="utf-8")
     output = generate_graph(source, tmp_path / "dist/index.html")
@@ -162,11 +189,214 @@ def node_point(page, node_id):
 
 
 def click_node(page, node_id):
-    # Dialog keyboard options can restart satellite physics; click a settled, drawn target.
+    # Wait for asynchronous dialog cleanup before freezing satellite physics for the click.
+    page.wait_for_function('network.interactionHandler.options.keyboard.enabled')
     page.evaluate("() => { network.stopSimulation(); network.redraw(); }")
     point = node_point(page, node_id)
     page.mouse.click(point["x"], point["y"])
     page.wait_for_selector("#map-details[open]")
+
+
+def click_connection(page, index=0):
+    page.evaluate("""index => {
+        const original = network.getEdgeAt;
+        network.getEdgeAt = () => `__connection-${index}`;
+        network.emit('click', {pointer: {DOM: network.canvasToDOM({x: 250, y: 0})}});
+        network.getEdgeAt = original;
+    }""", index)
+    page.wait_for_selector("#map-details[open]")
+
+
+def test_sign_hover_details_and_group_link_return_to_connection(viewer):
+    page = viewer
+    page.evaluate("""() => network.emit('hoverEdge', {edge: '__connection-0',
+        event: {clientX: 400, clientY: 300}})""")
+    tooltip = page.locator('#custom-vis-tooltip')
+    assert 'Signs: 2 present' in tooltip.inner_text()
+    assert all(
+        text not in tooltip.inner_text()
+        for text in ['Chipped plaque', 'Archive', 'Wardens', 'Source side', 'Destination side']
+    )
+    click_connection(page)
+    signs = page.locator('.map-sign-card')
+    assert signs.count() == 2
+    assert signs.nth(0).locator('b').inner_text() == 'Chipped plaque'
+    assert 'Dwarven' in signs.nth(0).inner_text()
+    assert signs.nth(0).get_by_text('Hall', exact=True).count() == 1
+    assert 'Archive. Keep closed.' in signs.nth(0).inner_text()
+    assert signs.nth(0).locator('img').count() == 1
+    assert signs.nth(1).locator('img').count() == 0
+    assert 'Common' in signs.nth(1).inner_text()
+    assert signs.nth(1).get_by_text('Study', exact=True).count() == 1
+    group = signs.nth(0).get_by_role('button', name='Old Wardens', exact=True)
+    group.click()
+    assert page.locator('#map-occupant-details').is_visible()
+    assert not page.locator('#map-additional-info').is_visible()
+    assert page.locator('#map-occupant-title').inner_text() == 'Old Wardens'
+    assert 'Dwarf, Human' in page.locator('#map-occupant-fields').inner_text()
+    assert 'Stern but helpful' in page.locator('#map-occupant-fields').inner_text()
+    page.get_by_role('button', name='View example signs image 1 full screen', exact=True).click()
+    assert page.locator('#map-image-preview').is_visible()
+    page.keyboard.press('Escape')
+    assert page.locator('#map-occupant-details').is_visible()
+    page.keyboard.press('Escape')
+    assert not page.locator('#map-occupant-details').is_visible()
+    assert page.locator('#map-details').is_visible()
+    assert page.locator('#map-detail-title').inner_text() == 'Passage'
+    assert group.evaluate('button => button === document.activeElement')
+    assert page.evaluate('network.interactionHandler.options.keyboard.enabled') is False
+    page.keyboard.press('Escape')
+    click_connection(page, 1)
+    assert page.locator('.map-signs').count() == 0
+    assert 'signs' not in page.locator('#map-detail-fields').inner_text()
+
+
+def test_additional_information_listing_details_photos_and_rotating_thumbnails(viewer):
+    page = viewer
+    page.clock.install()
+    trigger = page.get_by_role('button', name='Additional Information', exact=True)
+    trigger.click()
+    listing = page.locator('#map-additional-info')
+    assert page.locator('.map-occupant-card').count() == 2
+    card = page.locator('.map-occupant-card').nth(0)
+    assert all(text in card.inner_text() for text in ['Old Wardens', 'Dwarven', 'Angular runes',
+               'Carved stone', 'Warnings first'])
+    assert 'Brass badges' not in listing.inner_text()
+    assert 'Runes feel warm' not in listing.inner_text()
+    thumbnail = card.locator('.map-rotating-picture img')
+    first = thumbnail.get_attribute('src')
+    page.clock.fast_forward(4600)
+    assert thumbnail.get_attribute('src') != first
+    trigger_details = card.get_by_role('button', name='Details for Old Wardens', exact=True)
+    trigger_details.click()
+    details = page.get_by_role('dialog', name='Old Wardens', exact=True)
+    assert details.is_visible()
+    assert listing.is_visible()
+    assert listing.locator('.map-occupant-card').count() == 2
+    assert 'Brass badges' in page.locator('#map-occupant-fields').inner_text()
+    fields = page.locator('#map-occupant-fields')
+    assert fields.locator('dt').all_text_contents()[:4] == [
+        'Language', 'Lettering', 'Language Oddities', 'Signage Form'
+    ]
+    oddities = fields.locator('.map-detail-field').nth(2).locator('dd')
+    assert oddities.inner_text() == 'Runes feel warm.\nOnly warnings glow.'
+    assert oddities.locator('em').inner_text() == 'Runes feel warm'
+    assert page.locator('.map-occupant-gallery').count() == 2
+    assert page.locator('.map-occupant-gallery button').count() == 4
+    assert (
+        page.locator('.map-occupant-gallery figcaption').first.inner_text()
+        == '<b>Plain caption</b>'
+    )
+    picture = details.get_by_role(
+        'button', name='View example signs image 1 full screen', exact=True
+    )
+    picture.click()
+    assert page.locator('#map-image-preview').is_visible()
+    page.keyboard.press('Escape')
+    assert not page.locator('#map-image-preview').is_visible()
+    assert details.is_visible()
+    assert listing.is_visible()
+    assert picture.evaluate('button => button === document.activeElement')
+    for _ in range(8):
+        page.keyboard.press('Tab')
+        assert details.evaluate('dialog => dialog.contains(document.activeElement)')
+    details.get_by_role('button', name='Close details', exact=True).click()
+    assert not details.is_visible()
+    assert listing.is_visible()
+    assert trigger_details.evaluate('button => button === document.activeElement')
+    page.get_by_role('button', name='Scribes', exact=True).click()
+    assert page.locator('#map-occupant-title').inner_text() == 'Scribes'
+    assert 'Language Oddities' not in page.locator('#map-occupant-fields').inner_text()
+    assert page.locator('.map-occupant-gallery').count() == 0
+    page.keyboard.press('Escape')
+    assert not page.locator('#map-occupant-details').is_visible()
+    assert listing.is_visible()
+    for _ in range(8):
+        page.keyboard.press('Tab')
+        assert listing.evaluate('dialog => dialog.contains(document.activeElement)')
+    page.locator('#map-additional-close').click()
+    page.wait_for_function('network.interactionHandler.options.keyboard.enabled')
+    assert trigger.evaluate('button => button === document.activeElement')
+    assert page.evaluate('network.interactionHandler.options.keyboard.enabled') is True
+    # Connection thumbnails cycle independently and only use example signs.
+    click_connection(page)
+    thumbnail = page.locator('.map-sign-card').first.locator('img')
+    first = thumbnail.get_attribute('src')
+    page.clock.fast_forward(4600)
+    assert thumbnail.get_attribute('src') != first
+
+
+@pytest.mark.parametrize('method', ['button', 'escape', 'backdrop'])
+def test_inhabitant_details_close_preserves_listing_and_focus(viewer, method):
+    page = viewer
+    page.set_viewport_size({'width': 1400, 'height': 500})
+    page.get_by_role('button', name='Additional Information', exact=True).click()
+    listing = page.locator('#map-additional-info')
+    trigger = listing.get_by_role('button', name='Details for Scribes', exact=True)
+    trigger.scroll_into_view_if_needed()
+    trigger.focus()
+    before = listing.evaluate('dialog => ({html: dialog.innerHTML, scroll: dialog.scrollTop})')
+    assert before['scroll'] > 0
+    trigger.click()
+    details = page.get_by_role('dialog', name='Scribes', exact=True)
+    assert details.is_visible()
+    assert listing.is_visible()
+    assert listing.inner_html() == before['html']
+    if method == 'button':
+        details.get_by_role('button', name='Close details', exact=True).click()
+    elif method == 'escape':
+        page.keyboard.press('Escape')
+    else:
+        page.mouse.click(1, 1)
+    assert not details.is_visible()
+    assert listing.is_visible()
+    assert listing.inner_html() == before['html']
+    assert listing.evaluate('dialog => dialog.scrollTop') == pytest.approx(before['scroll'])
+    assert trigger.evaluate('button => button === document.activeElement')
+    assert page.evaluate('network.interactionHandler.options.keyboard.enabled') is False
+    listing.get_by_role('button', name='Close', exact=True).click()
+    page.wait_for_function('network.interactionHandler.options.keyboard.enabled')
+
+
+def test_additional_information_small_screen_and_reduced_motion(viewer):
+    page = viewer
+    page.set_viewport_size({'width': 390, 'height': 700})
+    page.emulate_media(reduced_motion='reduce')
+    page.clock.install()
+    page.get_by_role('button', name='Additional Information', exact=True).click()
+    modal = page.locator('#map-additional-info')
+    bounds = modal.bounding_box()
+    assert bounds['x'] >= 0 and bounds['x'] + bounds['width'] <= 390
+    assert bounds['height'] <= 700
+    assert modal.evaluate('dialog => dialog.scrollWidth <= dialog.clientWidth')
+    thumbnail = page.locator('.map-rotating-picture img').first
+    first = thumbnail.get_attribute('src')
+    page.clock.fast_forward(10000)
+    assert thumbnail.get_attribute('src') == first
+    page.get_by_role('button', name='Details for Old Wardens', exact=True).click()
+    details = page.locator('#map-occupant-details')
+    bounds = details.bounding_box()
+    assert bounds['x'] >= 0 and bounds['x'] + bounds['width'] <= 390
+    assert bounds['height'] <= 700
+    assert details.evaluate('dialog => dialog.scrollWidth <= dialog.clientWidth')
+    page.mouse.click(1, 1)
+    assert not details.is_visible()
+    assert modal.is_visible()
+    page.mouse.click(1, 1)
+    assert not modal.is_visible()
+
+
+@pytest.mark.parametrize('viewer', ['legacy'], indirect=True)
+def test_existing_maps_without_signs_or_inhabitants_still_open(viewer):
+    page = viewer
+    page.get_by_role('button', name='Additional Information', exact=True).click()
+    assert 'No previous inhabitants have been recorded.' in page.locator(
+        '#map-additional-info'
+    ).inner_text()
+    page.keyboard.press('Escape')
+    click_connection(page)
+    assert page.locator('#map-detail-title').inner_text() == 'Passage'
+    assert page.locator('.map-signs').count() == 0
 
 
 def test_map_frame_and_canvas_fill_window_after_resize(viewer, tmp_path):

@@ -123,6 +123,28 @@ class ConnectionStatus(StrictModel):
     line_style: Literal["solid", "dashed"] = "solid"
 
 
+class PreviousOccupant(StrictModel):
+    id: MapId
+    name: NonEmptyString
+    language: str = ""
+    language_visual_style: str = Field(default="", title="Lettering")
+    language_oddities: str = ""
+    signage_physical_form: str = ""
+    communication_quirks: str = ""
+    known_ancestries: list[NonEmptyString] = Field(default_factory=list)
+    common_appearance: str = ""
+    demeanor: str = ""
+    example_sign_images: list[MapImage] = Field(default_factory=list)
+    example_member_images: list[MapImage] = Field(default_factory=list)
+
+
+class Sign(StrictModel):
+    group: MapId
+    side: Literal["source", "destination"]
+    description: NonEmptyString
+    translation: NonEmptyString
+
+
 class Connection(StrictModel):
     source: MapId = Field(alias="from")
     target: MapId = Field(alias="to")
@@ -132,6 +154,7 @@ class Connection(StrictModel):
     notes: str = ""
     details: str = ""
     images: list[MapImage] = Field(default_factory=list)
+    signs: list[Sign] = Field(default_factory=list)
 
 
 class MapData(StrictModel):
@@ -139,6 +162,7 @@ class MapData(StrictModel):
     rooms: list[Room] = Field(default_factory=list)
     characters: list[Character] = Field(default_factory=list)
     character_groups: list[CharacterGroup] = Field(default_factory=list)
+    previous_occupants: list[PreviousOccupant] = Field(default_factory=list)
     connections: list[Connection] = Field(default_factory=list)
     connection_statuses: list[ConnectionStatus] = Field(
         default_factory=list,
@@ -151,6 +175,7 @@ class MapData(StrictModel):
         room_ids = {room.id for room in self.rooms}
         group_ids = {group.id for group in self.character_groups}
         status_ids = self._unique_ids("connection status", self.connection_statuses, errors)
+        occupant_ids = self._unique_ids("previous occupant", self.previous_occupants, errors)
 
         self._unique_ids(
             "node",
@@ -181,6 +206,12 @@ class MapData(StrictModel):
                 errors.append(f"unknown target room '{connection.target}' for {label}")
             if connection.status not in status_ids:
                 errors.append(f"unknown status '{connection.status}' for {label}")
+            for sign_index, sign in enumerate(connection.signs):
+                if sign.group not in occupant_ids:
+                    errors.append(
+                        f"unknown previous occupant '{sign.group}' for {label} "
+                        f"sign #{sign_index + 1}"
+                    )
 
         if errors:
             raise ValueError("\n".join(dict.fromkeys(errors)))

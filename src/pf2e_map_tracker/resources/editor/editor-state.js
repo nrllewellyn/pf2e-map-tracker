@@ -1,8 +1,8 @@
 /* Source relationships operate on the draft, never on graph-generated IDs. */
 window.MapEditorState = (() => {
-    const kinds = ['rooms', 'character_groups', 'characters', 'connections', 'connectionStatus'];
+    const kinds = ['rooms', 'character_groups', 'characters', 'connections', 'previous_occupants', 'connectionStatus'];
     const labels = {rooms: 'Room', character_groups: 'Group', characters: 'Character',
-        connections: 'Connection', connectionStatus: 'Connection status'};
+        connections: 'Connection', previous_occupants: 'Previous inhabitant', connectionStatus: 'Connection status'};
     const clone = value => JSON.parse(JSON.stringify(value));
     function label(kind, object, index) {
         return object.name || object.description || (kind === 'connections'
@@ -21,6 +21,10 @@ window.MapEditorState = (() => {
             for (const character of data.characters || []) if (character.group === previous) character.group = next;
         } else if (kind === 'connectionStatus') {
             for (const connection of data.connections || []) if (connection.status === previous) connection.status = next;
+        } else if (kind === 'previous_occupants') {
+            for (const connection of data.connections || []) {
+                for (const sign of connection.signs || []) if (sign.group === previous) sign.group = next;
+            }
         }
     }
     function dependencies(data, kind, id) {
@@ -36,12 +40,14 @@ window.MapEditorState = (() => {
             collect('characters', item => item.group === id);
         } else if (kind === 'connectionStatus') {
             collect('connections', item => item.status === id);
+        } else if (kind === 'previous_occupants') {
+            collect('connections', item => (item.signs || []).some(sign => sign.group === id));
         }
         return matches;
     }
     function suggestId(data, kind, name) {
         const base = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'new-object';
-        const used = new Set((kind === 'connectionStatus' ? data.connectionStatus || []
+        const used = new Set((['connectionStatus', 'previous_occupants'].includes(kind) ? data[kind] || []
             : [...data.rooms || [], ...data.character_groups || []]).map(item => item.id));
         if (kind === 'rooms') used.add('unknown');
         let id = base, suffix = 2;

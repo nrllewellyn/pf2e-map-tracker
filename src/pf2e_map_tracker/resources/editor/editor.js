@@ -6,29 +6,81 @@
     const state = {data: null, saved: '', revision: '', schema: null, selection: null,
         formDirty: false, busy: false, conflict: false, network: null, nodes: null, edges: null};
     window.mapEditor = state;
-    let draftImages = [];
+    let draftImages = {};
+    let draftSigns = [];
+    let mapPick = null;
+    const mapPickFields = new Set(['from', 'to', 'location', 'group']);
+    const imageFields = new Set(['images', 'example_sign_images', 'example_member_images']);
     let tooltipGeneration = 0;
     const definitions = {rooms: 'Room', character_groups: 'CharacterGroup', characters: 'Character',
-        connections: 'Connection', connectionStatus: 'ConnectionStatus'};
+        connections: 'Connection', previous_occupants: 'PreviousOccupant', connectionStatus: 'ConnectionStatus'};
     const fields = {
         rooms: ['id', 'name', 'position', 'color', 'shape', 'notes', 'details', 'images'],
         character_groups: ['id', 'name', 'location', 'defaultPosition', 'color', 'shape', 'notes', 'details', 'images'],
         characters: ['name', 'ancestry', 'class', 'placement', 'defaultPosition', 'color', 'shape',
             'physical_description', 'personality', 'other_details', 'images'],
-        connections: ['from', 'to', 'status', 'direction', 'name', 'notes', 'details', 'images'],
+        connections: ['from', 'to', 'status', 'direction', 'name', 'notes', 'details', 'signs', 'images'],
+        previous_occupants: ['id', 'name', 'language', 'language_visual_style', 'language_oddities', 'signage_physical_form',
+            'communication_quirks', 'known_ancestries', 'common_appearance', 'demeanor',
+            'example_sign_images', 'example_member_images'],
         connectionStatus: ['id', 'description', 'display_color', 'line_style']
     };
     const fieldLabels = {id: 'ID', name: 'Name', ancestry: 'Ancestry', class: 'Class', location: 'Room',
         group: 'Group', color: 'Color', shape: 'Shape', notes: 'Notes (HTML)', from: 'From room',
         to: 'To room', status: 'Connection status', direction: 'Direction', description: 'Description',
         display_color: 'Line color', line_style: 'Line style', physical_description: 'Physical description (HTML)',
-        personality: 'Personality (HTML)', other_details: 'Other details (HTML)', details: 'Details (HTML, detailed view only)'};
-    const htmlFields = new Set(['notes', 'details', 'physical_description', 'personality', 'other_details']);
+        personality: 'Personality (HTML)', other_details: 'Other details (HTML)', details: 'Details (HTML, detailed view only)',
+        language: 'Language', language_visual_style: 'Lettering (HTML)', language_oddities: 'Language oddities (HTML)',
+        signage_physical_form: 'Signage physical form (HTML)', communication_quirks: 'Communication quirks (HTML)',
+        known_ancestries: 'Known ancestries (one per line)', common_appearance: 'Common appearance (HTML)',
+        demeanor: 'Demeanor (HTML)', example_sign_images: 'Example sign images', example_member_images: 'Example group member photos'};
+    const htmlFields = new Set(['notes', 'details', 'physical_description', 'personality', 'other_details',
+        'language_visual_style', 'language_oddities', 'signage_physical_form', 'communication_quirks', 'common_appearance', 'demeanor']);
     const draggableKinds = new Set(['rooms', 'character_groups', 'characters']);
 
     function notice(message, error = false) {
         $('notice').textContent = message;
         $('notice').classList.toggle('error', error);
+    }
+    function stopMapPick(focus = false) {
+        if (!mapPick) return;
+        const control = $(`field-${mapPick}`);
+        $(`pick-${mapPick}`)?.setAttribute('aria-pressed', 'false');
+        mapPick = null;
+        $('room-pick-banner').hidden = true;
+        $('graph').classList.remove('picking-room');
+        state.network.setOptions({interaction: {dragNodes: true}});
+        if (focus) control?.focus();
+    }
+    function cancelMapPick() {
+        stopMapPick(true);
+        notice('Map picking cancelled.');
+    }
+    function startMapPick(field) {
+        if (state.busy || !mapPickFields.has(field)) return;
+        if (mapPick === field) { cancelMapPick(); return; }
+        stopMapPick();
+        mapPick = field;
+        $(`pick-${field}`).setAttribute('aria-pressed', 'true');
+        $('room-pick-banner').hidden = false;
+        const target = field === 'group' ? 'group' : 'room';
+        $('room-pick-help').textContent = `${fieldLabels[field]}: click a ${target} on the graph. Press Esc to cancel.`;
+        $('graph').classList.add('picking-room');
+        $('graph-tooltip').hidden = true;
+        state.network.setOptions({interaction: {dragNodes: false}});
+        $('graph').scrollIntoView({block: 'nearest'});
+        $('graph').querySelector('.vis-network').focus({preventScroll: true});
+    }
+    function pickMapObject(node) {
+        const field = mapPick;
+        if (node?.node_type !== (field === 'group' ? 'character_group' : 'room')) return;
+        const control = $(`field-${field}`);
+        const value = node.editorRef.kind === 'connections' ? 'unknown' : node.id;
+        if (![...control.options].some(option => option.value === value)) return;
+        control.value = value;
+        stopMapPick(true);
+        control.dispatchEvent(new Event('change', {bubbles: true}));
+        notice(`${fieldLabels[field]} selected: ${control.selectedOptions[0].text}. Apply to update the ${labels[state.selection.kind].toLowerCase()}.`);
     }
     function dirty() { return !!state.data && JSON.stringify(state.data) !== state.saved; }
     function updateControls() {
@@ -58,6 +110,7 @@
     }
     async function run(action) {
         if (state.busy) return;
+        stopMapPick();
         state.busy = true;
         updateControls();
         try { await action(); }
@@ -68,6 +121,7 @@
         return !state.formDirty || confirm('Discard the changes in this form? Applied preview changes will stay.');
     }
     function clearForm() {
+        stopMapPick();
         state.selection = null;
         state.formDirty = false;
         $('object-form').hidden = true;
@@ -124,23 +178,26 @@
     function imageUrl(source) {
         return /^https?:\/\//i.test(source) ? source : '/api/images?' + new URLSearchParams({src: source});
     }
-    function renderImages(images) {
-        draftImages = clone(images || []);
+    function renderImages(images, field = 'images') {
+        const pictures = draftImages[field] = clone(images || []);
+        const prefix = field === 'images' ? 'image' : field;
         const container = document.createElement('fieldset');
-        container.id = 'field-images';
+        container.id = `field-${field}`;
+        container.className = 'image-field';
         const legend = document.createElement('legend');
-        legend.textContent = 'Pictures';
+        legend.textContent = fieldLabels[field] || 'Pictures';
         const help = document.createElement('p');
         help.className = 'muted';
-        help.textContent = 'Use an HTTP/HTTPS URL or a file path relative to the map JSON directory. The first picture appears on hover.';
+        help.textContent = 'Use an HTTP/HTTPS URL or a file path relative to the map JSON directory.'
+            + (field === 'images' ? ' The first picture appears on hover.' : ' Examples appear in Additional Information.');
         const rows = document.createElement('div');
         const add = document.createElement('button');
         add.type = 'button';
-        add.id = 'add-image';
+        add.id = field === 'images' ? 'add-image' : `add-${field}`;
         add.textContent = 'Add picture';
         function draw() {
             rows.replaceChildren();
-            draftImages.forEach((picture, index) => {
+            pictures.forEach((picture, index) => {
                 const row = document.createElement('div');
                 row.className = 'image-entry';
                 const preview = document.createElement('img');
@@ -161,7 +218,7 @@
                     label.className = 'field';
                     label.textContent = title;
                     const input = document.createElement('input');
-                    input.id = `image-${index}-${key}`;
+                    input.id = `${prefix}-${index}-${key}`;
                     input.value = picture[key] || '';
                     input.required = key === 'src';
                     input.addEventListener('input', () => {
@@ -170,19 +227,34 @@
                         if (key === 'alt') preview.alt = picture.alt;
                     });
                     label.append(input);
-                    row.append(label);
+                    if (key === 'src') {
+                        const source = document.createElement('div');
+                        source.className = 'image-source';
+                        const remove = document.createElement('button');
+                        remove.type = 'button';
+                        remove.className = 'remove-image danger';
+                        remove.textContent = '×';
+                        remove.title = 'Remove picture';
+                        remove.setAttribute('aria-label', 'Remove picture');
+                        remove.addEventListener('click', () => {
+                            pictures.splice(index, 1);
+                            draw(); markFormDirty();
+                            ($(`${prefix}-${Math.min(index, pictures.length - 1)}-src`) || add).focus();
+                        });
+                        source.append(label, remove);
+                        row.append(source);
+                    } else row.append(label);
                 }
                 row.append(preview, fallback);
                 const actions = document.createElement('div');
                 actions.className = 'image-actions';
-                for (const [title, offset] of [['Move up', -1], ['Move down', 1], ['Remove picture', 0]]) {
+                for (const [title, offset] of [['Move up', -1], ['Move down', 1]]) {
                     const button = document.createElement('button');
                     button.type = 'button';
                     button.textContent = title;
-                    button.disabled = offset !== 0 && (index + offset < 0 || index + offset >= draftImages.length);
+                    button.disabled = index + offset < 0 || index + offset >= pictures.length;
                     button.addEventListener('click', () => {
-                        if (offset === 0) draftImages.splice(index, 1);
-                        else [draftImages[index], draftImages[index + offset]] = [draftImages[index + offset], draftImages[index]];
+                        [pictures[index], pictures[index + offset]] = [pictures[index + offset], pictures[index]];
                         draw(); markFormDirty();
                     });
                     actions.append(button);
@@ -193,13 +265,80 @@
             });
         }
         add.addEventListener('click', () => {
-            draftImages.push({src: '', alt: '', caption: ''});
+            pictures.push({src: '', alt: '', caption: ''});
             draw(); markFormDirty();
-            $(`image-${draftImages.length - 1}-src`).focus();
+            $(`${prefix}-${pictures.length - 1}-src`).focus();
         });
         container.append(legend, help, rows, add);
         $('fields').append(container);
         draw();
+    }
+    function renderSigns(signs) {
+        draftSigns = clone(signs || []);
+        const container = document.createElement('fieldset');
+        container.id = 'field-signs';
+        container.className = 'image-field';
+        container.innerHTML = '<legend>Signs</legend><p class="muted">All sign fields are required. Groups come from Previous Inhabitants. Descriptions and translations appear only in connection details.</p>';
+        const rows = document.createElement('div');
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.id = 'add-sign';
+        add.textContent = 'Add sign';
+        function draw() {
+            rows.replaceChildren();
+            draftSigns.forEach((sign, index) => {
+                const row = document.createElement('div');
+                row.className = 'sign-entry';
+                for (const [key, title] of [['group', 'Previous inhabitant group'], ['side', 'Side'],
+                    ['description', 'Sign description (HTML)'], ['translation', 'Translation (HTML)']]) {
+                    const label = document.createElement('label');
+                    label.className = 'field';
+                    label.textContent = `${title} *`;
+                    const input = document.createElement(['group', 'side'].includes(key) ? 'select' : 'textarea');
+                    input.id = `sign-${index}-${key}`;
+                    input.required = true;
+                    if (key === 'group') {
+                        input.add(new Option('Choose group…', ''));
+                        addChoices(input, (state.data.previous_occupants || []).map(group => [group.id, `${group.name} (${group.id})`]));
+                    } else if (key === 'side') {
+                        input.add(new Option('Choose side…', ''));
+                        addChoices(input, [['source', 'Source side (from room)'], ['destination', 'Destination side (to room)']]);
+                    }
+                    input.value = sign[key] ?? '';
+                    input.addEventListener('input', () => { sign[key] = input.value; });
+                    input.addEventListener('change', () => { sign[key] = input.value; });
+                    label.append(input);
+                    if (input.tagName === 'TEXTAREA') {
+                        const preview = document.createElement('iframe');
+                        preview.className = 'html-preview';
+                        preview.title = `${title} preview`;
+                        preview.setAttribute('sandbox', '');
+                        preview.srcdoc = htmlDocument(input.value);
+                        input.addEventListener('input', () => { preview.srcdoc = htmlDocument(input.value); });
+                        label.append(preview);
+                    }
+                    row.append(label);
+                }
+                const remove = document.createElement('button');
+                remove.type = 'button';
+                remove.textContent = 'Remove sign';
+                remove.addEventListener('click', () => { draftSigns.splice(index, 1); draw(); markFormDirty(); });
+                row.append(remove);
+                rows.append(row);
+            });
+        }
+        add.addEventListener('click', () => {
+            draftSigns.push({group: '', side: '', description: '', translation: ''});
+            draw(); markFormDirty();
+            $(`sign-${draftSigns.length - 1}-group`).focus();
+        });
+        container.append(rows, add);
+        $('fields').append(container);
+        draw();
+    }
+    function addChoices(control, choices) {
+        [...choices].sort((a, b) => a[1].localeCompare(b[1], undefined, {sensitivity: 'base'}))
+            .forEach(([value, text]) => control.add(new Option(text, value)));
     }
     function choiceValues(field) {
         if (['location', 'from', 'to'].includes(field)) {
@@ -226,8 +365,8 @@
             control = document.createElement('select');
             const property = state.schema.$defs[definitions[state.selection.kind]].properties[field];
             control.add(new Option(required ? 'Choose…' : `Default${property?.default ? ` (${property.default})` : ''}`, ''));
-            choices.forEach(([id, text]) => control.add(new Option(text, id)));
-        } else control = document.createElement(htmlFields.has(field) ? 'textarea' : 'input');
+            addChoices(control, choices);
+        } else control = document.createElement(htmlFields.has(field) || field === 'known_ancestries' ? 'textarea' : 'input');
         control.name = field;
         control.id = `field-${field}`;
         control.required = required;
@@ -265,10 +404,25 @@
             control.addEventListener('input', () => { preview.srcdoc = htmlDocument(control.value); });
             wrapper.append(preview);
         }
-        container.append(wrapper);
+        if (mapPickFields.has(field)) {
+            const row = document.createElement('div');
+            row.className = 'room-pick-row';
+            const pick = document.createElement('button');
+            pick.type = 'button';
+            pick.id = `pick-${field}`;
+            pick.textContent = 'Pick on map';
+            pick.setAttribute('aria-label', `Pick ${fieldLabels[field].toLowerCase()} on map`);
+            pick.setAttribute('aria-pressed', 'false');
+            pick.setAttribute('aria-controls', 'graph');
+            pick.addEventListener('click', () => startMapPick(field));
+            control.addEventListener('change', () => { if (mapPick === field) stopMapPick(); });
+            row.append(wrapper, pick);
+            container.append(row);
+        } else container.append(wrapper);
         return control;
     }
     function renderForm(object) {
+        stopMapPick();
         const {kind, index} = state.selection;
         const definition = state.schema.$defs[definitions[kind]];
         $('form-title').textContent = index === null ? `New ${labels[kind].toLowerCase()}` : `Edit ${labels[kind].toLowerCase()}`;
@@ -278,8 +432,11 @@
         $('delete').hidden = index === null;
         $('form-errors').textContent = '';
         $('fields').replaceChildren();
+        draftImages = {};
         for (const field of fields[kind]) {
-            if (field === 'images') renderImages(object.images);
+            if (imageFields.has(field)) renderImages(object[field], field);
+            else if (field === 'signs') renderSigns(object.signs);
+            else if (field === 'known_ancestries') addField(field, (object[field] || []).join('\n'));
             else if (field === 'position' || field === 'defaultPosition') {
                 const optional = field === 'defaultPosition';
                 if (optional) {
@@ -314,14 +471,14 @@
                 wrapper.textContent = 'Placement *';
                 const mode = document.createElement('select');
                 mode.id = 'placement-mode';
-                mode.add(new Option('In a room', 'location'));
-                mode.add(new Option('In a group', 'group'));
+                addChoices(mode, [['location', 'In a room'], ['group', 'In a group']]);
                 mode.value = object.group != null ? 'group' : 'location';
                 wrapper.append(mode);
                 $('fields').append(wrapper);
                 const target = document.createElement('div');
                 $('fields').append(target);
                 const placementField = () => {
+                    stopMapPick();
                     target.replaceChildren();
                     addField(mode.value, object[mode.value], true, target);
                 };
@@ -344,8 +501,13 @@
         const object = index === null ? {} : clone(state.data[kind][index]);
         const required = state.schema.$defs[definitions[kind]].required;
         for (const field of fields[kind]) {
-            if (field === 'images') {
-                if (draftImages.length || object.images) object.images = clone(draftImages);
+            if (imageFields.has(field)) {
+                if (draftImages[field].length || object[field]) object[field] = clone(draftImages[field]);
+            } else if (field === 'signs') {
+                if (draftSigns.length || object.signs) object.signs = clone(draftSigns);
+            } else if (field === 'known_ancestries') {
+                const values = $('field-known_ancestries').value.split('\n').map(value => value.trim()).filter(Boolean);
+                if (values.length || object[field]) object[field] = values;
             } else if (field === 'position' || field === 'defaultPosition') {
                 if (field === 'defaultPosition' && $('field-x').value === '' && $('field-y').value === '') {
                     delete object.defaultPosition;
@@ -405,7 +567,7 @@
         }
     }
     function showTooltip(html, event) {
-        if (!html) return;
+        if (!html || mapPick) return;
         const tooltip = $('graph-tooltip');
         const generation = ++tooltipGeneration;
         const content = document.createElement('template');
@@ -466,6 +628,9 @@
         options.interaction.selectable = true;
         options.interaction.selectConnectedEdges = true;
         options.interaction.multiselect = false;
+        // Map shortcuts belong to the focused canvas; hovering must not steal form focus.
+        options.interaction.keyboard = {enabled: options.interaction.keyboard,
+            bindToWindow: false, autoFocus: false};
         // Satellite settling must not zoom the canvas while the author is editing.
         options.physics.stabilization.fit = false;
         // Draw while satellites settle instead of hiding the editor canvas during initialization.
@@ -481,7 +646,16 @@
         }
         else {
             state.network = new vis.Network($('graph'), {nodes: state.nodes, edges: state.edges}, options);
+            $('graph').addEventListener('focusout', () => {
+                // Keyup may land in a text field after focus leaves the canvas.
+                state.network.interactionHandler.navigationHandler._stopMovement();
+            });
             state.network.on('click', params => {
+                if (state.busy) return;
+                if (mapPick) {
+                    pickMapObject(params.nodes.length ? state.nodes.get(params.nodes[0]) : null);
+                    return;
+                }
                 const object = params.nodes.length ? state.nodes.get(params.nodes[0])
                     : params.edges.length ? state.edges.get(params.edges[0]) : null;
                 if (object) select(object.editorRef);
@@ -609,6 +783,12 @@
     $('object-form').addEventListener('submit', event => { event.preventDefault(); run(applyForm); });
     $('search').addEventListener('input', renderList);
     $('visibility').addEventListener('change', applyVisibility);
+    $('cancel-room-pick').addEventListener('click', cancelMapPick);
+    addEventListener('keydown', event => {
+        if (event.key !== 'Escape' || !mapPick) return;
+        event.preventDefault();
+        cancelMapPick();
+    });
     $('fit').addEventListener('click', () => state.network?.fit({animation: true}));
     $('set-default-view').addEventListener('click', () => {
         if (state.busy || !state.data || state.conflict || !state.network) return;

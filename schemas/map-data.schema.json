@@ -215,6 +215,13 @@
           },
           "title": "Images",
           "type": "array"
+        },
+        "signs": {
+          "items": {
+            "$ref": "#/$defs/Sign"
+          },
+          "title": "Signs",
+          "type": "array"
         }
       },
       "required": [
@@ -356,6 +363,84 @@
       "title": "Position",
       "type": "object"
     },
+    "PreviousOccupant": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "language": {
+          "default": "",
+          "title": "Language",
+          "type": "string"
+        },
+        "language_visual_style": {
+          "default": "",
+          "title": "Lettering",
+          "type": "string"
+        },
+        "language_oddities": {
+          "default": "",
+          "title": "Language Oddities",
+          "type": "string"
+        },
+        "signage_physical_form": {
+          "default": "",
+          "title": "Signage Physical Form",
+          "type": "string"
+        },
+        "communication_quirks": {
+          "default": "",
+          "title": "Communication Quirks",
+          "type": "string"
+        },
+        "known_ancestries": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Known Ancestries",
+          "type": "array"
+        },
+        "common_appearance": {
+          "default": "",
+          "title": "Common Appearance",
+          "type": "string"
+        },
+        "demeanor": {
+          "default": "",
+          "title": "Demeanor",
+          "type": "string"
+        },
+        "example_sign_images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Example Sign Images",
+          "type": "array"
+        },
+        "example_member_images": {
+          "items": {
+            "$ref": "#/$defs/MapImage"
+          },
+          "title": "Example Member Images",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "PreviousOccupant",
+      "type": "object"
+    },
     "Room": {
       "additionalProperties": false,
       "properties": {
@@ -413,6 +498,42 @@
       ],
       "title": "Room",
       "type": "object"
+    },
+    "Sign": {
+      "additionalProperties": false,
+      "properties": {
+        "group": {
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "title": "Group",
+          "type": "string"
+        },
+        "side": {
+          "enum": [
+            "source",
+            "destination"
+          ],
+          "title": "Side",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "translation": {
+          "minLength": 1,
+          "title": "Translation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group",
+        "side",
+        "description",
+        "translation"
+      ],
+      "title": "Sign",
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -447,6 +568,13 @@
         "$ref": "#/$defs/CharacterGroup"
       },
       "title": "Character Groups",
+      "type": "array"
+    },
+    "previous_occupants": {
+      "items": {
+        "$ref": "#/$defs/PreviousOccupant"
+      },
+      "title": "Previous Occupants",
       "type": "array"
     },
     "connections": {

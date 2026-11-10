@@ -28,6 +28,24 @@ def session(tmp_path):
         yield client, source, output
 
 
+@pytest.mark.parametrize("field", ["group", "side", "description", "translation"])
+def test_saving_a_sign_with_a_missing_required_field_leaves_file_unchanged(session, field):
+    client, source, output = session
+    original = source.read_bytes()
+    loaded = client.get("/api/map").json()
+    del loaded["data"]["connections"][0]["signs"][0][field]
+    response = client.put(
+        "/api/map", json={"data": loaded["data"], "revision": loaded["revision"]}, headers=HEADERS
+    )
+    assert response.status_code == 422
+    assert any(
+        error["loc"] == ["connections", 0, "signs", 0, field] and error["type"] == "missing"
+        for error in response.json()["errors"]
+    )
+    assert source.read_bytes() == original
+    assert not output.exists()
+
+
 def test_load_preview_and_local_assets(session):
     client, source, output = session
     original = source.read_bytes()

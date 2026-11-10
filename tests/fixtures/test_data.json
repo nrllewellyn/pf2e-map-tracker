@@ -1,4 +1,19 @@
 {
+  "previous_occupants": [
+    {
+      "id": "household-scribes",
+      "name": "Household Scribes",
+      "language": "Common",
+      "language_visual_style": "Neat block letters with a small house symbol",
+      "signage_physical_form": "Painted wooden plaques",
+      "communication_quirks": "Room names are followed by a polite request",
+      "known_ancestries": ["Human", "Halfling"],
+      "common_appearance": "Ink-stained aprons and practical clothing",
+      "demeanor": "Orderly and welcoming",
+      "example_sign_images": [],
+      "example_member_images": []
+    }
+  ],
   "rooms": [
     {
       "id": "entrance",
@@ -185,7 +200,15 @@
       "from": "entrance",
       "to": "kitchen",
       "status": "open",
-      "name": "Hallway"
+      "name": "Hallway",
+      "signs": [
+        {
+          "group": "household-scribes",
+          "side": "source",
+          "description": "A small wooden plaque above the kitchen door",
+          "translation": "Kitchen. Please wash your hands."
+        }
+      ]
     },
     {
       "from": "entrance",

@@ -73,6 +73,9 @@ def connection_tooltip(
     parts.append(f"<br>{direction_symbol}")
     if connection.notes:
         parts.append(f"<br><b>Notes:</b><br>{_format_multiline(connection.notes)}")
+    if connection.signs:
+        count = len(connection.signs)
+        parts.append(f"<br><b>Signs:</b> {count} present (click for details)")
     return "<br>".join(parts)
 
 

@@ -12,7 +12,7 @@
       "name": "🌀 Teleporter Room 🌀",
       "position": {
         "x": -750.0,
-        "y": -750.0
+        "y": -500.0
       },
       "color": "#ff8800",
       "notes": "Arrival area",
@@ -23,8 +23,8 @@
       ]
     },
     {
-      "id": "main-corridor",
-      "name": "Main Corridor",
+      "id": "main-corridor-1",
+      "name": "Main Corridor-Part 1",
       "position": {
         "x": -500.0,
         "y": -500.0
@@ -41,8 +41,8 @@
       "id": "workshop",
       "name": "Workshop",
       "position": {
-        "x": -750.0,
-        "y": -500.0
+        "x": -500.0,
+        "y": -750.0
       },
       "notes": "Well-equipped workshop",
       "images": [
@@ -56,7 +56,7 @@
       "name": "Forest",
       "position": {
         "x": -500.0,
-        "y": -250.0
+        "y": 0.0
       },
       "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>",
       "details": "A flock of house drakes have moved into this room, relocated from The Lighthouse.",
@@ -74,11 +74,11 @@
       "name": "🛏️ Small Greenhouse 🛏️",
       "position": {
         "x": 250.0,
-        "y": 250.0
+        "y": 500.0
       },
       "color": "#4CAF50",
       "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here.",
-        "images": [
+      "images": [
         {
           "src": "images/rooms/SmallGreenhouse.png"
         }
@@ -89,7 +89,7 @@
       "name": "Crystal Growth Lab",
       "position": {
         "x": 500.0,
-        "y": 250.0
+        "y": 500.0
       },
       "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
     },
@@ -98,7 +98,7 @@
       "name": "Small Hallway behind Forest",
       "position": {
         "x": -750.0,
-        "y": -250.0
+        "y": 0.0
       },
       "color": "#757575",
       "notes": "A small east/west hallway"
@@ -108,7 +108,7 @@
       "name": "Memory Theater",
       "position": {
         "x": -750.0,
-        "y": 0.0
+        "y": 250.0
       },
       "notes": "Theater that reads the audience's memories and displays them on a screen.",
       "images": [
@@ -127,7 +127,7 @@
       "name": "Orrery",
       "position": {
         "x": -500.0,
-        "y": 0.0
+        "y": 250.0
       },
       "notes": "An orrery of a strange, alien solar system."
     },
@@ -136,7 +136,7 @@
       "name": "Small Hallway above Orrery",
       "position": {
         "x": -250.0,
-        "y": 0.0
+        "y": 250.0
       },
       "color": "#757575",
       "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
@@ -146,7 +146,7 @@
       "name": "Restoration Engine",
       "position": {
         "x": -500.0,
-        "y": 250.0
+        "y": 500.0
       },
       "notes": "A massive arcane device submerged in a pool of liquid.",
       "images": [
@@ -160,7 +160,7 @@
       "name": "Hanging Registry",
       "position": {
         "x": 0.0,
-        "y": 0.0
+        "y": 250.0
       },
       "notes": "Memories of those left behind",
       "images": [
@@ -174,7 +174,7 @@
       "name": "Porcelain Passageways",
       "position": {
         "x": 0.0,
-        "y": -250.0
+        "y": 0.0
       },
       "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls.",
       "images": [
@@ -191,7 +191,7 @@
       "name": "Quartermaster's Bazaar",
       "position": {
         "x": 250.0,
-        "y": -250.0
+        "y": 0.0
       },
       "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point.",
       "images": [
@@ -215,7 +215,7 @@
       "name": "The Crystal Mug",
       "position": {
         "x": -250.0,
-        "y": 250.0
+        "y": 500.0
       },
       "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.",
       "images": [
@@ -242,7 +242,7 @@
       "name": "Lighthouse",
       "position": {
         "x": 250.0,
-        "y": 0.0
+        "y": 250.0
       },
       "notes": "A lighthouse floating above the clouds.<br>Connected to The Gryphon Roost Inn by a beam of arcane energy.",
       "images": [
@@ -256,7 +256,7 @@
       "name": "☁️ Sky Void ☁️",
       "position": {
         "x": 500.0,
-        "y": 0.0
+        "y": 250.0
       },
       "color": "#5cc0ff",
       "notes": "Blue sky and clouds, but no ground in sight."
@@ -266,7 +266,7 @@
       "name": "Gryphon Roost Inn",
       "position": {
         "x": 500.0,
-        "y": -250.0
+        "y": 0.0
       },
       "notes": "A cozy inn floating above the clouds.<br>Connected to the Lighthouse by a beam of arcane energy.",
       "images": [
@@ -280,7 +280,7 @@
       "name": "The Webbed Dungeon",
       "position": {
         "x": -500.0,
-        "y": 500.0
+        "y": 750.0
       },
       "notes": "A crypt containing statues of unknown gods and a tomb protected by celestials."
     },
@@ -289,7 +289,7 @@
       "name": "🌀 Teleporter Room 🌀",
       "position": {
         "x": 0.0,
-        "y": 250.0
+        "y": 500.0
       },
       "color": "#ff8800",
       "notes": "A small teleporter room, just off the Crystal Mug.",
@@ -304,7 +304,7 @@
       "name": "🌍 Orthos 🌍",
       "position": {
         "x": 750.0,
-        "y": 750.0
+        "y": 1000.0
       }
     },
     {
@@ -312,7 +312,7 @@
       "name": "🛡️🛏️ Security 🛏️🛡️",
       "position": {
         "x": -750.0,
-        "y": 500.0
+        "y": 750.0
       },
       "color": "#4CAF50"
     },
@@ -321,7 +321,7 @@
       "name": "🧊 Cryo Prison 🧊",
       "position": {
         "x": 0.0,
-        "y": 750.0
+        "y": 1000.0
       }
     },
     {
@@ -329,8 +329,142 @@
       "name": "❓ Current Location Unknown ❓",
       "position": {
         "x": 500.0,
-        "y": 750.0
+        "y": 1000.0
       }
+    },
+    {
+      "id": "main-corridor-2",
+      "name": "Main Corridor-Part 2",
+      "position": {
+        "x": 0.0,
+        "y": -500.0
+      },
+      "color": "#757575",
+      "notes": "Corridor that appears to run the length of the ship.",
+      "images": [
+        {
+          "src": "images/rooms/Corridor.png"
+        }
+      ]
+    },
+    {
+      "id": "aetherlift-hangar",
+      "name": "Aetherlift Hangar",
+      "position": {
+        "x": -250.0,
+        "y": -750.0
+      },
+      "notes": "A high-ceilinged hangar containing crystal-powered hovering passenger and cargo carriages, energized parking berths, maintenance workstations, and an enormous reinforced bulkhead door.",
+      "details": "<p>The Aetherlift Hangar is a broad, high-ceilinged chamber of dark metal. Its ribbed ceiling is lined with recessed panels of soft white light. The room resembles a large vehicle garage, with orderly rows of small, open-sided carriages, each roughly the size of a golf cart. Some have multiple rows of bench seating for passengers, while others have a single driver's seat and a flat cargo bed.</p><p>Rather than wheels, each vehicle rests a few inches above the floor, suspended by glowing crystals and slowly rotating metal rings beneath its chassis. Faintly luminous sigils spiral across the floor of each parking berth, feeding energy into the vehicles with a gentle, musical hum. Occasionally, a carriage drifts slightly before correcting itself with a soft chime.</p><p>Along one wall, maintenance benches are stocked with specialized tools, crystal components, mechanical parts, and a mixture of arcane instruments and advanced diagnostic equipment. Small, strangely shaped signs bearing unfamiliar runes and alien symbols hang above the workstations and vehicle bays.</p><p>Dominating the far wall is an enormous reinforced bulkhead door, wide enough for several vehicles to pass through side by side. Its heavy segmented panels are set into the station's metal structure, and the floor leading toward it bears the polished scuffs of frequent traffic.</p><p>The room is clean and well-maintained, though its machinery and fittings show years of use. The air carries a faint scent of ozone and warm metal, accompanied by the constant, quiet resonance of the hovering vehicles.</p>",
+      "images": [
+        {
+          "src": "images/rooms/AetherliftHangar.png"
+        }
+      ]
+    },
+    {
+      "id": "cryosleep-repository",
+      "name": "The Cryosleep Repository",
+      "position": {
+        "x": 250.0,
+        "y": -250.0
+      },
+      "notes": "Room not yet explored."
+    },
+    {
+      "id": "space-dock",
+      "name": "Space Dock",
+      "position": {
+        "x": -250.0,
+        "y": -250.0
+      },
+      "notes": "Room not yet explored."
+    },
+    {
+      "id": "celestial-threshold",
+      "name": "The Celestial Threshold",
+      "position": {
+        "x": 0.0,
+        "y": -250.0
+      },
+      "notes": "A star-filled chamber with a dark, glasslike floor, two enormous luminous dragon figures, and a swirling portal.",
+      "details": "<p>The station seems to vanish around visitors as they step through the doorway.</p><p>Beyond the doorway stretches an immense, star-filled void. The floor appears to be perfectly smooth black glass, or perhaps something entirely transparent, revealing countless stars glittering in the darkness below. Thin lines of pale light connect some of these stars into strange, unfamiliar constellations.</p><p>Flanking the chamber are two enormous dragons, their serpentine bodies curving along the left and right sides of the room. They appear to be statues made entirely of pale blue-white light, their scales, claws, and elaborate horns traced in luminous strands like constellations given form. Their massive heads turn towards the entrance, as if inspecting visitors.</p><p>At the far end of the chamber, a swirling portal hangs suspended in the darkness, its shifting radiance casting faint ripples of light across the floor.</p><p>The air is cool and unnaturally still. Sound seems strangely muted, and a faint, almost imperceptible hum fills the space. Nothing moves except the occasional drifting mote of starlight and the slow, hypnotic swirling of the distant portal.</p>",
+      "images": [
+        {
+          "src": "images/rooms/TheCelestialThreshold.png",
+          "caption": "Close-up of the Astravindicta"
+        }
+      ]
+    },
+    {
+      "id": "celestial-reliquary",
+      "name": "The Celestial Reliquary",
+      "position": {
+        "x": 139.4137395215449,
+        "y": -124.0
+      },
+      "notes": "A circular platform suspended in a star-filled void, surrounded by eight luminous statues, with the Astravindicta hovering at its center.",
+      "details": "<p>Visitors emerge from the portal at the top of a short flight of stairs, looking out across a vast circular platform suspended in an endless, star-filled void. There are no visible walls, ceiling, or planets—only the distant shimmer of countless stars. Thin lines of pale blue light connect some of them into unfamiliar constellations, stretching across the darkness in every direction.</p><p>The platform itself appears to be made of dark, polished material, almost indistinguishable from the surrounding void. Its surface glitters with tiny points of light, giving the unsettling impression that visitors are standing directly upon the stars.</p><p>Arranged evenly around the platform are eight enormous statues, each resting on a circular pedestal. Their forms depict strange, unfamiliar beings, rendered in stylized, almost abstract shapes. Some resemble humanoids, while others have distinctly alien features, including elongated limbs, elaborate crests, and unusual facial structures. Rather than solid stone, the statues appear to be formed from translucent blue crystal or condensed starlight, their features traced in faintly glowing lines. Small points of brighter light shine from their eyes.</p><p>At the exact center of the chamber, a brilliant ring of pale blue runes surrounds a mysterious object suspended just above the floor. The artifact is roughly the size of a basketball, a perfect sphere of pale crystal held within an intricate golden framework. Its polished bands are covered in impossibly fine runic inscriptions, surrounding a central golden seal.</p><p>Within the crystal, an entire galaxy appears to swirl in miniature. Countless stars spiral slowly around a luminous center, casting shifting patterns of blue, white, and gold across the surrounding floor.</p><p>The chamber is utterly silent, save for a deep, almost imperceptible vibration that seems to come from the artifact itself. Despite the impossible expanse surrounding the platform, the air is still and breathable, and the distant stars provide a soft, ethereal illumination.</p><h3>Astravindicta - The Vengeance of the Stars</h3><p>Suspended silently in the air is an exquisite spherical artifact, roughly the size of a basketball. Its surface is made of flawless, transparent crystal, enclosed within an intricate lattice of interwoven golden filaments. The delicate framework forms elaborate geometric patterns, with intersecting curves and diamond-shaped ornaments that seem as much a work of art as a feat of impossible engineering.</p><p>At the sphere's apex sits a circular golden seal, engraved with a ring of impossibly fine runes surrounding a raised, diamond-shaped emblem. The inscriptions emit a faint blue-white glow, their shapes unfamiliar and their meaning inscrutable.</p><p>Within the crystal sphere, an entire spiral galaxy appears to exist in miniature. Countless stars swirl around a brilliant golden-white center, their luminous arms stretching outward in shimmering shades of violet, blue, and silver. The galaxy turns almost imperceptibly, with tiny points of light occasionally flaring and fading among its countless stars. Upon close inspection, the depth within the sphere seems impossible, as though its crystal surface were a window into an actual expanse of space rather than a container for an illusion.</p><p>The artifact slowly spins, radiating a gentle blue and golden light. A faint, rhythmic vibration can be felt in the air around it, more like a distant heartbeat than the hum of machinery. Despite its delicate appearance, the sphere conveys an unsettling sense of permanence and immense, carefully contained power.</p><p>Despite its incredible power, the object seems to invite observers to reach out and touch it.</p>",
+      "images": [
+        {
+          "src": "images/rooms/TheCelestialReliquary.png",
+          "caption": "Room view from entrance"
+        },
+        {
+          "src": "images/rooms/TheCelestialReliquary-Astravindicta.png",
+          "caption": "Close-up of the Astravindicta"
+        }
+      ]
+    },
+    {
+      "id": "hall-of-fallen-worlds",
+      "name": "Hall of Fallen Worlds",
+      "position": {
+        "x": 250.0,
+        "y": -750.0
+      },
+      "notes": "A circular chamber resembling an ancient temple, with murals and shrines depicting flourishing worlds descending into divine war and destruction.",
+      "details": "<p>The Hall of Fallen Worlds is a vast, circular chamber, its walls lined with towering stone pillars and intricate carvings. Unlike the rest of the station, the room resembles an ancient temple, its weathered stone illuminated by soft, golden light.</p><p>At the center stands a massive, freestanding wall bearing an elaborate mural divided into five horizontal scenes. The uppermost depicts a prosperous civilization, with bustling cities, fertile fields, and peaceful settlements. Below it, the scenes grow progressively darker: gods and celestial beings gathering above opposing armies, a terrible war between divine forces, and the devastation left in its wake. The final panel shows the world consumed by an enormous, fiery cataclysm, leaving nothing but ruin.</p><p>Around the chamber's outer wall, dozens of shallow alcoves contain smaller shrines, each displaying its own variation of the central mural. The inhabitants differ wildly between them: insect-like humanoids, amorphous beings of living slime, crystalline creatures, and countless other unfamiliar species. Their cities, landscapes, and gods are equally diverse, yet every mural follows the same progression—from flourishing civilization to divine war, and finally, utter destruction.</p><p>The chamber is unnaturally quiet. The air carries a faint scent of ancient stone and incense, and the countless shrines stand in solemn silence, each seemingly commemorating an entire world lost to the same terrible fate.</p>",
+      "images": [
+        {
+          "src": "images/rooms/HallOfFallenWorlds.png",
+          "caption": "Room view from entrance"
+        },
+        {
+          "src": "images/rooms/HallOfFallenWorlds-Mural.png",
+          "caption": "Central mural"
+        }
+      ]
+    },
+    {
+      "id": "portable-portal-nexus",
+      "name": "Portable Portal Nexus",
+      "position": {
+        "x": 0.0,
+        "y": -750.0
+      },
+      "notes": "A circular magitech chamber containing a ringed central apparatus and four pedestal machines, each holding a compact runic metal disk.",
+      "details": "<p>Portable Portal Nexus is a large, circular chamber of dark metal, illuminated by soft white lights recessed into the walls and ceiling. The room is remarkably clean, with a broad, open floor surrounding an imposing magitech apparatus at its center.</p><p>The central device is a towering construction of dark steel, polished brass, and faintly glowing crystal. Several concentric metal rings encircle a raised circular platform, their surfaces densely engraved with intricate runes, geometric patterns, and unfamiliar symbols. Thick cables and crystalline conduits run from the base into the floor, while small points of blue-violet light pulse slowly across its surface. A low, resonant hum fills the chamber, occasionally accompanied by a faint crackle of arcane energy.</p><p>Equally spaced around the central apparatus stand four identical machines, each resembling a sturdy metal pedestal fitted with articulated clamps and delicate mechanical instruments. Suspended within each machine is a strange, compact object: a thick, circular disk of dark metal, roughly the size of a dinner plate, its surface covered in tightly interlocking geometric segments and tiny, luminous runes. Each disk rests motionless within its housing, connected by several fine, glowing contacts.</p><p>The floor between the central apparatus and the four surrounding machines is marked by thin lines of inlaid metal, forming a precise, symmetrical pattern. Along the walls, small signs of varying shapes and materials display indecipherable symbols in several unfamiliar scripts. Some glow faintly, while others are simply engraved into metal plates.</p><p>Despite the complexity of the machinery, the room is strangely still. Nothing appears to be moving beyond the slow pulse of the lights, and the steady hum of the central device seems almost to reverberate through the floor beneath visitors' feet.</p>",
+      "images": [
+        {
+          "src": "images/rooms/PortablePortalNexus.png"
+        }
+      ]
+    },
+    {
+      "id": "main-corridor-3",
+      "name": "Main Corridor-Part 3",
+      "position": {
+        "x": 500.0,
+        "y": -500.0
+      },
+      "color": "#757575",
+      "notes": "Corridor that appears to run the length of the ship.",
+      "images": [
+        {
+          "src": "images/rooms/Corridor.png"
+        }
+      ]
     }
   ],
   "characters": [
@@ -341,7 +475,7 @@
       "physical_description": "Muscular, soot-streaked arms, hair pulled into a practical bun; always carrying a toolkit and a whetstone.",
       "personality": "Precise, disciplined, quietly confident; speaks little but commands respect with her skill.",
       "other_details": "Travels with Aurethion. Acts an armorer--assists in keeping his gear maintained, as well as making minor adjustments.",
-      "group": "base-camp",
+      "location": "workshop",
       "images": [
         {
           "src": "images/npcs/followers/ArianaIsenhart.png",
@@ -579,7 +713,7 @@
       "physical_description": "Human-sized; made of bronze-colored metal with glowing blue components; the symbol of ship security is built into his chassis",
       "personality": "Serious; protective of the ship; strongly dislikes chaos in all forms",
       "other_details": "Rescued from the brig in Security. Was confined there for \"several centuries\".",
-      "location": "main-corridor",
+      "location": "workshop",
       "images": [
         {
           "src": "images/npcs/SentinelVarr.png",
@@ -664,7 +798,7 @@
       "images": [
         {
           "src": "images/npcs/Tilly.png",
-        "caption": "Portrait"
+          "caption": "Portrait"
         }
       ]
     },
@@ -679,7 +813,7 @@
       "images": [
         {
           "src": "images/npcs/followers/TinkGearwhistle.png",
-        "caption": "Portrait"
+          "caption": "Portrait"
         }
       ]
     },
@@ -719,8 +853,8 @@
       "name": "Researchers",
       "location": "small-greenhouse",
       "defaultPosition": {
-        "x": 151.0,
-        "y": 479.0
+        "x": 225.0,
+        "y": 754.0
       }
     },
     {
@@ -731,7 +865,11 @@
     {
       "id": "the-party",
       "name": "The Party",
-      "location": "security",
+      "location": "main-corridor-2",
+      "defaultPosition": {
+        "x": 286.0,
+        "y": -525.0
+      },
       "color": "#d62000",
       "images": [
         {
@@ -741,25 +879,579 @@
       ]
     }
   ],
+  "previous_occupants": [
+    {
+      "id": "void-threaders",
+      "name": "The Void-Threaders (The Spiders)",
+      "language": "Arach-Glint",
+      "language_visual_style": "A complex web of glowing fiber-optic wires stretched across frames. The \"letters\" are formed by the intersections and knots in the wire.",
+      "language_oddities": "The language is three-dimensional. To a human, it looks like a mess of tangles, but from the correct angle, the shadows cast by the wires form legible sentences.",
+      "signage_physical_form": "Irregular, hand-spun wire lattices shaped like jagged webs. They are usually hooked into ceiling corners rather than eye-level walls.",
+      "communication_quirks": "They are extremely polite and formal, viewing direct eye contact or blunt speech as a sign of primitive aggression. Their signs often use flowery, overly-long descriptions for simple rooms (e.g., \"The Chamber of Nutritious Repose\" for a cafeteria).",
+      "known_ancestries": [
+        "Anandi"
+      ],
+      "common_appearance": "Spider‑folk with eight‑limbed features, chitinous accents, and silk‑looming motifs; often wear subtle cords and climbing gear that accentuate their limbs.",
+      "demeanor": "Highly formal and polite with one another; to outsiders, overly deferential and elaborate in speech, often using circumlocutions.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/void-threaders/sign-example-1.png"
+        },
+        {
+          "src": "images/previous-inhabitants/void-threaders/sign-example-2.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "binary-7-maintenance-cult",
+      "name": "Binary-7 \"Maintenance\" Cult",
+      "language": "High-Level Scrape",
+      "language_visual_style": "Vertical columns of binary code and circuit diagrams scratched roughly into surfaces.",
+      "language_oddities": "The language isn't meant to be read with eyes; it is designed to be felt. The depth of the scratches indicates \"volume\" or importance.",
+      "signage_physical_form": "Recycled octagonal hull-plating or scraps of sheet metal. The text is \"written\" using industrial plasma cutters or heavy-duty welding torches.",
+      "communication_quirks": "Obsessively practical. They don't believe in adjectives. A sign won't say \"Danger: High Voltage,\" it will simply say \"STAY. LETHAL. ENERGY.\"",
+      "known_ancestries": [
+        "Automaton"
+      ],
+      "common_appearance": "Industrial greys and metal plates integrated into bodies; often wear scavenged utility harnesses and tool rigs.",
+      "demeanor": "Extremely practical and matter‑of‑fact internally; brusque and blunt with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/binary-7-maintenance-cult/sign-example-1.png"
+        },
+        {
+          "src": "images/previous-inhabitants/binary-7-maintenance-cult/sign-example-2.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "jelly-kin-of-ooze-9",
+      "name": "The Jelly-Kin of Ooze-9",
+      "language": "Biolum-Splat",
+      "language_visual_style": "Swirls of glowing, viscous slime that slowly shifts and pulses.",
+      "language_oddities": "The language is \"living.\" Because the bacteria in the slime are alive, the signs occasionally \"drift,\" meaning a sign pointing to the Armory might slide six inches down the wall over the course of a week.",
+      "signage_physical_form": "Translucent glass petri-dishes or sealed plastic pouches filled with neon-green liquid. They are often suction-cupped to doors.",
+      "communication_quirks": "They are unfailingly cheerful and laid-back, even in dire situations. Their signs often include unsolicited advice or \"fun facts\" that have nothing to do with the room.",
+      "known_ancestries": [
+        "Slime"
+      ],
+      "common_appearance": "Gelatinous humanoid shapes with luminescent swirls; functional harnesses or containment pods for tools.",
+      "demeanor": "Cheerful and relaxed toward each other and strangers; often overly friendly.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/jelly-kin-of-ooze-9/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "fragmented",
+      "name": "The Fragmented (Exile Spirits)",
+      "language": "Echo-Script",
+      "language_visual_style": "Collage-style lettering where every character is stolen from a different source (magazines, old manuals, or other signs).",
+      "language_oddities": "The signs are often \"ghostly\"—the Fragmented use a psychic adhesive that makes the signs appear slightly blurry or out of focus unless you look at them through a mirror or a lens.",
+      "signage_physical_form": "Long scrolls of tattered parchment or synthetic fabric, with letters cut out and glued on. These are often hung crookedly or upside down because \"orientation is a physical-plane bias.\"",
+      "communication_quirks": "They are conspiratorial and paranoid. They love using riddles and assume everyone is out to steal their \"essence.\" A sign for a bathroom might be a riddle about water and waste.",
+      "known_ancestries": [
+        "Ghost‑touched spirits",
+        "Psychic entities"
+      ],
+      "common_appearance": "Semi‑transparent forms with mismatched remnants of cloth and armor; tend to carry patched banners and scrap talismans.",
+      "demeanor": "Paranoid and suspicious among themselves; distrustful of outsiders, often speaking in riddles.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/fragmented/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "h-0rs3-riders",
+      "name": "The H-0RS3 \"Riders\"",
+      "language": "Glyph-Meme",
+      "language_visual_style": "Brightly colored pictograms and stylized emojis that look like ancient Earth street art or 21st-century internet culture.",
+      "language_oddities": "The language has no grammar. It’s just a sequence of images that the reader is supposed to \"vibe\" with to understand the meaning.",
+      "signage_physical_form": "Triangle-shaped stickers or magnets made of neon-colored plastic. They use \"Ever-Ink\" markers that can only be cleaned with specialized solvents.",
+      "communication_quirks": "They are hyper-energetic and sarcastic. They treat everything like a joke or a competition. Their signage for a high-security vault might just be an image of a frowning face and a giant \"NOPE\" symbol.",
+      "known_ancestries": [
+        "Human",
+        "Goblin",
+        "Sprite"
+      ],
+      "common_appearance": "Bright, expressive ancestries. Neon gear, street‑art‑style tattoos/symbols; lots of stickers and pop‑culture imagery.",
+      "demeanor": "Competitive and playful in‑group; sarcastic and irreverent to outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/h-0rs3-riders/sign-example-1.png"
+        },
+        {
+          "src": "images/previous-inhabitants/h-0rs3-riders/sign-example-2.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "lithos-architects",
+      "name": "The Lithos-Architects",
+      "language": "Deep-Thrum",
+      "language_visual_style": "Heavy, geometric cuneiform carved deep into the material.",
+      "language_oddities": "The language is tactile and thermal. Each symbol is meant to be touched; the Architects use a slight heat-enchantment so the \"important\" words feel warm to the fingertip.",
+      "signage_physical_form": "Heavy basalt slabs or thick lead bricks bolted directly into the hull. The writing is chiseled using diamond-tipped tools.",
+      "communication_quirks": "Dour and traditional. They view modern technology as \"flimsy.\" Their signs often include the date the sign was made and the expected expiration date of the room (usually in thousands of years).",
+      "known_ancestries": [
+        "Dwarf"
+      ],
+      "common_appearance": "Sturdy, carved stone adornments; heavy geometric motifs in garments and tools.",
+      "demeanor": "Serious and traditional internally; brusque and rigid with strangers.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/lithos-architects/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "glimmer-flys",
+      "name": "The Glimmer-Flys",
+      "language": "Kinetic-Flash",
+      "language_visual_style": "Tiny, rapidly spinning mirrors or sequins that catch the light to \"blink\" messages.",
+      "language_oddities": "The sign changes depending on how fast you walk past it. If you stand still, it looks like a blur; if you run, the message becomes clear.",
+      "signage_physical_form": "Long, thin strips of iridescent ribbon pinned to the wall with shimmering needles.",
+      "communication_quirks": "Hyper-active and distractible. They hate long sentences. A sign for a \"Danger: Radiation Zone\" might just be a flashing sequence that translates to \"SHINY HURT.\"",
+      "known_ancestries": [
+        "Sprite"
+      ],
+      "common_appearance": "Colorful ribboned outfits with reflective surfaces and sequins; kaleidoscope accessories.",
+      "demeanor": "Energetic and flighty with each other and others; easily distracted.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/glimmer-flys/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "bureau-kraken",
+      "name": "The Bureau-Kraken",
+      "language": "Sub-Clause Gothic",
+      "language_visual_style": "Tiny, microscopic dense text arranged in perfect, soul-crushing grids.",
+      "language_oddities": "A single sign for a \"Storage Closet\" usually contains 4,000 words of legal disclaimers, safety protocols, and a history of the closet's previous occupants.",
+      "signage_physical_form": "Laminated A4 paper stuck to the wall with industrial-strength, impossible-to-remove adhesive.",
+      "communication_quirks": "Pathologically bureaucratic. They refuse to enter a room unless the sign is level to within 0.1 degrees. They are often found straightening other people's signs with a look of pure disgust.",
+      "known_ancestries": [
+        "Modrons"
+      ],
+      "common_appearance": "Tidy uniforms, clipped badges, precise pins; often carry paperwork bundles.",
+      "demeanor": "Obsessively precise with one another; irritatingly meticulous with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/bureau-kraken/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "rust-walkers",
+      "name": "The Rust-Walkers",
+      "language": "Oxide-Trace",
+      "language_visual_style": "Chemical corrosion patterns. The \"letters\" are actually controlled patches of rust or acid-burns.",
+      "language_oddities": "The language smells like ozone and wet iron. To \"read\" it properly, one often has to sniff the sign.",
+      "signage_physical_form": "Circular rusted canisters or hubcaps. The \"ink\" is concentrated salt-water or digestive acid applied with a coarse brush.",
+      "communication_quirks": "Deeply fatalistic. They believe the station is slowly dying and they worship the decay. Their signs are often found on things that are broken, proudly labeling them as \"RETURNED TO DUST.\"",
+      "known_ancestries": [
+        "Automaton",
+        "Golemborn",
+        "Android"
+      ],
+      "common_appearance": "Patchworks of rusted metal, leather, and corroded relics; smell of ozone and iron.",
+      "demeanor": "Fatalistic and quiet together; darkly humorous and resigned with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/rust-walkers/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "star-singers",
+      "name": "The Star-Singers",
+      "language": "Melodic-Script",
+      "language_visual_style": "Musical staffs and notes that seem to vibrate slightly.",
+      "language_oddities": "If you tap the sign, it emits a low hum. The pitch of the hum tells you the \"mood\" of the room (a minor key for a morgue, a bright major chord for a kitchen).",
+      "signage_physical_form": "Curved glass tubes filled with singing sands. The tubes are bent into the shape of musical signatures.",
+      "communication_quirks": "Highly dramatic. They refuse to speak—only sing. Their signs are often hung in \"acoustically pleasing\" spots, even if that spot is twenty feet up a wall or behind a pipe.",
+      "known_ancestries": [
+        "Elf"
+      ],
+      "common_appearance": "Flowing robes, tunic‑like garments with musical motifs, glass tubes and singing sand ornaments.",
+      "demeanor": "Dramatic and cooperative with each other; expressive and lyrical toward others.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/star-singers/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "hive-mind-of-sector-4",
+      "name": "The Hive-Mind of Sector 4",
+      "language": "Pheromone-Print",
+      "language_visual_style": "Abstract, organic splotches that look like coffee stains or grease marks.",
+      "language_oddities": "To anyone without a sense of smell, the signs look like accidents. To the Hive, they are vivid, colorful maps.",
+      "signage_physical_form": "Rough burlap patches soaked in pungent oils. They are usually slapped onto walls at waist height (the height of their antennae).",
+      "communication_quirks": "Radically communal. They don't have a word for \"I\" or \"Mine.\" A sign for a private bedroom would translate to \"Collective Resting Niche #402.\"",
+      "known_ancestries": [
+        "Swarmblood"
+      ],
+      "common_appearance": "Organic splotches and scent‑soaked patches; minimal clothing but shared communal glyphs.",
+      "demeanor": "Highly communal and consensus‑driven internally; disinterested or alien to outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/hive-mind-of-sector-4/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "chronos-glitchers",
+      "name": "The Chronos-Glitchers",
+      "language": "Retro-Futurism",
+      "language_visual_style": "Vibrant neon tubes that occasionally flicker and show messages from five minutes in the future.",
+      "language_oddities": "The signs are prone to \"ghosting,\" where you see the sign for where the room used to be before the station was remodeled eighty years ago.",
+      "signage_physical_form": "Acrylic boxes containing humming neon gas. They are almost always hung crookedly because the Glitchers exist in four dimensions and can't tell what \"straight\" looks like.",
+      "communication_quirks": "Constantly confused. They might thank you for a conversation you haven't had yet. Their signs are often apologetic, like \"Bridge (Likely) This Way.\"",
+      "known_ancestries": [
+        "Conrasu"
+      ],
+      "common_appearance": "Flickering cloth with patterns that look displaced in time; time‑glyph adornments.",
+      "demeanor": "Confused and nonlinear with each other; oddly polite or oddly ahead of schedule with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/chronos-glitchers/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "trash-goblins",
+      "name": "The Trash-Goblins (Scavenger Guild)",
+      "language": "Junk-Speak",
+      "language_visual_style": "Crude crayon drawings and stick figures.",
+      "language_oddities": "The language uses a lot of \"X\" marks for things that are dangerous and \"Circle\" marks for things that can be eaten.",
+      "signage_physical_form": "Flattened soda cans or pieces of cardboard. The writing implement is usually a half-melted crayon or a piece of charcoal.",
+      "communication_quirks": "Aggressively protective of loot. They use signs to claim territory. You’ll see a sign on a vending machine that just says \"MINE\" with a very poorly drawn picture of a bite mark.",
+      "known_ancestries": [
+        "Goblin",
+        "Gremlin"
+      ],
+      "common_appearance": "Ragged scraps, cardboard and found metal; marked with simple symbols (Xs, circles).",
+      "demeanor": "Territorial and mischievous inside the group; defensive and opportunistic outside it.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/trash-goblins/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "order-of-the-void-eye",
+      "name": "The Order of the Void-Eye",
+      "language": "Negative-Space",
+      "language_visual_style": "The sign is a solid block of color, and the letters are the holes cut out of it.",
+      "language_oddities": "You can only read the sign by looking at what isn't there. If the wall behind the sign is the same color as the sign, it is completely invisible.",
+      "signage_physical_form": "Square sheets of black silicone. They are often placed over lights so the \"letters\" are projected onto the floor.",
+      "communication_quirks": "Highly secretive and elitist. They think if you can't see their signs, you don't deserve to find their rooms. They get very annoyed if someone shines a flashlight on their \"invisible\" doors.",
+      "known_ancestries": [
+        "Fetchling"
+      ],
+      "common_appearance": "Simple dark robes or cloth with negative‑space sigils; often minimalistic gear.",
+      "demeanor": "Secretive and solemn with each other; dismissive and cool to outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/order-of-the-void-eye/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "party-bot-renegades",
+      "name": "The Party-Bot Renegades",
+      "language": "Glitch-Art",
+      "language_visual_style": "Rainbow-colored static and pixelated icons that hurt the eyes to look at.",
+      "language_oddities": "The signs often play a 1-second loop of high-tempo electronic dance music when someone passes by.",
+      "signage_physical_form": "Discarded tablet screens or broken monitors taped to the wall with neon duct tape.",
+      "communication_quirks": "Inappropriately enthusiastic. Even a sign for \"Nuclear Reactor Core\" will have festive streamers and a \"LETS GOOO!\" icon. They treat every room transition like a VIP club entrance.",
+      "known_ancestries": [
+        "Android",
+        "Automaton"
+      ],
+      "common_appearance": "Glitchy neon screens, patched circuits, luminous streamers.",
+      "demeanor": "Highly enthusiastic internally; overly friendly and chaotic externally.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/party-bot-renegades/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "hierophants-hand",
+      "name": "The Hierophant’s Hand",
+      "language": "Celestial Decree",
+      "language_visual_style": "Ornate, sweeping golden calligraphy featuring numerous loops, halos, and decorative flourishes that make the text look like art.",
+      "language_oddities": "The ink used often smells like incense (sandalwood or myrrh). If a sign is removed or defaced, the group considers it an act of heresy and may launch a \"holy investigation.\"",
+      "signage_physical_form": "Silk banners with gold-tasseled fringes or hammered gold-leaf plates bolted to the wall with silver screws.",
+      "communication_quirks": "Highly Religious. They are incredibly polite but immovable in their convictions. They believe the station's layout is a divine map. Every single sign, no matter how mundane, must conclude with the phrase, \"By the will of the Hierophant.\"",
+      "known_ancestries": [
+        "Human"
+      ],
+      "common_appearance": "Ornate clerical vestments, gold filigree banners, sacred symbols.",
+      "demeanor": "Reverent and orderly among themselves; formal and solemn toward others.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/hierophants-hand/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "station-normals",
+      "name": "The Station Normals",
+      "language": "Basic Common",
+      "language_visual_style": "Standard block lettering that is clear, legible, and entirely devoid of artistic flair.",
+      "language_oddities": "Because their signs are so \"normal,\" they are often the most ignored or overlooked by the stranger alien species on the station.",
+      "signage_physical_form": "Square pieces of white paper or yellow sticky notes attached with clear tape. Occasionally, they just write directly on the wall with a black permanent marker.",
+      "communication_quirks": "Polite and Literal. They are the \"straight men\" of the station. They value safety, clear directions, and social niceties. Their signs often include small pleas for civility, such as \"Please don't eat the glowing moss\" or \"Kindly keep noise down after 10 PM.\"",
+      "known_ancestries": [
+        "Any common ancestry"
+      ],
+      "common_appearance": "Everyday clothing styles from their home cultures; common tools and simple garb.",
+      "demeanor": "Cooperative and polite both internally and with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/station-normals/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "vacuum-born",
+      "name": "The Vacuum-Born",
+      "language": "Void-Gaze",
+      "language_visual_style": "Transparent indentations or microscopic etchings that are invisible from a distance.",
+      "language_oddities": "The text can only be read if a light source (like a flashlight or a glowrod) is held at a specific 45-degree angle to the surface, causing the shadows of the etchings to appear.",
+      "signage_physical_form": "Thick sheets of clear plexiglass or, in colder sectors of the station, carved slabs of industrial ice that never melt due to localized cooling fields.",
+      "communication_quirks": "Stoic and Detached. They have a \"spacewalker\" mentality—lonely, quiet, and obsessed with oxygen and pressure stats. They rarely use verbs, preferring to list raw data. A sign for a kitchen might simply list the caloric density of the food inside.",
+      "known_ancestries": [
+        "Sarcesian",
+        "Android",
+        "Various ancestries alien to the PF2e world"
+      ],
+      "common_appearance": "Pale, minimalist attire with practical accessories; often etched markings only visible in light.",
+      "demeanor": "Reserved and introspective within the group; quiet and data‑oriented with others.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/vacuum-born/sign-example-1.png"
+        }
+      ],
+      "example_member_images": []
+    },
+    {
+      "id": "re-animators",
+      "name": "The Re-Animators",
+      "language": "Flesh-Font",
+      "language_visual_style": "Stitched-together characters made from different textures of organic material (leathery, veined, or porous).",
+      "language_oddities": "The signs are biologically active. If the \"sign\" gets \"hungry,\" the edges might curl or turn grey, requiring a splash of nutrient solution (or a drop of blood) to become legible again.",
+      "signage_physical_form": "Dried leather hides or cured \"meat\" parchment. Instead of ink, they use surgical sutures or cauterized burn marks to form words.",
+      "communication_quirks": "Disturbingly Biological. They view the station as a giant organism and the players as \"microbes.\" They are not necessarily evil, just clinical and creepy. They might refer to a hallway as an \"artery\" or a door as a \"sphincter.\"",
+      "known_ancestries": [
+        "Android",
+        "Automaton",
+        "Human",
+        "Elf"
+      ],
+      "common_appearance": "Members wear face‑covering masks, clean lab coats or clinical garments, and well‑pressed professional attire underneath. Their look emphasizes sterility and precision—dark or neutral tones, minimal ornamentation, and purposeful gear such as gloves, medical belts, or instrument pouches. Their masks and clothing minimize personal expression, making the group appear impersonal and clinical.",
+      "demeanor": "Exceptionally cold and analytical with one another; interactions with outsiders are matter‑of‑fact and detached. They prioritize procedure and protocol over emotion, often speaking in clinical terms and evaluating situations with scientific rigor.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/re-animators/sign-example-1.png"
+        }
+      ],
+      "example_member_images": [
+        {
+          "src": "images/previous-inhabitants/re-animators/Re-Animators_Scientist.png",
+          "caption": "Re-Animators Scientist"
+        },
+        {
+          "src": "images/previous-inhabitants/re-animators/Re-Animators_Officer.png",
+          "caption": "Re-Animators Officer"
+        },
+        {
+          "src": "images/previous-inhabitants/re-animators/Re-Animators_Security.png",
+          "caption": "Re-Animators Security"
+        },
+        {
+          "src": "images/previous-inhabitants/re-animators/Re-Animators_Security_WithLaser.png",
+          "caption": "Re-Animators Security with Laser"
+        }
+      ]
+    },
+    {
+      "id": "gravity-drunks",
+      "name": "The Gravity-Drunks",
+      "language": "Tilt-Talk",
+      "language_visual_style": "Spiraling, dizzying swirls of text that seem to \"fall\" across the surface of the sign.",
+      "language_oddities": "The signs are rarely placed at eye level. You might find one on the floor, another behind a pipe, and a third on the ceiling. They often use \"lenticular\" printing so the image changes as you move your head.",
+      "signage_physical_form": "Bouncy rubber balls with words printed on them, or metal slinkies stretched across doorways with letters dangling from the coils.",
+      "communication_quirks": "Always Joking. They are addicted to the sensation of shifting gravity and find the concept of \"up\" and \"down\" to be a hilarious prank. Their signs are filled with puns and \"dad jokes\" about weightlessness, falling, and orbits.",
+      "known_ancestries": [
+        "Fey‑touched Gnome",
+        "Sprite",
+        "Satyr",
+        "Figment",
+        "Nymph"
+      ],
+      "common_appearance": "Spiraled cloth, gravity‑themed prints, improvised floating ornaments.",
+      "demeanor": "Jovial and joking together; playful and unpredictable with outsiders.",
+      "example_sign_images": [
+        {
+          "src": "images/previous-inhabitants/gravity-drunks/sign-example-1.png"
+        },
+        {
+          "src": "images/previous-inhabitants/gravity-drunks/sign-example-2.png"
+        }
+      ],
+      "example_member_images": []
+    }
+  ],
   "connections": [
     {
       "from": "teleporter-room-arrival",
-      "to": "main-corridor",
+      "to": "main-corridor-1",
       "status": "open",
-      "name": "Airtight Door"
-    },
-    {
-      "from": "main-corridor",
-      "to": "workshop",
-      "status": "locked",
       "name": "Airtight Door",
-      "notes": "Locked due to security lockdown"
+      "signs": [
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A perfectly level, laminated A4 sheet of paper is attached to the door eye-level with industrial-strength adhesive, covered in microscopic, bone-dry text arranged in a soul-crushing grid.",
+          "translation": "Welcome to Station Sector 4-G. By exiting this portal, you agree to all 4,513 safety bylaws as noted below; note that Subsection R-9 strictly prohibits 'Sudden Running' or 'Unauthorized Sweating,' both of which are classified as Level-3 Security violations."
+        },
+        {
+          "group": "station-normals",
+          "side": "source",
+          "description": "A simple square of white paper is taped to the door with a piece of scotch tape, featuring neat, blocky English written in a black permanent marker.",
+          "translation": "Welcome! Please avoid [burn mark] will set off the security sensors. Reminder: If the door is locked for any reason, use the teleport to travel to [burn mark] and disengage the lockdown. Have a nice day!"
+        },
+        {
+          "group": "re-animators",
+          "side": "source",
+          "description": "A patch of dried, veined leather is stitched directly into the door’s rubber seal with surgical staples, featuring words that appear to have been cauterized into the hide with a branding iron.",
+          "translation": "This outer membrane is currently closed to prevent infection."
+        },
+        {
+          "group": "fragmented",
+          "side": "source",
+          "description": "A long scroll of tattered synthetic fabric hangs upside down from the door frame, featuring blurry, collage-style letters cut out of various technical manuals and glued on in a jagged line.",
+          "translation": "You are pieces of a puzzle that does not want to be solved; be careful which shadow you step into first."
+        },
+        {
+          "group": "hive-mind-of-sector-4",
+          "side": "source",
+          "description": "A rough, pungent burlap patch soaked in a yellowish, greasy oil is slapped onto the door at waist height, featuring abstract organic splotches that seem to pulse when the air hits them.",
+          "translation": "Welcome to the Shared Breath; your individual thoughts are loud, but we will learn to ignore them together."
+        },
+        {
+          "group": "lithos-architects",
+          "side": "source",
+          "description": "A heavy basalt slab is bolted into the metal bulkhead with four massive iron rivets, featuring geometric cuneiform deeply chiseled into the stone that feels warm to the touch.",
+          "translation": "This portal has stood for sixty solar cycles. Should the mechanism fail to yield, return to the stone-gate of light and seek another shore."
+        }
+      ]
     },
     {
-      "from": "main-corridor",
+      "from": "main-corridor-1",
+      "to": "workshop",
+      "status": "open",
+      "name": "Airtight Door",
+      "signs": [
+        {
+          "group": "void-threaders",
+          "side": "source",
+          "description": "A jagged lattice of glowing fiber-optic wires is hooked into the upper corner of the doorway, twisting into chaotic 3D knots and intersections that cast legible shadows on the wall if viewed from the correct angle.",
+          "translation": "Chamber of Constructive Chaos: Tools of Fire and Potion Await."
+        },
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "An octagonal scrap of sheet metal is bolted crookedly beside the door, scratched deeply with columns of binary and circuit diagrams meant to be read by touch.",
+          "translation": "HANDLE EQUIPMENT. HOT. SHARP. ALIVE."
+        },
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "A translucent glass petri-dish suctioned to the wall beside the door slowly pulses with neon-green bioluminescent slime, letters swirling and shifting inside.",
+          "translation": "Psst… Careful, some things bite. But the blue mushroom tea is safe. Maybe."
+        },
+        {
+          "group": "trash-goblins",
+          "side": "source",
+          "description": "Flattened soda cans taped together in a crude rectangle, scribbled with half-melted crayon, stick figures, and X marks; the top corner is chewed away.",
+          "translation": "DANGER X X X. STUFF GOOD TO TAKE."
+        },
+        {
+          "group": "glimmer-flys",
+          "side": "source",
+          "description": "Long strips of iridescent ribbon hang vertically from the ceiling, pinned with sparkling needles. The strips spin slightly in the air currents, messages flickering with motion.",
+          "translation": "SHINY FIRE! ⚡⚗️🛠️"
+        }
+      ]
+    },
+    {
+      "from": "main-corridor-1",
       "to": "forest",
       "status": "open",
-      "name": "Airtight Door"
+      "name": "Airtight Door",
+      "signs": [
+        {
+          "group": "void-threaders",
+          "side": "source",
+          "description": "A jagged, hand-spun wire lattice is hooked into the ceiling corner above the door, its glowing fiber-optic knots casting complex, geometric shadows against the metal.",
+          "translation": "Welcome, esteemed travelers, to the Arboretum of Perpetual Whispers; we humbly request you do not startle the six-legged weavers in the canopy, as their defensive silk is quite difficult to remove from organic hides."
+        },
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "A translucent glass petri-dish is suction-cupped to the door at eye level, filled with neon-green liquid that swirls into glowing, organic patterns as the door vibrates.",
+          "translation": "Hungry? The blue berries in the center grove are 90% sugar and only 10% hallucinogenic! Fun Fact: The 'Screaming Vines' aren't actually angry, they just vibrate at a frequency that causes human teeth to rattle!"
+        },
+        {
+          "group": "rust-walkers",
+          "side": "source",
+          "description": "A rusted, circular fuel-canister lid is pinned to the wall with a spike, featuring words etched into the metal using concentrated acid that has created a permanent, crusty brown \"ink.\"",
+          "translation": "The Green spreads like a cancer over the holy iron. Go inside and watch the roots eat the station; it is a beautiful, slow death. Drink the water—it tastes of copper and coming ends."
+        },
+        {
+          "group": "glimmer-flys",
+          "side": "source",
+          "description": "A long, thin strip of iridescent ribbon is pinned to the door frame with shimmering needles, its tiny sequins spinning wildly in the ventilation draft to create a rhythmic blinking message.",
+          "translation": "SHINY LEAVES. GOOD WATER. FLYING BITERS. RUN FAST."
+        },
+        {
+          "group": "hierophants-hand",
+          "side": "source",
+          "description": "A hammered gold-leaf plate is bolted to the center of the door, its elegant, flowing calligraphy reflecting the hallway lights with a divine shimmer.",
+          "translation": "Enter this sacred garden to harvest the bounty of the soil, but remember that the predators within are also the Hierophant's children; to be eaten is to be truly integrated. By the will of the Hierophant."
+        },
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A clear plexiglass placard flush with the doorframe reveals faint etched lines only when corridor lights strike it at an angle.",
+          "translation": "Pressure Stable. Oxygen High. Exit Access: Disabled. Cause: Biological Contamination."
+        }
+      ]
     },
     {
       "from": "forest",
@@ -778,14 +1470,78 @@
       "from": "hallway-forest",
       "to": "memory-theater",
       "status": "open",
-      "name": "Airtight Door"
+      "name": "Airtight Door",
+      "signs": [
+        {
+          "group": "void-threaders",
+          "side": "source",
+          "description": "A delicate, asymmetrical web of glowing fiber-optic strands is anchored high in the upper corner of the doorway, its tangled intersections casting elegant, readable shadows only when viewed from a precise angle.",
+          "translation": "Sanctum of Recollected Echoes, Where Minds Are Gently Unspooled Before a Patient Audience—Please Engage With Care and Reverence."
+        },
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "A roughly cut octagonal plate is welded directly into the wall beside the control panel, its surface gouged with deep vertical scratches forming harsh binary columns and circuit paths.",
+          "translation": "INPUT MIND. OUTPUT IMAGE. CONTROL DIFFICULT."
+        },
+        {
+          "group": "fragmented",
+          "side": "source",
+          "description": "A long strip of tattered synthetic fabric hangs crookedly over the doorway, its collage of mismatched letters appearing slightly blurred unless viewed through a reflective surface.",
+          "translation": "What is seen is not yours unless it already was—sit, and let the room decide what you remember."
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "Curved glass tubes filled with softly glowing sand are mounted in an elegant arc above the entrance, faintly humming when disturbed, their note-patterns forming a flowing musical script.",
+          "translation": "Enter, and your past shall sing in trembling harmony—though some notes may refuse your command."
+        },
+        {
+          "group": "party-bot-renegades",
+          "side": "source",
+          "description": "A cracked tablet screen taped beside the door with neon duct tape flickers with glitching rainbow static and looping pixel icons.",
+          "translation": "🎥🧠🔥 LET’S GOOOOO!!! MEMORY DROP ZONE!!! 🔥🧠🎥"
+        }
+      ]
     },
     {
       "from": "hallway-forest",
       "to": "orrery",
       "status": "open",
       "name": "Plexiglass Door",
-      "notes": "A spiral staircase down, behind a plexiglass door"
+      "notes": "A spiral staircase down, behind a plexiglass door",
+      "signs": [
+        {
+          "group": "chronos-glitchers",
+          "side": "source",
+          "description": "A crooked acrylic neon box floats slightly off the wall near the entrance, its flickering tubes displaying overlapping messages that phase in and out of sync.",
+          "translation": "WELCOME TO THE CORRECT MODEL (REVISION PENDING). PLANETS MAY NOT BE WHERE YOU REMEMBER THEM."
+        },
+        {
+          "group": "station-normals",
+          "side": "source",
+          "description": "A slightly wrinkled sheet of white paper is taped to a nearby wall, written in careful block letters with a black marker.",
+          "translation": "Please do not rearrange the orrery. The current configuration is intentional (we think)."
+        },
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A perfectly level laminated document is affixed to the glass door, its impossibly dense grid of tiny text filling every available space.",
+          "translation": "All observational records contained within these shelves are cataloged under Temporal Filing System 88-C; removal, misplacement, or chronological misordering of any document constitutes a Class-7 infraction, regardless of whether the document has ‘already been moved’ in a future state."
+        },
+        {
+          "group": "glimmer-flys",
+          "side": "source",
+          "description": "A thin ribbon of spinning mirrored sequins is attached to the wall on the far side of the plexiglass door, its surface flashing erratically as one walks past.",
+          "translation": "SPIN FAST = SEE TRUE."
+        },
+        {
+          "group": "order-of-the-void-eye",
+          "side": "source",
+          "description": "A matte-black silicone square is mounted over a small light fixture, its cut-out negative spaces only visible as glowing shapes projected onto the floor beneath it.",
+          "translation": "Only those who understand absence may perceive the hidden orbit."
+        }
+      ]
     },
     {
       "from": "memory-theater",
@@ -805,12 +1561,82 @@
     {
       "from": "hallway-orrery",
       "to": "restoration-engine",
-      "status": "open"
+      "status": "open",
+      "signs": [
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "A scorched octagonal metal plate is welded directly onto a nearby pipe, its deeply gouged vertical markings forming harsh, tactile columns of binary and schematic lines.",
+          "translation": "COOLANT REQUIRED. HEAT RISE = EXPLOSION."
+        },
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "A wobbling, translucent pouch of glowing blue-green slime is suction-cupped to the side of the pool, its internal swirls lazily forming cheerful, drifting symbols.",
+          "translation": "The big machine gets VERY cranky when it’s hot! Keep the water nice and cool and it’ll fix your stuff like magic!"
+        },
+        {
+          "group": "lithos-architects",
+          "side": "source",
+          "description": "A thick, rectangular slab of dark basalt is bolted firmly into the floor beside the pool, its deeply carved symbols radiating faint warmth along key lines.",
+          "translation": "Restoration Engine. Submersion Mandated for Thermal Stability. Failure to Maintain Cooling Will Result in Violent Structural Dissolution. Installed Year 3891. Expected Failure: Imminent (Within Acceptable Margin)."
+        },
+        {
+          "group": "party-bot-renegades",
+          "side": "source",
+          "description": "A cracked monitor taped to a railing with neon duct tape flickers with rainbow static and looping pixel animations, occasionally emitting a burst of upbeat electronic noise.",
+          "translation": "💧🔥⚙️ LET’S FIX IT!!! SPLASH ZONE!!! 🔥💧⚙️"
+        },
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A clear pane of plexiglass is mounted just above the waterline, its fine etched markings only visible when light hits at a precise angle, though part of the surface is fogged and scratched.",
+          "translation": "Critical Temperature Threshold: [DAMAGE]. Minimum Liquid Level: [DAMAGE]. Detonation Probability: [DAMAGE]."
+        }
+      ]
     },
     {
       "from": "hallway-orrery",
       "to": "hanging-registry",
-      "status": "open"
+      "status": "open",
+      "signs": [
+        {
+          "group": "void-threaders",
+          "side": "source",
+          "description": "Jagged wire lattice hooked high into a ceiling corner; glowing fiber-optic intersections form three-dimensional letters that cast shadows when viewed from the right angle.",
+          "translation": "The Left Behind. Remembered here, though the rest of the station pretends not to notice."
+        },
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "Petri-dish filled with shifting neon-green slime suction-cupped to a plate; the text drifts slowly over time.",
+          "translation": "Names? Possibly edible? Fun fact: slime expands more in quiet rooms."
+        },
+        {
+          "group": "glimmer-flys",
+          "side": "source",
+          "description": "Long, thin iridescent ribbons pinned to a ceiling cluster; tiny spinning sequins catch the light in a rapid, confusing blink.",
+          "translation": "SHINY! Maybe important… or maybe just glitter."
+        },
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "Laminated A4 sheet stuck crookedly to a beam, dense tiny text forming a perfect bureaucratic grid; the adhesive is industrial-strength.",
+          "translation": "All persons previously registered in this quadrant must ensure forms 4B, 7C, and 92-Z are completed. Also, the room may or may not contain relevant artifacts."
+        },
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "Clear plexiglass panel etched with microscopic indentations; readable only when the light strikes at 45°, revealing faint shadowed letters.",
+          "translation": "Observation: multiple objects hang. Potential significance unknown. Oxygen levels stable."
+        },
+        {
+          "group": "gravity-drunks",
+          "side": "source",
+          "description": "Bouncy rubber ball dangling from a thin wire above the head; text spirals across its surface, moving slightly as the ball sways.",
+          "translation": "Up? Down? Maybe someone fell… or maybe not. Wheee!"
+        }
+      ]
     },
     {
       "from": "hallway-orrery",
@@ -824,12 +1650,76 @@
       "to": "the-crystal-mug",
       "status": "open",
       "name": "Underwater door",
-      "notes": "See note on The Crystal Mug about arrival/departure."
+      "notes": "See note on The Crystal Mug about arrival/departure.",
+      "signs": [
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "A sealed plastic pouch of glowing neon-green liquid is suction-cupped beside the entrance archway, its swirling text drifting lazily around suspended crystal fragments inside the pouch.",
+          "translation": "Welcome, friend! Refreshments this way! Fun fact: some crystals grow faster when complimented. Have you told a crystal it looks nice today?"
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "A curved glass tube filled with softly humming singing sands hangs from a crystal cluster above the bar, vibrating gently in a warm major chord.",
+          "translation": "A place of fellowship, song, drink, and stories polished bright as gemstones."
+        },
+        {
+          "group": "lithos-architects",
+          "side": "source",
+          "description": "A thick basalt plaque bolted directly into a crystal-covered support column, its deep geometric carvings warm to the touch at key words.",
+          "translation": "STRUCTURE STABLE. CRYSTAL GROWTH ACCEPTABLE. ESTIMATED SERVICE LIFE OF ESTABLISHMENT: 4,800 YEARS. LAST INSPECTION: 27 YEARS AGO."
+        },
+        {
+          "group": "gravity-drunks",
+          "side": "source",
+          "description": "A metal slinky stretches diagonally across a doorway between dining areas, dangling letters spinning gently whenever someone passes.",
+          "translation": "WARNING: The drinks may improve your sense of direction or make gravity significantly funnier."
+        },
+        {
+          "group": "order-of-the-void-eye",
+          "side": "source",
+          "description": "A square sheet of black silicone is mounted over a lantern near a private booth corridor, projecting cut-out letters onto the floor in pale crystal-reflected light.",
+          "translation": "Reserved Chamber for Quiet Reflection, Discreet Meetings, and Those Worthy of Fine Vintage Spirits."
+        }
+      ]
     },
     {
       "from": "hanging-registry",
       "to": "porcelain-passageways",
-      "status": "open"
+      "status": "open",
+      "signs": [
+        {
+          "group": "station-normals",
+          "side": "source",
+          "description": "A slightly yellowed sheet of paper taped carefully at eye level on a porcelain column, its clean block lettering stark against the overwhelming white reflections of the room.",
+          "translation": "Bathing area. Do not drink from faucets unless you know what is coming out."
+        },
+        {
+          "group": "hierophants-hand",
+          "side": "source",
+          "description": "A silk banner with gold-tasseled edges draped awkwardly over a clawfoot tub, ornate calligraphy shimmering faintly as it catches the mist, the incense-scented ink slightly smudged by humidity.",
+          "translation": "Behold the sacred Rite of Purification wherein the vessel is cleansed by ever-shifting divine waters. All forms of contamination are to be surrendered. By the will of the Hierophant."
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "A curved glass tube filled with softly glowing sand mounted above a basin, humming faintly; the pitch fluctuates as mist drifts through it, altering the tone mid-note.",
+          "translation": "Shhhhhh… the room is asleep and listening to itself breathe."
+        },
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A laminated multi-page document bolted to a porcelain pillar with industrial adhesive, so dense with microscopic text it appears as a gray block unless inspected closely under harsh light.",
+          "translation": "NOTICE: All personnel entering the Porcelain Hydrological Annex must acknowledge Section 12.4.3 regarding non-standard liquid classifications, including but not limited to: stellar emulsions, reflective gels, sentimental humidity, and/or substances exhibiting temporary anatomical suggestibility. Failure to comply may result in undefined outcomes. Additional bathing protocols may or may not apply depending on jurisdictional ambiguity."
+        },
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A clear plexiglass slab suspended near a basin, etched with microscopic markings that only appear when mist condenses at a precise angle, briefly outlining shifting numerical readouts.",
+          "translation": "Humidity: extreme. Visibility: reduced. Liquid states in circulation: 14 confirmed, 3 indeterminate. Sound attenuation approaching maximum theoretical threshold."
+        }
+      ]
     },
     {
       "from": "porcelain-passageways",
@@ -846,7 +1736,39 @@
     {
       "from": "porcelain-passageways",
       "to": "quartermasters-bazaar",
-      "status": "open"
+      "status": "open",
+      "signs": [
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A laminated A4 sheet bolted onto the doorframe at a precise 0.0-degree alignment, its dense microscopic text illuminated by flickering neon pink from a broken display screen.",
+          "translation": "All transactions within the Commercial Logistics Corridor are subject to multi-jurisdictional procurement statutes, including but not limited to: exchange parity anomalies, sentient inventory classification disputes, and mandatory acknowledgment that vending units may constitute sovereign micro-enterprises. Please retain receipts for eternity or until audit completion, whichever occurs first."
+        },
+        {
+          "group": "trash-goblins",
+          "side": "source",
+          "description": "A flattened soda can nailed crookedly just above the door controls, covered in crayon stick figures pointing at glowing squares labeled with crude “X” and “CIRCLE” marks.",
+          "translation": "X bite bad. Circle snack good. Shiny box mine now."
+        },
+        {
+          "group": "chronos-glitchers",
+          "side": "source",
+          "description": "A flickering neon tube sign above the door shows a version of the corridor that is slightly older or newer, with vending machines appearing and disappearing between frames.",
+          "translation": "You already bought this item. You will buy it again. Please proceed to checkout that hasn’t happened yet."
+        },
+        {
+          "group": "station-normals",
+          "side": "source",
+          "description": "A simple white paper sign taped between to the left of the door, slightly curled at the edges from heat exposure.",
+          "translation": "Try not to get trapped in here. If you can’t find exit B, go back the way you came and ignore the blinking machine that says it knows you."
+        },
+        {
+          "group": "party-bot-renegades",
+          "side": "source",
+          "description": "A broken monitor duct-taped below the door controls, flashing rainbow static and looping a one-second burst of distorted celebratory music whenever someone is nearby.",
+          "translation": "WELCOME TO THE SUPPLY ZONE!!! EVERYTHING IS ON SALE!!! (INCLUDING YOUR ITEMS!!!)"
+        }
+      ]
     },
     {
       "from": "quartermasters-bazaar",
@@ -895,6 +1817,243 @@
       "to": "unknown",
       "status": "blocked",
       "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+    },
+    {
+      "from": "main-corridor-1",
+      "to": "main-corridor-2",
+      "status": "open",
+      "notes": "Originally sealed by a blast door."
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "aetherlift-hangar",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Aetherlift Hangar entrance",
+      "signs": [
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "An octagonal piece of scorched hull plating is bolted to the left side of the enormous doorframe at waist height, covered in deeply gouged vertical columns of binary code and crude circuit diagrams.",
+          "translation": "VEHICLES. MOVING. KEEP CLEAR. DOOR CRUSHES."
+        },
+        {
+          "group": "void-threaders",
+          "side": "source",
+          "description": "A delicate, irregular lattice of glowing blue fiber-optic threads hangs from the ceiling corner above the entrance, its tangled knots casting intricate shadows that resemble flowing calligraphy.",
+          "translation": "We humbly welcome all esteemed travelers to the Chamber of Elevated Conveyances, where weary passengers and their burdens may be transported with the utmost dignity and efficiency."
+        },
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A perfectly rectangular sheet of laminated white paper is permanently adhered beside the door controls, filled edge-to-edge with microscopic black Gothic lettering arranged in impossibly precise grids.",
+          "translation": "NOTICE: Audible warnings accompanying the opening or closing of this portal shall be interpreted as notification of imminent mechanical movement, and shall not be construed as invitations to enter, musical performances, or indications of emergency unless accompanied by additional authorized signals."
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "A small crescent-shaped arrangement of curved glass tubes filled with shimmering silver sand is fastened to the corridor wall beside the door, the tubes forming delicate musical notes that vibrate softly.",
+          "translation": "Within these walls, the crystal hearts of our faithful chariots shall rest, replenish their celestial harmonies, and rise once more to carry us onward."
+        },
+        {
+          "group": "gravity-drunks",
+          "side": "source",
+          "description": "A brightly colored metal slinky is stretched diagonally between two exposed pipes above the door, with tiny dangling plastic letters arranged in a dizzying spiral that changes appearance as the viewer moves.",
+          "translation": "What goes up must come down! Unless it's a hovercart. Then you're just making things up."
+        }
+      ]
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "cryosleep-repository",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Cryosleep Repository entrance",
+      "signs": [
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A thick, rectangular panel of transparent plexiglass is bolted to the corridor wall beside the massive circular door, bearing microscopic geometric etchings that become visible only when illuminated at a sharp angle.",
+          "translation": "Atmospheric isolation: mandatory. Thermal deviation: unacceptable. Pressure equalization: required before entry. Unprotected exposure: hazardous."
+        },
+        {
+          "group": "bureau-kraken",
+          "side": "source",
+          "description": "A perfectly rectangular sheet of laminated white paper is adhered to the wall beside the door controls, covered in microscopic black Gothic lettering arranged into dozens of impossibly dense, numbered paragraphs.",
+          "translation": "All requests for occupant retrieval, reinsertion, reassignment, or inspection must be submitted through the designated processing terminal at the far end of the accessway. Unauthorized manipulation of registered occupants shall result in immediate suspension of retrieval privileges, pending investigation and completion of Form 88-C (Improper Interference with Stationary Personnel)."
+        },
+        {
+          "group": "re-animators",
+          "side": "source",
+          "description": "A small, irregular oval of leathery organic parchment is stitched directly onto the outer doorframe, its veined characters formed from dark surgical sutures, although several symbols have been partially eaten away by tiny scavenging organisms.",
+          "translation": "The flesh rests. The blood slows. The mind waits. Disturb not the preservation of the vessel before the appointed renewal."
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "A narrow crescent-shaped arrangement of curved glass tubes containing softly humming silver sand is mounted high above the doorway, forming delicate musical staffs and notes that shimmer with pale violet light.",
+          "translation": "Here the weary surrender their hours to silence, while the stars continue their eternal dance. Let no careless hand disturb the sleeping melody."
+        },
+        {
+          "group": "gravity-drunks",
+          "side": "source",
+          "description": "A brightly colored rubber ball is permanently suspended from a short chain attached to the corridor ceiling just outside the door, covered in spiraling lenticular letters that seem to tumble across its surface as it sways.",
+          "translation": "I asked the universe for some personal space. It gave me a vacuum. Worst roommate EVER."
+        }
+      ]
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "space-dock",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Space Dock entrance",
+      "notes": "A sign over the door auto-translates to \"Atmosphere: Good\" with a color that the viewer interprets as \"good\" (often green).",
+      "signs": [
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A narrow hexagonal sheet of transparent plexiglass is embedded in the corridor floor immediately before the dock entrance, its microscopic etchings nearly invisible except when illuminated at a precise angle.",
+          "translation": "Atmospheric boundary: permeable. Exterior pressure: negligible. Oxygen supply beyond boundary: zero. Freedom of movement: unrestricted."
+        },
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "An octagonal slab of recycled hull plating is welded beside the dock's entrance controls, covered in vertical columns of roughly gouged binary code and deeply scratched circuit diagrams.",
+          "translation": "CARGO. TRANSFER. PASSENGERS. BOARD. LOAD LIMITS APPLY. CRATES EMPTY. REUSE."
+        },
+        {
+          "group": "trash-goblins",
+          "side": "source",
+          "description": "A flattened, circular soda can is riveted crookedly to the outer doorframe at knee height, bearing crude charcoal stick figures, several large X marks, and a roughly drawn mechanical claw reaching toward a box.",
+          "translation": "BIG GRABBY THING BROKE. DON'T FEED IT BOXES. WE TRIED. BOXES STILL OURS."
+        },
+        {
+          "group": "hierophants-hand",
+          "side": "source",
+          "description": "A narrow triangular banner of ivory silk with gold-tasseled fringes hangs from a silver bracket above the entrance, its sweeping golden calligraphy embellished with tiny halos and intricate flourishes.",
+          "translation": "Beyond this threshold lies the sacred meeting of countless peoples, where vessels of the heavens surrender their travelers and treasures unto the station's embrace. May all who arrive find sanctuary, and all who depart carry blessings into the endless dark. By the will of the Hierophant."
+        },
+        {
+          "group": "jelly-kin-of-ooze-9",
+          "side": "source",
+          "description": "A round, translucent glass dish filled with softly pulsing neon-green slime is suction-cupped to the corridor wall beside the door, its glowing swirls forming cheerful, rounded symbols that slowly drift through the liquid.",
+          "translation": "Welcome to the docking zone! Remember, the pretty shimmering edge is NOT a wall! Fun fact: Most organisms only get to experience explosive decompression once! Have a squishy day!"
+        },
+        {
+          "group": "order-of-the-void-eye",
+          "side": "source",
+          "description": "A small square sheet of matte-black silicone is mounted over a recessed light above the dock entrance, its precisely cut negative-space glyphs projecting faint, angular shadows onto the floor.",
+          "translation": "The boundary is an agreement, not a prison. Those who understand the emptiness need no protection from it."
+        }
+      ]
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "celestial-threshold",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Celestial Threshold entrance",
+      "signs": [
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A thin hexagonal sheet of perfectly transparent plexiglass is embedded flush with the corridor wall beside the entrance, its microscopic etchings forming nearly invisible angular symbols that can only be read when light strikes them at precisely 45 degrees.",
+          "translation": "Designation: Final Inheritance. Origin: Those Who Endure the Emptiness. Intended recipients: Worlds Yet Unborn. Purpose: Repayment of Ancient Debts. Delivery: Deferred. Forgiveness: Never."
+        },
+        {
+          "group": "gravity-drunks",
+          "side": "source",
+          "description": "A small, rainbow-colored rubber ball is permanently suspended from a magnetic bracket on the corridor ceiling outside the entrance, its spiraling lenticular lettering appearing to fall endlessly around its surface.",
+          "translation": "What's the difference between a dragon and a constellation? One's a star attraction, and the other's a real drag-on!"
+        },
+        {
+          "group": "hive-mind-of-sector-4",
+          "side": "source",
+          "description": "An irregular oval patch of coarse burlap is permanently affixed to the corridor wall beside the doorway, its surface covered in overlapping amber and violet grease-like splotches that emit a pungent, sweet odor.",
+          "translation": "All who pass this threshold become part of the greater whole. The great watchers recognize every visitor as kin and deliver them to the great final treasure."
+        },
+        {
+          "group": "fragmented",
+          "side": "source",
+          "description": "A crooked strip of tattered synthetic parchment hangs upside down from the corridor wall beside the entrance, covered in mismatched cutout characters that shimmer and blur as though viewed through rippling water.",
+          "translation": "Two serpents without scales, a sky without a sun, a prize without a price. Tell us, little thief, what can wound the unwound and silence the eternal? We know. We know. WE KNOW. But we will not tell you."
+        },
+        {
+          "group": "h-0rs3-riders",
+          "side": "source",
+          "description": "A tiny triangular sticker of bright pink plastic is permanently affixed to the underside of the doorway's upper frame, decorated with garish pictograms of two enormous dragons, a tiny stick figure, and a glittering trophy surrounded by exaggerated lightning bolts.",
+          "translation": "SECRET BOSS ROOM?! DRAGON DRAGON LOOT! GOOD LUCK, NERD!"
+        },
+        {
+          "group": "star-singers",
+          "side": "source",
+          "description": "A small crescent of curved glass tubes containing softly vibrating silver sand is suspended from a ceiling pipe outside the doorway, forming unfamiliar musical staffs intertwined with tiny representations of stars.",
+          "translation": "Two ancient wyrms embrace the heavens, guarding a note that must never be sung. The stars within know neither our names nor our songs, yet tremble at the silence awaiting them."
+        }
+      ]
+    },
+    {
+      "from": "celestial-threshold",
+      "to": "celestial-reliquary",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Celestial Reliquary portal",
+      "signs": []
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "hall-of-fallen-worlds",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Hall of Fallen Worlds entrance",
+      "notes": "An ornate door that appears to be made from carved stone. A sign over the door automatically translates to “Hall of Fallen Worlds”.",
+      "signs": []
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "portable-portal-nexus",
+      "status": "open",
+      "direction": "bidirectional",
+      "name": "Portable Portal Nexus entrance",
+      "signs": [
+        {
+          "group": "lithos-architects",
+          "side": "source",
+          "description": "A heavy, rectangular slab of dark basalt is bolted into the corridor wall beside the doorframe, bearing deeply chiseled geometric cuneiform whose largest symbols radiate a faint warmth.",
+          "translation": "Let the Great Anchor endure beyond the passing of ten thousand generations. Should its heart grow silent, all paths bound to it shall perish. Erected in the 8,412th Cycle. Expected service: 90,000 years."
+        },
+        {
+          "group": "binary-7-maintenance-cult",
+          "side": "source",
+          "description": "A battered octagonal plate of recycled steel is welded directly above the door controls, its surface scarred with vertical columns of deeply gouged binary digits and angular circuit diagrams.",
+          "translation": "FOUR UNITS. DETACHABLE. DEPLOY. RETURN. RECHARGE."
+        },
+        {
+          "group": "chronos-glitchers",
+          "side": "source",
+          "description": "A small, crooked triangular acrylic box hangs above the right corner of the doorway, containing flickering violet neon tubes that form shifting symbols occasionally doubled by ghostly afterimages.",
+          "translation": "Teleportation Research Annex! Or was it the Transportation Department? Sorry, the renovations haven't happened yet."
+        },
+        {
+          "group": "vacuum-born",
+          "side": "source",
+          "description": "A narrow, transparent hexagonal sheet of thick plexiglass is mounted flush against the corridor wall near the door's hinges, its microscopic etchings appearing as delicate silver lines when illuminated from an oblique angle.",
+          "translation": "Spatial displacement chamber. Anchor synchronization: mandatory. Remote operating range: anchor-dependent. Independent operation: unsupported."
+        },
+        {
+          "group": "h-0rs3-riders",
+          "side": "source",
+          "description": "A tiny triangular sticker of neon-orange plastic is permanently affixed upside down to the bottom of the doorframe, covered in garish pictograms showing a grinning face, a swirling portal, and a cartoon skeleton giving two thumbs up.",
+          "translation": "YEET YOURSELF INTO THE UNKNOWN! WHAT COULD POSSIBLY GO WRONG?"
+        }
+      ]
+    },
+    {
+      "from": "main-corridor-2",
+      "to": "main-corridor-3",
+      "status": "locked",
+      "notes": "Sealed by an airtight, reinforced blast door."
     }
   ],
   "connectionStatus": [

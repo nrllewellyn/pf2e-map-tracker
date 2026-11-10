@@ -29,11 +29,12 @@
       <div class="add-row">
         <label for="add-kind" class="sr-only">Object type to add</label>
         <select id="add-kind">
-          <option value="rooms">Room</option>
-          <option value="character_groups">Group</option>
           <option value="characters">Character</option>
           <option value="connections">Connection</option>
           <option value="connectionStatus">Connection status</option>
+          <option value="character_groups">Group</option>
+          <option value="previous_occupants">Previous inhabitant</option>
+          <option value="rooms" selected>Room</option>
         </select>
         <button id="add" type="button" disabled>Add</button>
       </div>
@@ -45,15 +46,21 @@
         <div class="canvas-actions">
           <label for="visibility" class="sr-only">Character visibility</label>
           <select id="visibility" aria-label="Character visibility">
-            <option value="show_all">Show all</option>
             <option value="groups_only">Groups only</option>
             <option value="hidden">Hide characters &amp; groups</option>
+            <option value="show_all" selected>Show all</option>
           </select>
           <button id="fit" type="button">Fit graph</button>
           <button id="set-default-view" type="button" disabled title="Capture the current center and zoom. Save to keep this default.">Set default view</button>
         </div>
       </div>
-      <div id="graph"></div>
+      <div class="graph-stage">
+        <div id="graph"></div>
+        <div id="room-pick-banner" hidden>
+          <span id="room-pick-help" role="status" aria-live="polite"></span>
+          <button id="cancel-room-pick" type="button">Cancel picking</button>
+        </div>
+      </div>
       <div class="canvas-caption">Drag rooms to snap to a 250 px grid; hold Shift to position freely. Drag groups and characters to set their starting position before physics.</div>
     </section>
     <aside class="inspector" aria-label="Selected object">

@@ -60,15 +60,22 @@ def local_image_files(data: "MapData", image_root: Path) -> dict[str, Path]:
     result = {}
     for kind in ("rooms", "characters", "character_groups", "connections"):
         for index, item in enumerate(getattr(data, kind)):
-            for image_index, picture in enumerate(item.images):
-                if not is_remote_image(picture.src):
-                    try:
-                        result[picture.src] = resolve_local_image(picture.src, image_root)
-                    except (OSError, ValueError) as error:
-                        raise ValueError(
-                            f"{kind}[{index}].images[{image_index}]: {error}"
-                        ) from error
+            _collect_local_images(result, item.images, f"{kind}[{index}].images", image_root)
+    for index, occupant in enumerate(data.previous_occupants):
+        for field in ("example_sign_images", "example_member_images"):
+            _collect_local_images(
+                result, getattr(occupant, field), f"previous_occupants[{index}].{field}", image_root
+            )
     return result
+
+
+def _collect_local_images(result: dict[str, Path], images: list, label: str, root: Path) -> None:
+    for image_index, picture in enumerate(images):
+        if not is_remote_image(picture.src):
+            try:
+                result[picture.src] = resolve_local_image(picture.src, root)
+            except (OSError, ValueError) as error:
+                raise ValueError(f"{label}[{image_index}]: {error}") from error
 
 
 def publish_images(data: "MapData", image_root: Path, output_dir: Path) -> dict[str, str]:
