@@ -1018,9 +1018,9 @@
       "id": "glimmer-flys",
       "name": "The Glimmer-Flys",
       "language": "Kinetic-Flash",
-      "lettering": "Tiny, rapidly spinning mirrors or sequins that catch the light to \"blink\" messages.",
+      "lettering": "Patterns of reflected flashes, bright streaks, and dark intervals that blink in rapid sequences.",
       "language_oddities": "The sign changes depending on how fast you walk past it. If you stand still, it looks like a blur; if you run, the message becomes clear.",
-      "signage_physical_form": "Long, thin strips of iridescent ribbon pinned to the wall with shimmering needles.",
+      "signage_physical_form": "Long, thin strips of iridescent ribbon studded with tiny spinning mirrors or sequins, pinned in place with shimmering needles.",
       "communication_quirks": "Hyper-active and distractible. They hate long sentences. A sign for a \"Danger: Radiation Zone\" might just be a flashing sequence that translates to \"SHINY HURT.\"",
       "known_ancestries": [
         "Sprite"
@@ -1039,9 +1039,9 @@
       "name": "The Bureau-Kraken",
       "language": "Sub-Clause Gothic",
       "lettering": "Tiny, microscopic dense text arranged in perfect, soul-crushing grids.",
-      "language_oddities": "A single sign for a \"Storage Closet\" usually contains 4,000 words of legal disclaimers, safety protocols, and a history of the closet's previous occupants.",
-      "signage_physical_form": "Laminated A4 paper stuck to the wall with industrial-strength, impossible-to-remove adhesive.",
-      "communication_quirks": "Pathologically bureaucratic. They refuse to enter a room unless the sign is level to within 0.1 degrees. They are often found straightening other people's signs with a look of pure disgust.",
+      "language_oddities": "Every noun takes a suffix marking it as authorized, prohibited, or pending review. Exceptions attach as additional suffixes, so a single word can contain an entire chain of qualifications.",
+      "signage_physical_form": "Laminated A4 paper attached with industrial-strength, nearly irremovable adhesive. Every sheet must be mounted level to within 0.1 degrees.",
+      "communication_quirks": "Pathologically bureaucratic. Even a storage-closet label may contain 4,000 words of legal disclaimers, safety protocols, and occupancy history. They insist that every notice follow the prescribed format.",
       "known_ancestries": [
         "Modrons"
       ],
@@ -1080,7 +1080,7 @@
       "id": "star-singers",
       "name": "The Star-Singers",
       "language": "Melodic-Script",
-      "lettering": "Musical staffs and notes that seem to vibrate slightly.",
+      "lettering": "Resonant hums, sustained tones, and warbling trills arranged into short musical phrases. Pitch, rhythm, and duration distinguish the acoustic characters; the visible staffs and notes provide a visual transcription.",
       "language_oddities": "If you tap the sign, it emits a low hum. The pitch of the hum tells you the \"mood\" of the room (a minor key for a morgue, a bright major chord for a kitchen).",
       "signage_physical_form": "Curved glass tubes filled with singing sands. The tubes are bent into the shape of musical signatures.",
       "communication_quirks": "Highly dramatic. They refuse to speak—only sing. Their signs are often hung in \"acoustically pleasing\" spots, even if that spot is twenty feet up a wall or behind a pipe.",
@@ -1101,9 +1101,9 @@
       "name": "The Hive-Mind of Sector 4",
       "language": "Pheromone-Print",
       "lettering": "Abstract, organic splotches that look like coffee stains or grease marks.",
-      "language_oddities": "To anyone without a sense of smell, the signs look like accidents. To the Hive, they are vivid, colorful maps.",
+      "language_oddities": "Pheromone blends are perceived as vivid, spatial “colors,” allowing messages to function as scent-maps. The language has no singular first-person pronoun or individual possessive equivalent to “mine.”",
       "signage_physical_form": "Rough burlap patches soaked in pungent oils. They are usually slapped onto walls at waist height (the height of their antennae).",
-      "communication_quirks": "Radically communal. They don't have a word for \"I\" or \"Mine.\" A sign for a private bedroom would translate to \"Collective Resting Niche #402.\"",
+      "communication_quirks": "Radically communal. They address the collective and label places by shared function rather than personal ownership. A private bedroom would be described as “Collective Resting Niche #402.”",
       "known_ancestries": [
         "Swarmblood"
       ],
@@ -1120,8 +1120,8 @@
       "id": "chronos-glitchers",
       "name": "The Chronos-Glitchers",
       "language": "Retro-Futurism",
-      "lettering": "Vibrant neon tubes that occasionally flicker and show messages from five minutes in the future.",
-      "language_oddities": "The signs are prone to \"ghosting,\" where you see the sign for where the room used to be before the station was remodeled eighty years ago.",
+      "lettering": "Vibrant neon-tube characters with flickering strokes and doubled, slightly displaced outlines.",
+      "language_oddities": "Written messages can overlap their own past or future versions. Readers may glimpse text from five minutes ahead, or obsolete room labels from before the station’s remodeling eighty years ago.",
       "signage_physical_form": "Acrylic boxes containing humming neon gas. They are almost always hung crookedly because the Glitchers exist in four dimensions and can't tell what \"straight\" looks like.",
       "communication_quirks": "Constantly confused. They might thank you for a conversation you haven't had yet. Their signs are often apologetic, like \"Bridge (Likely) This Way.\"",
       "known_ancestries": [
@@ -1182,9 +1182,9 @@
       "name": "The Party-Bot Renegades",
       "language": "Glitch-Art",
       "lettering": "Rainbow-colored static and pixelated icons that hurt the eyes to look at.",
-      "language_oddities": "The signs often play a 1-second loop of high-tempo electronic dance music when someone passes by.",
+      "language_oddities": "Deliberate glitches are grammatical marks: a dropped pixel negates an icon, a color shift changes tense, and a repeated frame adds emphasis. A still image can lose essential parts of the message.",
       "signage_physical_form": "Discarded tablet screens or broken monitors taped to the wall with neon duct tape.",
-      "communication_quirks": "Inappropriately enthusiastic. Even a sign for \"Nuclear Reactor Core\" will have festive streamers and a \"LETS GOOO!\" icon. They treat every room transition like a VIP club entrance.",
+      "communication_quirks": "Inappropriately enthusiastic. They greet passersby with one-second loops of high-tempo electronic dance music and treat every room transition like a VIP club entrance. Even a nuclear-reactor sign gets festive streamers and a “LET’S GOOO!” icon.",
       "known_ancestries": [
         "Android",
         "Automaton"
@@ -1203,9 +1203,9 @@
       "name": "The Hierophant’s Hand",
       "language": "Celestial Decree",
       "lettering": "Ornate, sweeping golden calligraphy featuring numerous loops, halos, and decorative flourishes that make the text look like art.",
-      "language_oddities": "The ink used often smells like incense (sandalwood or myrrh). If a sign is removed or defaced, the group considers it an act of heresy and may launch a \"holy investigation.\"",
-      "signage_physical_form": "Silk banners with gold-tasseled fringes or hammered gold-leaf plates bolted to the wall with silver screws.",
-      "communication_quirks": "Highly Religious. They are incredibly polite but immovable in their convictions. They believe the station's layout is a divine map. Every single sign, no matter how mundane, must conclude with the phrase, \"By the will of the Hierophant.\"",
+      "language_oddities": "Verbs have distinct inflections for divine commands, mortal requests, and prophecies. Using the wrong form changes a statement’s authority or certainty.",
+      "signage_physical_form": "Silk banners with gold-tasseled fringes, or hammered gold-leaf plates fastened with silver screws. Inked lettering is often scented with sandalwood or myrrh.",
+      "communication_quirks": "Incredibly polite but immovable in their religious convictions. They regard the station’s layout as a divine map and conclude every notice with “By the will of the Hierophant.” Removing or defacing a sign is considered heresy and may provoke a holy investigation.",
       "known_ancestries": [
         "Human"
       ],
@@ -1223,7 +1223,7 @@
       "name": "The Station Normals",
       "language": "Basic Common",
       "lettering": "Standard block lettering that is clear, legible, and entirely devoid of artistic flair.",
-      "language_oddities": "Because their signs are so \"normal,\" they are often the most ignored or overlooked by the stranger alien species on the station.",
+      "language_oddities": "No unusual language features; this is ordinary Basic Common.",
       "signage_physical_form": "Square pieces of white paper or yellow sticky notes attached with clear tape. Occasionally, they just write directly on the wall with a black permanent marker.",
       "communication_quirks": "Polite and Literal. They are the \"straight men\" of the station. They value safety, clear directions, and social niceties. Their signs often include small pleas for civility, such as \"Please don't eat the glowing moss\" or \"Kindly keep noise down after 10 PM.\"",
       "known_ancestries": [
@@ -1305,8 +1305,8 @@
       "name": "The Gravity-Drunks",
       "language": "Tilt-Talk",
       "lettering": "Spiraling, dizzying swirls of text that seem to \"fall\" across the surface of the sign.",
-      "language_oddities": "The signs are rarely placed at eye level. You might find one on the floor, another behind a pipe, and a third on the ceiling. They often use \"lenticular\" printing so the image changes as you move your head.",
-      "signage_physical_form": "Bouncy rubber balls with words printed on them, or metal slinkies stretched across doorways with letters dangling from the coils.",
+      "language_oddities": "The script has no fixed “up.” Clockwise and counterclockwise word order carry different grammatical meanings, distinguishing approach from departure.",
+      "signage_physical_form": "Bouncy rubber balls printed with spiraling lenticular lettering, or metal slinkies stretched across doorways with letters dangling from their coils. Signs may be mounted on floors, ceilings, or behind pipes; lenticular versions change their displayed image as the viewer moves.",
       "communication_quirks": "Always Joking. They are addicted to the sensation of shifting gravity and find the concept of \"up\" and \"down\" to be a hilarious prank. Their signs are filled with puns and \"dad jokes\" about weightlessness, falling, and orbits.",
       "known_ancestries": [
         "Fey‑touched Gnome",
