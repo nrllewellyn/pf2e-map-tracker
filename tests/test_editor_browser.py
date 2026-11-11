@@ -104,6 +104,27 @@ def graph_point(page, node_id):
     return canvas["x"] + point["x"], canvas["y"] + point["y"]
 
 
+@pytest.mark.parametrize("kind", ["rooms", "character_groups", "connections"])
+def test_short_description_preview_and_save(page, editor_server, kind):
+    description = "<em>Brief description 🧭</em>\nSecond line"
+    choose(page, kind)
+    assert page.locator("#field-notes").count() == 0
+    page.locator("#field-short_description").fill(description)
+    preview = page.frame_locator('iframe[title="Short description (HTML) preview"]')
+    assert preview.locator("em").inner_text() == "Brief description 🧭"
+    apply(page)
+    page.get_by_role("button", name="Save", exact=True).click()
+    wait_idle(page)
+
+    record = json.loads(editor_server["source"].read_bytes())[kind][0]
+    assert record["short_description"] == description
+    assert "notes" not in record
+    page.get_by_role("button", name="Reload", exact=True).click()
+    wait_idle(page)
+    choose(page, kind)
+    assert page.locator("#field-short_description").input_value() == description
+
+
 @pytest.mark.parametrize("new_connection", [False, True])
 @pytest.mark.parametrize("width", [390, 1500])
 def test_pick_connection_rooms_on_graph(page, editor_server, new_connection, width):
@@ -114,7 +135,7 @@ def test_pick_connection_rooms_on_graph(page, editor_server, new_connection, wid
     else:
         choose(page, "connections")
     page.locator("#field-name").fill("Graph route")
-    page.locator("#field-notes").fill("<p>Keep these notes.</p>")
+    page.locator("#field-short_description").fill("<p>Keep these notes.</p>")
     page.locator("#field-status").select_option("open")
     page.locator("#field-direction").select_option("forward_only")
     page.evaluate("mapEditor.network.moveTo({position: {x: 0, y: 0}, scale: 0.3})")
@@ -132,7 +153,7 @@ def test_pick_connection_rooms_on_graph(page, editor_server, new_connection, wid
         assert pick.get_attribute("aria-pressed") == "false"
         assert page.evaluate("mapEditor.selection") == selection
         assert page.locator("#field-name").input_value() == "Graph route"
-        assert page.locator("#field-notes").input_value() == "<p>Keep these notes.</p>"
+        assert page.locator("#field-short_description").input_value() == "<p>Keep these notes.</p>"
         assert page.evaluate("mapEditor.network.interactionHandler.options.dragNodes") is True
     assert page.evaluate("mapEditor.network.getScale()") == pytest.approx(0.3)
     assert page.evaluate("mapEditor.network.getViewPosition()") == pytest.approx({"x": 0, "y": 0})
@@ -144,7 +165,7 @@ def test_pick_connection_rooms_on_graph(page, editor_server, new_connection, wid
     assert connection["from"] == "study"
     assert connection["to"] == "hall"
     assert connection["name"] == "Graph route"
-    assert connection["notes"] == "<p>Keep these notes.</p>"
+    assert connection["short_description"] == "<p>Keep these notes.</p>"
     assert connection["direction"] == "forward_only"
     assert len(saved) == (3 if new_connection else 2)
 
@@ -169,7 +190,7 @@ def test_pick_group_and_character_placement(
     else:
         choose(page, kind)
     name = "Pending group" if kind == "character_groups" else "Pending hero"
-    details = "notes" if kind == "character_groups" else "physical_description"
+    details = "short_description" if kind == "character_groups" else "physical_description"
     page.locator("#field-name").fill(name)
     page.locator(f"#field-{details}").fill("<p>Keep these details.</p>")
     page.locator("#field-x").fill("-123.5")
@@ -396,7 +417,7 @@ def test_editor_dropdowns_alphabetize_display_labels_without_reordering_data(pag
             {"id": "a-hidden", "description": "beta hidden"},
         ]
     )
-    data["previous_occupants"] = [
+    data["npc_groups"] = [
         {"id": "a-scribes", "name": "zebra Scribes"},
         {"id": "z-wardens", "name": "Alpha Wardens"},
         {"id": "m-builders", "name": "beta Builders"},
@@ -462,7 +483,7 @@ def test_editor_dropdowns_alphabetize_display_labels_without_reordering_data(pag
         ("#search", "hall-west + east = [rooms]"),
         ("#field-id", "hall-west"),
         ("#field-name", "Hall - Study + Library"),
-        ("#field-notes", "<p>North-south + east-west = [routes]</p>"),
+        ("#field-short_description", "<p>North-south + east-west = [routes]</p>"),
         ("#field-x", "-123.5"),
         ("#image-0-caption", "Map - level + room = [1]"),
     ],
@@ -532,14 +553,16 @@ def test_graph_hotkeys_do_not_intercept_select_controls(page):
     assert page.evaluate("mapEditor.network.getViewPosition()") == pytest.approx(view)
 
 
-def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, editor_server):
+def test_edit_npc_groups_signs_rename_protection_and_image_collections(page, editor_server):
     picture = editor_server["source"].parent / "example.svg"
     picture.write_text(
         '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100">'
         '<rect width="200" height="100" fill="blue"/></svg>',
         encoding="utf-8",
     )
-    add(page, "previous_occupants")
+    add(page, "npc_groups")
+    assert page.locator('#add-kind option[value="npc_groups"]').inner_text() == "NPC group"
+    assert page.locator("#form-title").inner_text() == "New NPC group"
     page.locator("#field-name").fill("Old Wardens")
     page.locator("#field-language").fill("Dwarven")
     page.get_by_label("Lettering (HTML)", exact=True).fill("Angular runes")
@@ -554,7 +577,7 @@ def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, ed
         page.locator(f"#{field}-0-src").fill("example.svg")
         page.locator(f"#{field}-0-alt").fill(field)
     apply(page)
-    assert page.evaluate("mapEditor.data.previous_occupants[0].id") == "old-wardens"
+    assert page.evaluate("mapEditor.data.npc_groups[0].id") == "old-wardens"
     choose(page, "connections")
     page.get_by_role("button", name="Add sign", exact=True).click()
     assert page.locator("#sign-0-side").input_value() == ""
@@ -584,7 +607,7 @@ def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, ed
     page.locator("#sign-1-description").fill("Paper note")
     page.locator("#sign-1-translation").fill("Second sign")
     apply(page)
-    choose(page, "previous_occupants")
+    choose(page, "npc_groups")
     page.locator("#field-id").fill("wardens")
     apply(page)
     assert page.evaluate("mapEditor.data.connections[0].signs.map(sign => sign.group)") == [
@@ -596,9 +619,9 @@ def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, ed
     page.get_by_role("button", name="Rebuild graph", exact=True).click()
     wait_idle(page)
     saved = json.loads(editor_server["source"].read_text(encoding="utf-8"))
-    assert saved["previous_occupants"][0]["language_visual_style"] == "Angular runes"
-    assert saved["previous_occupants"][0]["language_oddities"] == "<b>Runes feel warm</b>"
-    assert saved["previous_occupants"][0]["known_ancestries"] == ["Dwarf", "Human"]
+    assert saved["npc_groups"][0]["language_visual_style"] == "Angular runes"
+    assert saved["npc_groups"][0]["language_oddities"] == "<b>Runes feel warm</b>"
+    assert saved["npc_groups"][0]["known_ancestries"] == ["Dwarf", "Human"]
     assert saved["connections"][0]["signs"][0] == {
         "group": "wardens",
         "side": "destination",
@@ -608,7 +631,7 @@ def test_edit_inhabitants_signs_rename_protection_and_image_collections(page, ed
     assert len(list((editor_server["output"].parent / "assets/images").glob("*.svg"))) == 1
     page.reload()
     page.wait_for_function("window.mapEditor?.network && !window.mapEditor.busy")
-    choose(page, "previous_occupants")
+    choose(page, "npc_groups")
     assert (
         page.get_by_label("Language oddities (HTML)", exact=True).input_value()
         == "<b>Runes feel warm</b>"
@@ -636,7 +659,7 @@ def test_cancel_picture_preserves_new_room(page, editor_server, keep_picture, wi
     original = editor_server["source"].read_bytes()
     add(page, "rooms")
     page.locator("#field-name").fill("New room")
-    page.locator("#field-notes").fill("<p>Keep this draft.</p>")
+    page.locator("#field-short_description").fill("<p>Keep this draft.</p>")
     page.locator("#field-x").fill("-250")
     page.locator("#field-y").fill("500")
     if keep_picture:
@@ -653,7 +676,7 @@ def test_cancel_picture_preserves_new_room(page, editor_server, keep_picture, wi
     remove.click()
     assert page.locator(".image-entry").count() == int(keep_picture)
     assert page.locator("#field-name").input_value() == "New room"
-    assert page.locator("#field-notes").input_value() == "<p>Keep this draft.</p>"
+    assert page.locator("#field-short_description").input_value() == "<p>Keep this draft.</p>"
     assert page.evaluate("mapEditor.selection") == {"kind": "rooms", "index": None}
     assert page.evaluate("document.activeElement.id") == (
         "image-0-src" if keep_picture else "add-image"
@@ -664,7 +687,7 @@ def test_cancel_picture_preserves_new_room(page, editor_server, keep_picture, wi
     saved = json.loads(editor_server["source"].read_text(encoding="utf-8"))["rooms"][-1]
     assert saved["id"] == "new-room"
     assert saved["name"] == "New room"
-    assert saved["notes"] == "<p>Keep this draft.</p>"
+    assert saved["short_description"] == "<p>Keep this draft.</p>"
     assert saved["position"] == {"x": -250, "y": 500}
     assert saved.get("images", []) == (
         [{"src": "picture.svg", "alt": "Room picture", "caption": "Keep me"}]
@@ -685,7 +708,7 @@ def test_edit_pictures_and_new_fields_save_rebuild_reload(page, editor_server):
         if kind != "characters":
             page.locator("#field-details").fill(f"<b>{kind} detailed text</b>")
         if kind == "character_groups":
-            page.locator("#field-notes").fill("Group hover note")
+            page.locator("#field-short_description").fill("Group hover note")
         page.get_by_role("button", name="Add picture", exact=True).click()
         page.locator("#image-0-src").fill("picture.svg")
         page.locator("#image-0-alt").fill(f"{kind} alternative text")
@@ -718,12 +741,12 @@ def test_edit_pictures_and_new_fields_save_rebuild_reload(page, editor_server):
         ]
         if kind != "characters":
             assert saved[kind][0]["details"] == f"<b>{kind} detailed text</b>"
-    assert saved["character_groups"][0]["notes"] == "Group hover note"
+    assert saved["character_groups"][0]["short_description"] == "Group hover note"
     assert len(list((editor_server["output"].parent / "assets/images").glob("*.svg"))) == 1
     page.reload()
     page.wait_for_function("window.mapEditor?.network && !window.mapEditor.busy")
     choose(page, "character_groups")
-    assert page.locator("#field-notes").input_value() == "Group hover note"
+    assert page.locator("#field-short_description").input_value() == "Group hover note"
     assert page.locator("#image-0-caption").input_value() == "<b>Plain caption</b>"
     assert page.evaluate("mapEditor.network.selectionHandler.options.selectable") is True
     page.locator("#image-0-src").fill("missing.svg")
@@ -804,7 +827,7 @@ def test_create_all_objects_save_rebuild_and_reload(page, editor_server, tmp_pat
     add(page, "rooms")
     page.locator("#field-name").fill("🛏️ Refuge")
     assert page.locator("#field-id").input_value() == "refuge"
-    page.locator("#field-notes").fill("<p><b>Warm</b> &amp; safe</p>")
+    page.locator("#field-short_description").fill("<p><b>Warm</b> &amp; safe</p>")
     apply(page)
     assert page.evaluate("mapEditor.nodes.get('refuge').label") == "🛏️ Refuge"
     assert editor_server["source"].read_bytes() == original
@@ -853,7 +876,7 @@ def test_create_all_objects_save_rebuild_and_reload(page, editor_server, tmp_pat
     page.get_by_role("button", name="Reload", exact=True).click()
     wait_idle(page)
     choose(page, "rooms", 2)
-    assert page.locator("#field-notes").input_value() == "<p><b>Warm</b> &amp; safe</p>"
+    assert page.locator("#field-short_description").input_value() == "<p><b>Warm</b> &amp; safe</p>"
     page.screenshot(path=str(tmp_path / "editor.png"), full_page=True)
 
 

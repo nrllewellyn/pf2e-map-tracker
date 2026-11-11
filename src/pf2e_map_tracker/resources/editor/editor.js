@@ -2,6 +2,7 @@
 (() => {
     'use strict';
     const {kinds, labels, clone, label, renameReferences, dependencies, suggestId} = window.MapEditorState;
+    const {createSignCard, parseHtml, renderRoomSigns} = window.MapDetails;
     const $ = id => document.getElementById(id);
     const state = {data: null, saved: '', revision: '', schema: null, selection: null,
         formDirty: false, busy: false, conflict: false, network: null, nodes: null, edges: null};
@@ -13,20 +14,21 @@
     const imageFields = new Set(['images', 'example_sign_images', 'example_member_images']);
     let tooltipGeneration = 0;
     const definitions = {rooms: 'Room', character_groups: 'CharacterGroup', characters: 'Character',
-        connections: 'Connection', previous_occupants: 'PreviousOccupant', connectionStatus: 'ConnectionStatus'};
+        connections: 'Connection', npc_groups: 'NPCGroup', connectionStatus: 'ConnectionStatus'};
     const fields = {
-        rooms: ['id', 'name', 'position', 'color', 'shape', 'notes', 'details', 'images'],
-        character_groups: ['id', 'name', 'location', 'defaultPosition', 'color', 'shape', 'notes', 'details', 'images'],
+        rooms: ['id', 'name', 'position', 'color', 'shape', 'short_description', 'details', 'images'],
+        character_groups: ['id', 'name', 'location', 'defaultPosition', 'color', 'shape', 'short_description', 'details', 'images'],
         characters: ['name', 'ancestry', 'class', 'placement', 'defaultPosition', 'color', 'shape',
             'physical_description', 'personality', 'other_details', 'images'],
-        connections: ['from', 'to', 'status', 'direction', 'name', 'notes', 'details', 'signs', 'images'],
-        previous_occupants: ['id', 'name', 'language', 'language_visual_style', 'language_oddities', 'signage_physical_form',
+        connections: ['from', 'to', 'status', 'direction', 'name', 'short_description', 'details', 'signs', 'images'],
+        npc_groups: ['id', 'name', 'language', 'language_visual_style', 'language_oddities', 'signage_physical_form',
             'communication_quirks', 'known_ancestries', 'common_appearance', 'demeanor',
             'example_sign_images', 'example_member_images'],
         connectionStatus: ['id', 'description', 'display_color', 'line_style']
     };
     const fieldLabels = {id: 'ID', name: 'Name', ancestry: 'Ancestry', class: 'Class', location: 'Room',
-        group: 'Group', color: 'Color', shape: 'Shape', notes: 'Notes (HTML)', from: 'From room',
+        group: 'Group', color: 'Color', shape: 'Shape',
+        short_description: 'Short description (HTML)', from: 'From room',
         to: 'To room', status: 'Connection status', direction: 'Direction', description: 'Description',
         display_color: 'Line color', line_style: 'Line style', physical_description: 'Physical description (HTML)',
         personality: 'Personality (HTML)', other_details: 'Other details (HTML)', details: 'Details (HTML, detailed view only)',
@@ -34,9 +36,10 @@
         signage_physical_form: 'Signage physical form (HTML)', communication_quirks: 'Communication quirks (HTML)',
         known_ancestries: 'Known ancestries (one per line)', common_appearance: 'Common appearance (HTML)',
         demeanor: 'Demeanor (HTML)', example_sign_images: 'Example sign images', example_member_images: 'Example group member photos'};
-    const htmlFields = new Set(['notes', 'details', 'physical_description', 'personality', 'other_details',
+    const htmlFields = new Set(['short_description', 'details', 'physical_description', 'personality', 'other_details',
         'language_visual_style', 'language_oddities', 'signage_physical_form', 'communication_quirks', 'common_appearance', 'demeanor']);
     const draggableKinds = new Set(['rooms', 'character_groups', 'characters']);
+    const sentenceLabel = kind => kind === 'npc_groups' ? labels[kind] : labels[kind].toLowerCase();
 
     function notice(message, error = false) {
         $('notice').textContent = message;
@@ -80,7 +83,7 @@
         control.value = value;
         stopMapPick(true);
         control.dispatchEvent(new Event('change', {bubbles: true}));
-        notice(`${fieldLabels[field]} selected: ${control.selectedOptions[0].text}. Apply to update the ${labels[state.selection.kind].toLowerCase()}.`);
+        notice(`${fieldLabels[field]} selected: ${control.selectedOptions[0].text}. Apply to update the ${sentenceLabel(state.selection.kind)}.`);
     }
     function dirty() { return !!state.data && JSON.stringify(state.data) !== state.saved; }
     function updateControls() {
@@ -172,11 +175,48 @@
         renderList();
         updateControls();
     }
-    function htmlDocument(html) {
-        return `<html><head><meta charset="utf-8"><style>body{font:13px/1.5 system-ui;color:#e7edf6;background:#222;padding:8px;margin:0;overflow-wrap:anywhere}a{color:#70d6c7}img{max-width:100%}</style></head><body>${html}</body></html>`;
+    function htmlDocument(html, withSignStyles = false) {
+        const stylesheet = withSignStyles ? '<link rel="stylesheet" href="/shared/viewer.css">' : '';
+        return `<html><head><meta charset="utf-8">${stylesheet}<style>body{font:13px/1.5 system-ui;color:#e7edf6;background:#222;padding:8px;margin:0;overflow-wrap:anywhere}a{color:#70d6c7}img{max-width:100%}.map-sign-warning{color:#ffb3b3;margin:0 0 8px}</style></head><body>${html}</body></html>`;
     }
     function imageUrl(source) {
         return /^https?:\/\//i.test(source) ? source : '/api/images?' + new URLSearchParams({src: source});
+    }
+    function previewSignCard(doc, sign, group, index) {
+        let groupName, thumbnail;
+        if (group) {
+            groupName = doc.createElement('div');
+            groupName.innerHTML = group.name;
+            const picture = group.example_sign_images?.[0];
+            if (picture) {
+                thumbnail = doc.createElement('figure');
+                thumbnail.className = 'map-rotating-picture';
+                const img = doc.createElement('img');
+                img.alt = picture.alt || 'Example sign';
+                img.title = picture.caption || 'Example sign';
+                img.src = imageUrl(picture.src);
+                thumbnail.append(img);
+            }
+        }
+        return createSignCard(doc, sign, index, {groupName, language: group?.language, thumbnail});
+    }
+    function roomDetailsPreview(html) {
+        const template = parseHtml(html);
+        const doc = template.content.ownerDocument;
+        const content = doc.createElement('div');
+        content.append(template.content);
+        const groups = new Map((state.data.npc_groups || []).map(group => [group.id, group]));
+        const warnings = renderRoomSigns(content, groups, (sign, group, index) =>
+            previewSignCard(doc, sign, group, index));
+        if (warnings === null) return htmlDocument(html);
+        for (const message of warnings) {
+            const warning = doc.createElement('p');
+            warning.className = 'map-sign-warning';
+            warning.textContent = message;
+            template.content.append(warning);
+        }
+        template.content.append(content);
+        return htmlDocument(template.innerHTML, true);
     }
     function renderImages(images, field = 'images') {
         const pictures = draftImages[field] = clone(images || []);
@@ -278,7 +318,7 @@
         const container = document.createElement('fieldset');
         container.id = 'field-signs';
         container.className = 'image-field';
-        container.innerHTML = '<legend>Signs</legend><p class="muted">All sign fields are required. Groups come from Previous Inhabitants. Descriptions and translations appear only in connection details.</p>';
+        container.innerHTML = '<legend>Signs</legend><p class="muted">All sign fields are required. Groups come from NPC Groups. Descriptions and translations appear only in connection details.</p>';
         const rows = document.createElement('div');
         const add = document.createElement('button');
         add.type = 'button';
@@ -289,7 +329,7 @@
             draftSigns.forEach((sign, index) => {
                 const row = document.createElement('div');
                 row.className = 'sign-entry';
-                for (const [key, title] of [['group', 'Previous inhabitant group'], ['side', 'Side'],
+                for (const [key, title] of [['group', 'NPC group'], ['side', 'Side'],
                     ['description', 'Sign description (HTML)'], ['translation', 'Translation (HTML)']]) {
                     const label = document.createElement('label');
                     label.className = 'field';
@@ -299,7 +339,7 @@
                     input.required = true;
                     if (key === 'group') {
                         input.add(new Option('Choose group…', ''));
-                        addChoices(input, (state.data.previous_occupants || []).map(group => [group.id, `${group.name} (${group.id})`]));
+                        addChoices(input, (state.data.npc_groups || []).map(group => [group.id, `${group.name} (${group.id})`]));
                     } else if (key === 'side') {
                         input.add(new Option('Choose side…', ''));
                         addChoices(input, [['source', 'Source side (from room)'], ['destination', 'Destination side (to room)']]);
@@ -400,8 +440,11 @@
             preview.className = 'html-preview';
             preview.title = `${fieldLabels[field]} preview`;
             preview.setAttribute('sandbox', '');
-            preview.srcdoc = htmlDocument(control.value);
-            control.addEventListener('input', () => { preview.srcdoc = htmlDocument(control.value); });
+            const previewDocument = field === 'details' && state.selection.kind === 'rooms'
+                ? roomDetailsPreview : htmlDocument;
+            const updatePreview = () => { preview.srcdoc = previewDocument(control.value); };
+            updatePreview();
+            control.addEventListener('input', updatePreview);
             wrapper.append(preview);
         }
         if (mapPickFields.has(field)) {
@@ -425,7 +468,7 @@
         stopMapPick();
         const {kind, index} = state.selection;
         const definition = state.schema.$defs[definitions[kind]];
-        $('form-title').textContent = index === null ? `New ${labels[kind].toLowerCase()}` : `Edit ${labels[kind].toLowerCase()}`;
+        $('form-title').textContent = index === null ? `New ${sentenceLabel(kind)}` : `Edit ${sentenceLabel(kind)}`;
         $('form-help').textContent = 'Apply updates the preview. Save writes the map file. * Required field.';
         $('object-form').hidden = false;
         $('cancel').hidden = false;
@@ -826,7 +869,7 @@
             $('form-errors').textContent = `Reassign or remove these dependent objects first:\n${dependents.join('\n')}`;
             return;
         }
-        if (!confirm(`Delete ${labels[kind].toLowerCase()} “${label(kind, object, index)}”?`)) return;
+        if (!confirm(`Delete ${sentenceLabel(kind)} “${label(kind, object, index)}”?`)) return;
         run(async () => {
             const candidate = clone(state.data);
             candidate[kind].splice(index, 1);

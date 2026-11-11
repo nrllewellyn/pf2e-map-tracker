@@ -43,6 +43,48 @@ def test_repository_map_data_is_valid(path: Path) -> None:
     assert load_map_data(path).rooms
 
 
+@pytest.mark.parametrize("collection", ["rooms", "character_groups", "connections"])
+@pytest.mark.parametrize(
+    "fields",
+    [{}, {"short_description": ""}, {"short_description": "<p>Warm 🔥</p>\nSecond line"}],
+)
+def test_short_descriptions_round_trip(collection: str, fields: dict) -> None:
+    data = _minimal_data()
+    data[collection][0].update(fields)
+
+    model = MapData.model_validate(data)
+    expected = fields.get("short_description", "")
+    assert getattr(model, collection)[0].short_description == expected
+    serialized = model.model_dump(mode="json", by_alias=True)[collection][0]
+    assert serialized["short_description"] == expected
+    assert "notes" not in serialized
+
+
+@pytest.mark.parametrize("collection", ["rooms", "character_groups", "connections"])
+@pytest.mark.parametrize("include_description", [False, True])
+def test_legacy_notes_are_rejected(collection: str, include_description: bool) -> None:
+    data = _minimal_data()
+    data[collection][0]["notes"] = "Legacy note"
+    if include_description:
+        data[collection][0]["short_description"] = "New description"
+
+    with pytest.raises(ValidationError) as caught:
+        MapData.model_validate(data)
+
+    assert any(
+        error["loc"] == (collection, 0, "notes") and error["type"] == "extra_forbidden"
+        for error in caught.value.errors()
+    )
+
+
+def test_description_schema_uses_short_description_for_all_entities() -> None:
+    definitions = MapData.model_json_schema(by_alias=True)["$defs"]
+    for name in ("Room", "CharacterGroup", "Connection"):
+        assert "short_description" in definitions[name]["properties"]
+        assert "notes" not in definitions[name]["properties"]
+        assert definitions[name]["additionalProperties"] is False
+
+
 def test_graph_options_are_valid() -> None:
     assert load_graph_options()
 
@@ -313,7 +355,7 @@ def _minimal_data() -> dict:
             {"id": "b", "name": "B", "position": {"x": 1200, "y": 0}},
         ],
         "characters": [],
-        "character_groups": [],
+        "character_groups": [{"id": "party", "name": "Party", "location": "a"}],
         "connections": [{"from": "a", "to": "b", "status": "open"}],
         "connectionStatus": [{"id": "open", "description": "Open"}],
     }

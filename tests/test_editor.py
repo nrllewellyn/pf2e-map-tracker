@@ -69,6 +69,8 @@ def test_load_preview_and_local_assets(session):
         "/editor.js",
         "/editor.css",
         "/editor-state.js",
+        "/shared/mapDetails.js",
+        "/shared/viewer.css",
         "/vendor/vis-network.min.js",
         "/vendor/vis-network.css",
     ]:
@@ -162,7 +164,7 @@ def test_save_preserves_unicode_html_aliases_optional_fields_and_order(session):
     loaded = client.get("/api/map").json()
     data = loaded["data"]
     data["rooms"][0]["name"] = "🛏️ Refuge"
-    data["rooms"][0]["notes"] = "<p><b>Safe</b> &amp; warm</p>"
+    data["rooms"][0]["short_description"] = "<p><b>Safe</b> &amp; warm</p>"
     data["characters"][0]["class"] = "Wizard"
     data["rooms"][0].pop("color", None)
     response = client.put(
@@ -179,6 +181,108 @@ def test_save_preserves_unicode_html_aliases_optional_fields_and_order(session):
     assert "class_name" not in json.loads(text)["characters"][0]
     assert "color" not in json.loads(text)["rooms"][0]
     assert not output.exists()
+
+
+@pytest.mark.parametrize("collection", ["rooms", "character_groups", "connections"])
+def test_short_description_survives_preview_save_reload_and_rebuild(session, collection):
+    client, source, output = session
+    original = source.read_bytes()
+    loaded = client.get("/api/map").json()
+    description = "<p>Warm 🔥</p>\nSecond line"
+    loaded["data"][collection][0]["short_description"] = description
+
+    response = client.post("/api/preview", json={"data": loaded["data"]}, headers=HEADERS)
+    assert response.status_code == 200
+    preview = response.json()
+    assert preview["data"][collection][0]["short_description"] == description
+    objects = preview["graph"]["edges" if collection == "connections" else "nodes"]
+    item = next(obj for obj in objects if obj["editorRef"] == {"kind": collection, "index": 0})
+    assert item["detail"]["fields"]["short_description"] == description
+    assert description.replace("\n", "<br>") in item["title"]
+    assert source.read_bytes() == original
+    assert not output.exists()
+
+    saved = client.put(
+        "/api/map", json={"data": loaded["data"], "revision": loaded["revision"]}, headers=HEADERS
+    )
+    assert saved.status_code == 200
+    reloaded = client.get("/api/map").json()
+    assert reloaded["data"][collection][0]["short_description"] == description
+    assert "notes" not in reloaded["data"][collection][0]
+    assert not output.exists()
+
+    rebuilt = client.post(
+        "/api/rebuild",
+        json={"data": reloaded["data"], "revision": reloaded["revision"]},
+        headers=HEADERS,
+    )
+    assert rebuilt.status_code == 200
+    assert json.loads(source.read_bytes())[collection][0]["short_description"] == description
+    dataset = "edges" if collection == "connections" else "nodes"
+    content = output.read_text(encoding="utf-8")
+    objects = json.loads(re.search(rf"{dataset} = new vis.DataSet\((\[.*?\])\);", content)[1])
+    item_id = (
+        "__connection-0" if collection == "connections" else loaded["data"][collection][0]["id"]
+    )
+    item = next(obj for obj in objects if obj["id"] == item_id)
+    assert item["detail"]["fields"]["short_description"] == description
+    assert description.replace("\n", "<br>") in item["title"]
+
+
+@pytest.mark.parametrize("endpoint", ["/api/preview", "/api/map", "/api/rebuild"])
+@pytest.mark.parametrize("collection", ["rooms", "character_groups", "connections"])
+@pytest.mark.parametrize("include_description", [False, True])
+def test_legacy_notes_are_rejected_without_writes(
+    session, endpoint, collection, include_description
+):
+    client, source, output = session
+    original = source.read_bytes()
+    output.write_text("Previous map", encoding="utf-8")
+    loaded = client.get("/api/map").json()
+    record = loaded["data"][collection][0]
+    record["notes"] = "Legacy note"
+    if include_description:
+        record["short_description"] = "New description"
+    else:
+        record.pop("short_description", None)
+    method = client.put if endpoint == "/api/map" else client.post
+    body = {"data": loaded["data"]}
+    if endpoint != "/api/preview":
+        body["revision"] = loaded["revision"]
+
+    response = method(endpoint, json=body, headers=HEADERS)
+    assert response.status_code == 422
+    assert any(
+        error["loc"] == [collection, 0, "notes"] and error["type"] == "extra_forbidden"
+        for error in response.json()["errors"]
+    )
+    assert source.read_bytes() == original
+    assert output.read_text(encoding="utf-8") == "Previous map"
+
+
+@pytest.mark.parametrize("endpoint", ["/api/preview", "/api/map", "/api/rebuild"])
+@pytest.mark.parametrize("keep_npc_groups", [False, True])
+def test_legacy_group_field_is_rejected_without_writes(session, endpoint, keep_npc_groups):
+    client, source, output = session
+    original = source.read_bytes()
+    output.write_text("Previous map", encoding="utf-8")
+    loaded = client.get("/api/map").json()
+    loaded["data"]["previous_occupants"] = loaded["data"]["npc_groups"]
+    if not keep_npc_groups:
+        del loaded["data"]["npc_groups"]
+    method = client.put if endpoint == "/api/map" else client.post
+    body = {"data": loaded["data"]}
+    if endpoint != "/api/preview":
+        body["revision"] = loaded["revision"]
+
+    response = method(endpoint, json=body, headers=HEADERS)
+    assert response.status_code == 422
+    assert any(
+        error["loc"] == ["previous_occupants"] and error["type"] == "extra_forbidden"
+        for error in response.json()["errors"]
+    )
+    assert source.read_bytes() == original
+    assert output.read_text(encoding="utf-8") == "Previous map"
 
 
 @pytest.mark.parametrize("endpoint", ["/api/preview", "/api/map", "/api/rebuild"])

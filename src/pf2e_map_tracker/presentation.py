@@ -10,10 +10,10 @@ from pf2e_map_tracker.models import UNKNOWN_ROOM_ID, MapData
 TOOLTIP_PROPERTIES = ("title", "tooltip_hidden", "tooltip_groups_only", "tooltip_show_all")
 
 
-def previous_occupant_details(data: MapData, resolve: Callable[[str], str]) -> list[dict]:
+def npc_group_details(data: MapData, resolve: Callable[[str], str]) -> list[dict]:
     result = []
-    for occupant in data.previous_occupants:
-        fields = occupant.model_dump(mode="json")
+    for group in data.npc_groups:
+        fields = group.model_dump(mode="json")
         for key in ("example_sign_images", "example_member_images"):
             fields[key] = [{**picture, "url": resolve(picture["src"])} for picture in fields[key]]
         result.append(fields)

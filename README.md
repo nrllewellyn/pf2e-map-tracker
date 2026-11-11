@@ -60,7 +60,7 @@ pf2e-map-tracker edit --input tests/fixtures/test_data.json --output dist/test-m
 ```
 
 Select a graph node or connection, or search the object list. Use **Add** to create
-a room, group, character, connection, previous inhabitant, or connection status. Fill out the form and
+a room, group, character, connection, NPC group, or connection status. Fill out the form and
 click **Apply**. HTML fields include a rendered preview; formatting is
 entered as HTML.
 
@@ -77,10 +77,12 @@ beside each image source removes that picture, including an empty entry, while
 keeping the rest of the form. The first picture appears in hover previews. Detailed text fields have
 HTML previews and appear only in the generated viewer's details panel.
 
-Previous inhabitants have separate picture controls for example signs and group
-member photos. In connection forms, **Add sign** selects a previous inhabitant
-and records the sign's side, description, and translation. Renaming an inhabitant's
-ID updates its signs; deleting an inhabitant is blocked while signs refer to it.
+NPC groups have separate picture controls for example signs and group
+member photos. In connection forms, **Add sign** selects an NPC group
+and records the sign's side, description, and translation. In room forms, add
+`<map-sign>` to **Details** and use the HTML preview to check the card. Renaming an
+NPC group's ID updates signs in rooms and connections. Deleting an NPC group
+is blocked while signs refer to it.
 
 Drag rooms to arrange them on a 250 px grid in both directions.
 Hold Shift to position freely; Shift can be pressed or released during a drag.
@@ -165,21 +167,24 @@ with a count of additional pictures. Click to open a read-only details panel wit
 fields, referenced room/group names, and a full picture gallery. IDs and saved
 coordinates and empty fields are omitted from the panel. A colored node
 shape or connection-line preview appears beside **Close**; shape names and color
-codes are omitted from the text. Choose gallery thumbnails to switch pictures. Click
+codes are omitted from the text. Descriptions wrap around the gallery and continue
+across the panel below it. Sign cards span the full content width. On narrow screens,
+the gallery appears above the text. Expand **Image details** to see the selected
+picture's source path and alt text. Choose gallery thumbnails to switch pictures. Click
 the main picture to open a full-screen preview. Click outside the picture, choose
 **Close image**, or press Escape to return to the details panel. Images preserve
 their proportions and fit the screen. Close the panel with **Close**, Escape, or
 a click on the backdrop. Clicking no longer selects or dims graph objects.
 
 The top bar contains character visibility, **Additional Information**, and build information.
-Open **Additional Information → Previous Inhabitants** for a compact group listing;
+Open **Additional Information → NPC Groups** for a compact group listing;
 choose a group name or **Details** for its full description and example pictures
 in a separate panel above the listing. **Close details**, Escape, or a backdrop
 click returns to the same place in the listing.
-Connection hover text reports the number of signs. Connection details show each
-sign's group, language, side (shown as the room name), description, translation, and a
-thumbnail of an example sign. A group name opens its inhabitant record; closing it
-returns to the connection.
+Connection hover text reports the number of signs. Room and connection details
+use the same sign card with the group, language, Location, description, translation,
+and an example sign thumbnail when available. A group name opens its NPC group
+record. Closing it returns to the sign card.
 Thumbnails cycle through available examples every 4.5 seconds, except when reduced
 motion is requested. Group listings cycle through both sign and member pictures.
 The local visual
@@ -187,10 +192,14 @@ editor retains click-to-select and dragging for authoring.
 
 ## Trusted HTML
 
-Display strings in map data are treated as trusted HTML so notes can contain markup such as
+Display strings in map data are treated as trusted HTML so descriptions can contain markup such as
 `<b>`, `<br>`, and `<p>`. Only build maps from JSON maintained by trusted authors.
 
 ## Map Data Format
+
+Rooms, character groups, and connections use `short_description` for their brief description. The
+former `notes` field is invalid on these records; rename it to `short_description`
+in older map files before validating, building, or opening the editor.
 
 All object fields are validated strictly. Unknown fields are rejected so spelling mistakes are
 reported instead of silently ignored.
@@ -229,7 +238,7 @@ default unless you capture the view again.
 | `position` | Yes    | Saved coordinates, for example `{"x": -1200, "y": 0}`. Both coordinates must be finite numbers.                                                            |
 | `color`  | No       | CSS node color.                                                                                                                                           |
 | `shape`  | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `box`. |
-| `notes`  | No       | Trusted HTML shown in the room tooltip.                                                                                                                   |
+| `short_description` | No | Trusted HTML shown in the room tooltip and at the top of its details panel.                                                                                                                   |
 | `details` | No      | Trusted HTML shown only in the details panel. |
 | `images` | No       | Ordered pictures, as described below. |
 
@@ -288,7 +297,7 @@ also be removed from graph options.
 | `defaultPosition` | No | Starting coordinates before physics, for example `{"x": -1200, "y": 0}`. Omit or use `null` for automatic placement. |
 | `color`    | No       | CSS node color.                                                                                                                                              |
 | `shape`    | No       | Node shape. Accepts `ellipse`, `circle`, `database`, `box`, `text`, `diamond`, `dot`, `star`, `triangle`, `triangleDown`, or `square`. Defaults to `circle`. |
-| `notes`    | No       | Trusted HTML shown in hover previews and the details panel. |
+| `short_description` | No | Trusted HTML shown in hover previews and at the top of the details panel. |
 | `details`  | No       | Trusted HTML shown only in the details panel. |
 | `images`   | No       | Ordered pictures, as described below. |
 
@@ -301,7 +310,7 @@ also be removed from graph options.
 | `status`    | Yes      | Existing `connectionStatus` ID.                                                   |
 | `direction` | No       | `bidirectional`, `forward_only`, or `backward_only`. Defaults to `bidirectional`. |
 | `name`      | No       | Connection label shown in the tooltip.                                            |
-| `notes`     | No       | Trusted HTML shown in the tooltip.                                                |
+| `short_description` | No | Trusted HTML shown in the tooltip and at the top of the details panel.                                                |
 | `details`   | No       | Trusted HTML shown only in the details panel. |
 | `images`    | No       | Ordered pictures, as described below. |
 | `signs`     | No       | Array of posted signs. Omitted means no signs. See below. |
@@ -311,11 +320,15 @@ separate virtual node named **Unknown room** on the graph.
 Clicking an Unknown Room shows its appearance and owning connection's information.
 Character/group attachment edges open the attached object's details.
 
-### Signs and Previous Inhabitants
+### Signs and NPC Groups
 
-The optional top-level `previous_occupants` array stores groups that left signs.
-It is displayed as **Previous Inhabitants** and is separate from current character
-groups. Omitted arrays are empty; maps without signs need no migration.
+The optional top-level `npc_groups` array stores NPC groups, including groups
+that are still active in the world and groups that left signs in the past.
+It is displayed as **NPC Groups** and is separate from character groups placed
+on the map. Omitted arrays are empty. The former `previous_occupants` field is
+invalid, even when `npc_groups` is also present; rename it in older map files
+before validating, building, or opening the editor. Local NPC group pictures
+are stored under `data/images/npc-groups/` in this repository.
 
 | Group field | Required | Description |
 |-------------|----------|-------------|
@@ -333,17 +346,19 @@ groups. Omitted arrays are empty; maps without signs need no migration.
 | `example_member_images` | No | Ordered array of group member pictures using the same format. |
 
 A connection's `signs` array contains objects with four required, non-empty fields:
-`group` (a previous occupant's ID), `side`, `description`, and `translation`.
-Missing fields, blank text, unknown group IDs, and duplicate previous occupant IDs
+`group` (an NPC group's ID), `side`, `description`, and `translation`.
+Missing fields, blank text, unknown group IDs, and duplicate NPC group IDs
 are rejected. Sign fields have no defaults; existing signs must include all four.
 For `side`, `source` means the connection's `from` room, and
 `destination` means its `to` room. This is independent of the connection's travel
 direction. A sign outside a door and one inside it can be separate entries with
 opposite sides. The editor requires an explicit side selection for every new sign.
+The card displays **Location** as **Entrance from Main Corridor**, using the room
+name for that side. For an unknown endpoint it displays **Entrance from Unknown Room**.
 Descriptions and translations support trusted HTML and appear only in details.
 
 ```json
-"previous_occupants": [
+"npc_groups": [
   {
     "id": "old-wardens",
     "name": "Old Wardens",
@@ -374,10 +389,24 @@ On a connection:
 ]
 ```
 
+In a room's `details` HTML, place each `<map-sign>` between paragraphs. Use an
+NPC group ID in `group` and include both a description and a translation.
+Location is optional and appears as written. The three fields accept trusted HTML.
+
+```html
+<p>A panel glows beside the hatch.</p>
+<map-sign group="old-wardens">
+  <div data-location>Beside the service hatch</div>
+  <div data-description>A brass plaque with <em>blinking runes</em>.</div>
+  <div data-translation>Maintenance access only.</div>
+</map-sign>
+<p>A ladder descends into the maintenance bay.</p>
+```
+
 ### Pictures
 
 Rooms, characters, character groups, and connections accept an optional ordered
-`images` array. Previous inhabitants use the same format and linking rules in
+`images` array. NPC groups use the same format and linking rules in
 `example_sign_images` and `example_member_images`. Only `src` is required;
 `alt` and `caption` default to empty text.
 Captions and alt text are plain text, even when they contain HTML-looking markup.

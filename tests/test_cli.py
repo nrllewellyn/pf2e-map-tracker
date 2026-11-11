@@ -31,6 +31,30 @@ def test_validation_failure_returns_nonzero(tmp_path: Path, capsys) -> None:
 
 
 @pytest.mark.parametrize("command", ["build", "validate"])
+@pytest.mark.parametrize("collection", ["rooms", "character_groups", "connections"])
+def test_legacy_notes_do_not_overwrite_source_or_output(
+    command: str, collection: str, tmp_path: Path, capsys
+) -> None:
+    data = json.loads(TEST_DATA.read_text(encoding="utf-8"))
+    data[collection][0].update(notes="Legacy note", short_description="New description")
+    source = tmp_path / "map.json"
+    content = json.dumps(data)
+    source.write_text(content, encoding="utf-8")
+    output = tmp_path / "map.html"
+    output.write_text("Previous map", encoding="utf-8")
+    args = [command, "--input", str(source)]
+    if command == "build":
+        args += ["--output", str(output)]
+
+    assert main(args) == 1
+    error = capsys.readouterr().err
+    assert f"{collection}.0.notes" in error
+    assert "extra_forbidden" in error
+    assert source.read_text(encoding="utf-8") == content
+    assert output.read_text(encoding="utf-8") == "Previous map"
+
+
+@pytest.mark.parametrize("command", ["build", "validate"])
 def test_json_syntax_error_reports_source_and_context(
     command: str, tmp_path: Path, capsys, monkeypatch
 ) -> None:

@@ -1,5 +1,5 @@
 {
-  "previous_occupants": [
+  "npc_groups": [
     {
       "id": "household-scribes",
       "name": "Household Scribes",
@@ -19,7 +19,7 @@
       "id": "entrance",
       "name": "Entrance",
       "color": "#4CAF50",
-      "notes": "Main entry point",
+      "short_description": "Main entry point",
       "position": {
         "x": -1800.0,
         "y": -1800.0
@@ -29,7 +29,7 @@
       "id": "kitchen",
       "name": "Kitchen",
       "color": "#FF9800",
-      "notes": "Heart of the home with <b>large</b> island",
+      "short_description": "Heart of the home with <b>large</b> island",
       "position": {
         "x": -600.0,
         "y": -1800.0
@@ -39,7 +39,7 @@
       "id": "upstairs-hall",
       "name": "Upstairs Hall",
       "color": "#27F5F2",
-      "notes": "Central hallway upstairs",
+      "short_description": "Central hallway upstairs",
       "position": {
         "x": 600.0,
         "y": -1800.0
@@ -49,7 +49,7 @@
       "id": "master-bedroom",
       "name": "Master Bedroom",
       "color": "#9C27B0",
-      "notes": "Private sleeping area with en-suite bathroom",
+      "short_description": "Private sleeping area with en-suite bathroom",
       "position": {
         "x": 1800.0,
         "y": -1800.0
@@ -68,7 +68,7 @@
       "id": "living-room",
       "name": "Living Room",
       "color": "#2196F3",
-      "notes": "Main family gathering space",
+      "short_description": "Main family gathering space",
       "position": {
         "x": -600.0,
         "y": -600.0
@@ -78,7 +78,7 @@
       "id": "dining-room",
       "name": "Dining Room",
       "color": "#607D8B",
-      "notes": "Formal dining area",
+      "short_description": "Formal dining area",
       "position": {
         "x": 600.0,
         "y": -600.0
@@ -88,7 +88,7 @@
       "id": "family-room",
       "name": "Family Room",
       "color": "#3F51B5",
-      "notes": "Casual TV and relaxation space",
+      "short_description": "Casual TV and relaxation space",
       "position": {
         "x": 1800.0,
         "y": -600.0
@@ -98,7 +98,7 @@
       "id": "bathroom-main",
       "name": "Bathroom (Main)",
       "color": "#00BCD4",
-      "notes": "Upstairs full bathroom",
+      "short_description": "Upstairs full bathroom",
       "position": {
         "x": -1800.0,
         "y": 600.0
@@ -108,7 +108,7 @@
       "id": "master-bathroom",
       "name": "Master Bathroom",
       "color": "#009688",
-      "notes": "En-suite with double vanity",
+      "short_description": "En-suite with double vanity",
       "position": {
         "x": -600.0,
         "y": 600.0
@@ -118,7 +118,7 @@
       "id": "basement-hall",
       "name": "Basement Hall",
       "color": "#795548",
-      "notes": "Lower level hall",
+      "short_description": "Lower level hall",
       "position": {
         "x": 600.0,
         "y": 600.0
@@ -128,7 +128,7 @@
       "id": "basement-rec-room",
       "name": "Basement Rec Room",
       "color": "#607D8B",
-      "notes": "Game room and media area",
+      "short_description": "Game room and media area",
       "position": {
         "x": 1800.0,
         "y": 600.0
@@ -138,7 +138,7 @@
       "id": "laundry-room",
       "name": "Laundry Room",
       "color": "#8BC34A",
-      "notes": "Utility and washing area",
+      "short_description": "Utility and washing area",
       "position": {
         "x": -1800.0,
         "y": 1800.0
@@ -148,7 +148,7 @@
       "id": "home-office",
       "name": "Home Office",
       "color": "#FF5722",
-      "notes": "Quiet workspace",
+      "short_description": "Quiet workspace",
       "position": {
         "x": -600.0,
         "y": 1800.0
@@ -158,7 +158,7 @@
       "id": "garage",
       "name": "Garage",
       "color": "#757575",
-      "notes": "Two-car garage",
+      "short_description": "Two-car garage",
       "position": {
         "x": 600.0,
         "y": 1800.0
@@ -215,7 +215,7 @@
       "to": "upstairs-hall",
       "status": "open",
       "name": "↗ Stairs",
-      "notes": "Stairs squeak <b>loudly</b>"
+      "short_description": "Stairs squeak <b>loudly</b>"
     },
     {
       "from": "entrance",
@@ -263,13 +263,13 @@
       "from": "upstairs-hall",
       "to": "guest-bedroom",
       "status": "blocked",
-      "notes": "Under renovation"
+      "short_description": "Under renovation"
     },
     {
       "from": "upstairs-hall",
       "to": "master-bedroom",
       "status": "locked",
-      "notes": "Requires key after 10pm"
+      "short_description": "Requires key after 10pm"
     },
     {
       "from": "upstairs-hall",

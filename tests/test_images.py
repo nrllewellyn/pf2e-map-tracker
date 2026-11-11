@@ -22,7 +22,7 @@ def image_map(tmp_path):
                 "id": "room",
                 "name": "Room",
                 "position": {"x": 0, "y": 0},
-                "notes": "Room note",
+                "short_description": "Room note",
                 "details": "Room secret",
             }
         ],
@@ -31,7 +31,7 @@ def image_map(tmp_path):
                 "id": "party",
                 "name": "Party",
                 "location": "room",
-                "notes": "Group note",
+                "short_description": "Group note",
                 "details": "Group secret",
             }
         ],
@@ -50,7 +50,7 @@ def image_map(tmp_path):
                 "from": "room",
                 "to": "unknown",
                 "status": "open",
-                "notes": "Connection note",
+                "short_description": "Connection note",
                 "details": "Connection secret",
             },
             {"from": "room", "to": "unknown", "status": "open", "name": "Second"},
@@ -240,7 +240,7 @@ def test_editor_image_previews_round_trip_and_failed_rebuild(image_map):
         assert client.get("/api/images", params={"src": "missing.svg"}).status_code == 404
         for invalid in ("../outside.svg", "https://example.com/image.png", "map.json"):
             assert client.get("/api/images", params={"src": invalid}).status_code == 400
-        loaded["data"]["character_groups"][0]["notes"] = "<b>Public group note</b>"
+        loaded["data"]["character_groups"][0]["short_description"] = "<b>Public group note</b>"
         request = {"data": loaded["data"], "revision": loaded["revision"]}
         rebuilt = client.post("/api/rebuild", json=request, headers=headers)
         assert rebuilt.status_code == 200

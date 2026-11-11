@@ -146,9 +146,9 @@
           "$ref": "#/$defs/NodeShape",
           "default": "circle"
         },
-        "notes": {
+        "short_description": {
           "default": "",
-          "title": "Notes",
+          "title": "Short Description",
           "type": "string"
         },
         "details": {
@@ -199,9 +199,9 @@
           "title": "Name",
           "type": "string"
         },
-        "notes": {
+        "short_description": {
           "default": "",
-          "title": "Notes",
+          "title": "Short Description",
           "type": "string"
         },
         "details": {
@@ -327,43 +327,7 @@
       "title": "MapImage",
       "type": "object"
     },
-    "NodeShape": {
-      "enum": [
-        "ellipse",
-        "circle",
-        "database",
-        "box",
-        "text",
-        "diamond",
-        "dot",
-        "star",
-        "triangle",
-        "triangleDown",
-        "square"
-      ],
-      "title": "NodeShape",
-      "type": "string"
-    },
-    "Position": {
-      "additionalProperties": false,
-      "properties": {
-        "x": {
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "title": "Y",
-          "type": "number"
-        }
-      },
-      "required": [
-        "x",
-        "y"
-      ],
-      "title": "Position",
-      "type": "object"
-    },
-    "PreviousOccupant": {
+    "NPCGroup": {
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -438,7 +402,43 @@
         "id",
         "name"
       ],
-      "title": "PreviousOccupant",
+      "title": "NPCGroup",
+      "type": "object"
+    },
+    "NodeShape": {
+      "enum": [
+        "ellipse",
+        "circle",
+        "database",
+        "box",
+        "text",
+        "diamond",
+        "dot",
+        "star",
+        "triangle",
+        "triangleDown",
+        "square"
+      ],
+      "title": "NodeShape",
+      "type": "string"
+    },
+    "Position": {
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "title": "Position",
       "type": "object"
     },
     "Room": {
@@ -473,9 +473,9 @@
           "$ref": "#/$defs/NodeShape",
           "default": "box"
         },
-        "notes": {
+        "short_description": {
           "default": "",
-          "title": "Notes",
+          "title": "Short Description",
           "type": "string"
         },
         "details": {
@@ -570,11 +570,11 @@
       "title": "Character Groups",
       "type": "array"
     },
-    "previous_occupants": {
+    "npc_groups": {
       "items": {
-        "$ref": "#/$defs/PreviousOccupant"
+        "$ref": "#/$defs/NPCGroup"
       },
-      "title": "Previous Occupants",
+      "title": "NPC Groups",
       "type": "array"
     },
     "connections": {

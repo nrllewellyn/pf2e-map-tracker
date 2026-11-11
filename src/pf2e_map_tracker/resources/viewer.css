@@ -1,36 +1,37 @@
 body { margin: 0; background: #222; }
 body > .card { position: fixed; inset: 0; display: flex; flex-direction: column; box-sizing: border-box; background: #222; }
 #mynetwork { box-sizing: border-box; flex: 1 1 0; min-height: 0; padding: 0; float: none; }
-#map-toolbar, #map-details, #map-additional-info, #map-occupant-details, #map-image-preview { font: 14px/1.5 system-ui, sans-serif; color: #eef0fa; }
+#map-toolbar, #map-details, #map-additional-info, #map-npc-group-details, #map-image-preview { font: 14px/1.5 system-ui, sans-serif; color: #eef0fa; }
 #map-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 18px; background: #202331; border-bottom: 1px solid #45495e; flex-wrap: wrap; flex-shrink: 0; }
 #map-toolbar label { display: grid; gap: 4px; }
 #map-toolbar select { width: min(300px, 80vw); }
-#map-toolbar select, #map-toolbar button, #map-details button, #map-additional-info button, #map-occupant-details button, #map-image-preview button { font: inherit; border: 1px solid #666c83; background: #30354a; color: #fff; padding: 6px 12px; border-radius: 6px; }
-#map-toolbar button, #map-details button, #map-additional-info button, #map-occupant-details button { cursor: pointer; }
+#map-toolbar select, #map-toolbar button, #map-details button, #map-additional-info button, #map-npc-group-details button, #map-image-preview button { font: inherit; border: 1px solid #666c83; background: #30354a; color: #fff; padding: 6px 12px; border-radius: 6px; }
+#map-toolbar button, #map-details button, #map-additional-info button, #map-npc-group-details button { cursor: pointer; }
 #map-build-info { margin-left: auto; text-align: right; color: #b9bfd2; font-size: 12px; }
 #custom-vis-tooltip { position: fixed; visibility: hidden; padding: 10px 12px; background: rgba(30,30,50,.97); color: #f0f0ff; border: 1px solid #666; border-radius: 6px; max-width: min(420px, calc(100vw - 16px)); max-height: calc(100dvh - 16px); overflow: auto; box-sizing: border-box; font: 13px/1.5 system-ui,sans-serif; pointer-events: none; z-index: 9999; box-shadow: 0 4px 12px #0006; overflow-wrap: anywhere; }
-#map-details, #map-additional-info, #map-occupant-details { box-sizing: border-box; width: min(1050px, 96vw); max-width: 96vw; max-height: 92dvh; padding: 0; border: 1px solid #626982; border-radius: 12px; background: #222637; box-shadow: 0 16px 70px #0009; overflow: auto; }
-#map-occupant-details { width: min(920px, 92vw); max-height: 86dvh; }
-#map-details::backdrop, #map-additional-info::backdrop, #map-occupant-details::backdrop { background: #080b14b8; }
-#map-details *, #map-additional-info *, #map-occupant-details * { box-sizing: border-box; }
+#map-details, #map-additional-info, #map-npc-group-details { box-sizing: border-box; width: min(1050px, 96vw); max-width: 96vw; max-height: 92dvh; padding: 0; border: 1px solid #626982; border-radius: 12px; background: #222637; box-shadow: 0 16px 70px #0009; overflow: auto; }
+#map-npc-group-details { width: min(920px, 92vw); max-height: 86dvh; }
+#map-details::backdrop, #map-additional-info::backdrop, #map-npc-group-details::backdrop { background: #080b14b8; }
+#map-details *, #map-additional-info *, #map-npc-group-details * { box-sizing: border-box; }
 .map-dialog-header { position: sticky; top: 0; z-index: 1; background: #222637; padding: 16px 22px; border-bottom: 1px solid #45495e; display: flex; gap: 16px; align-items: center; justify-content: space-between; }
 .map-dialog-heading { min-width: 0; }
 .map-dialog-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-#map-detail-title, #map-additional-title, #map-occupant-title { font-size: 23px; margin: 0; overflow-wrap: anywhere; }
+#map-detail-title, #map-additional-title, #map-npc-group-title { font-size: 23px; margin: 0; overflow-wrap: anywhere; }
 #map-detail-kind { color: #b9bfd2; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
 .map-dialog-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 22px; }
-.map-dialog-body.has-images { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+.map-dialog-body.has-images { display: flow-root; }
+.map-short-description { margin-bottom: 12px; }
 .map-detail-field { margin: 0 0 16px; min-width: 0; overflow-wrap: anywhere; }
 .map-detail-field dt { font-size: 12px; color: #b9bfd2; margin-bottom: 4px; }
 .map-detail-field dd { margin: 0; }
 .map-detail-field dd > :first-child { margin-top: 0; }
-#map-details img, #map-additional-info img, #map-occupant-details img { max-width: 100%; }
-#map-details a, #map-additional-info a, #map-occupant-details a { color: #a8cfff; }
+#map-details img, #map-additional-info img, #map-npc-group-details img { max-width: 100%; }
+#map-details a, #map-additional-info a, #map-npc-group-details a { color: #a8cfff; }
 #map-detail-appearance { display: flex; align-items: center; justify-content: center; }
 .map-shape-preview { width: 64px; height: 44px; flex: 0 0 64px; }
 .map-line-preview { width: 64px; height: 44px; display: flex; align-items: center; gap: 3px; }
 .map-line-preview span { flex: 1; border-top-width: 3px; border-top-color: currentColor; }
-#map-detail-gallery { min-width: 0; }
+#map-detail-gallery { float: right; width: 46%; max-width: 470px; min-width: 0; margin: 0 0 20px 24px; }
 #map-detail-figure { margin: 0; background: #181b28; border-radius: 8px; padding: 10px; }
 #map-detail-image { display: block; width: 100%; height: min(50dvh, 470px); object-fit: contain; }
 #map-details #map-detail-image-open { display: block; width: 100%; border: 0; padding: 0; background: transparent; cursor: zoom-in; }
@@ -47,27 +48,28 @@ body > .card { position: fixed; inset: 0; display: flex; flex-direction: column;
 #map-gallery-thumbnails button[aria-pressed=true] { outline: 2px solid #a8cfff; outline-offset: 2px; }
 #map-gallery-thumbnails img { width: 100%; height: 100%; object-fit: contain; }
 .map-image-metadata { overflow-wrap: anywhere; color: #b9bfd2; font-size: 12px; }
-#map-details :focus-visible, #map-toolbar :focus-visible, #map-additional-info :focus-visible, #map-occupant-details :focus-visible { outline: 2px solid #a8cfff; outline-offset: 3px; }
-#map-details [hidden], #map-additional-info [hidden], #map-occupant-details [hidden] { display: none !important; }
+#map-details :focus-visible, #map-toolbar :focus-visible, #map-additional-info :focus-visible, #map-npc-group-details :focus-visible { outline: 2px solid #a8cfff; outline-offset: 3px; }
+#map-details [hidden], #map-additional-info [hidden], #map-npc-group-details [hidden] { display: none !important; }
 .map-additional-sections { padding: 16px 22px 0; display: flex; gap: 8px; flex-wrap: wrap; }
 #map-additional-info .map-additional-sections button[aria-current] { border-color: #a8cfff; }
 #map-additional-content { padding: 0 22px 22px; overflow-wrap: anywhere; }
 #map-additional-content h3 { font-size: 20px; margin: 20px 0 16px; }
 .map-signs h3 { font-size: 18px; margin: 24px 0 12px; }
-.map-sign-card, .map-occupant-card { border: 1px solid #45495e; background: #1b1f2e; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
-.map-sign-card > div, .map-occupant-card > div { min-width: 0; flex: 1; }
+#map-details .map-signs, #map-details .map-sign-card { clear: right; }
+.map-sign-card, .map-npc-group-card { border: 1px solid #45495e; background: #1b1f2e; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+.map-sign-card > div, .map-npc-group-card > div { min-width: 0; flex: 1; }
 .map-sign-group { margin-bottom: 12px; }
 .map-rotating-picture { margin: 0; width: 112px; height: 112px; flex: 0 0 112px; display: grid; place-items: center; background: #141723; border-radius: 6px; overflow: hidden; }
 .map-rotating-picture img { width: 112px; height: 112px; object-fit: contain; }
 .map-rotating-picture .map-image-unavailable { padding: 8px; color: #b9bfd2; font-size: 12px; }
-.map-occupant-card > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; }
-.map-occupant-card h4 { margin: 0; grid-column: 1 / -1; }
-.map-occupant-card .map-detail-field { margin: 0; }
-.map-occupant-card > div > button { grid-column: 1 / -1; justify-self: start; }
-.map-occupant-card .map-detail-field dd { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.map-occupant-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.map-occupant-gallery figure { margin: 0; min-width: 0; }
-#map-occupant-details .map-occupant-gallery button { display: block; width: 100%; padding: 6px; background: #181b28; cursor: zoom-in; }
-.map-occupant-gallery img { width: 100%; height: 150px; object-fit: contain; }
-.map-occupant-gallery figcaption { white-space: pre-wrap; margin-top: 6px; color: #b9bfd2; font-size: 12px; }
-@media (max-width: 700px) { .map-dialog-body.has-images { grid-template-columns: minmax(0,1fr); } .map-dialog-header, .map-dialog-body { padding: 14px; } #map-detail-gallery { grid-row: 1; } #map-detail-image { height: 38dvh; } .map-sign-card, .map-occupant-card { flex-wrap: wrap; padding: 12px; } .map-sign-card > div, .map-occupant-card > div { flex-basis: 100%; } .map-occupant-card > div { grid-template-columns: minmax(0, 1fr); } #map-additional-content { padding: 0 14px 14px; } .map-additional-sections { padding: 14px 14px 0; } }
+.map-npc-group-card > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; }
+.map-npc-group-card h4 { margin: 0; grid-column: 1 / -1; }
+.map-npc-group-card .map-detail-field { margin: 0; }
+.map-npc-group-card > div > button { grid-column: 1 / -1; justify-self: start; }
+.map-npc-group-card .map-detail-field dd { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.map-npc-group-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.map-npc-group-gallery figure { margin: 0; min-width: 0; }
+#map-npc-group-details .map-npc-group-gallery button { display: block; width: 100%; padding: 6px; background: #181b28; cursor: zoom-in; }
+.map-npc-group-gallery img { width: 100%; height: 150px; object-fit: contain; }
+.map-npc-group-gallery figcaption { white-space: pre-wrap; margin-top: 6px; color: #b9bfd2; font-size: 12px; }
+@media (max-width: 700px) { .map-dialog-header, .map-dialog-body { padding: 14px; } #map-detail-gallery { float: none; width: 100%; max-width: none; margin: 0 0 24px; } #map-detail-image { height: 38dvh; } .map-sign-card, .map-npc-group-card { flex-wrap: wrap; padding: 12px; } .map-sign-card > div, .map-npc-group-card > div { flex-basis: 100%; } .map-npc-group-card > div { grid-template-columns: minmax(0, 1fr); } #map-additional-content { padding: 0 14px 14px; } .map-additional-sections { padding: 14px 14px 0; } }

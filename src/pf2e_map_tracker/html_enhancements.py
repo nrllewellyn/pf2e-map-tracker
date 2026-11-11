@@ -16,16 +16,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 def inject_enhancements(
     html_path: Path,
     default_view: DefaultView | None = None,
-    previous_occupants: list[dict] | None = None,
+    npc_groups: list[dict] | None = None,
 ) -> None:
     content = html_path.read_text(encoding="utf-8")
     if INJECTION_MARKER in content:
         return
 
-    javascript = (
-        files("pf2e_map_tracker.resources")
-        .joinpath("graphEnhancements.js")
-        .read_text(encoding="utf-8")
+    assets = files("pf2e_map_tracker.resources")
+    javascript = "\n".join(
+        assets.joinpath(filename).read_text(encoding="utf-8")
+        for filename in ("mapDetails.js", "graphEnhancements.js")
     )
     build_info = json.dumps(
         {
@@ -34,15 +34,13 @@ def inject_enhancements(
         }
     )
     view_info = json.dumps(default_view.model_dump() if default_view is not None else None)
-    occupant_info = json.dumps(previous_occupants or [], ensure_ascii=False).replace("<", "\\u003c")
-    stylesheet = (
-        files("pf2e_map_tracker.resources").joinpath("viewer.css").read_text(encoding="utf-8")
-    )
+    npc_group_info = json.dumps(npc_groups or [], ensure_ascii=False).replace("<", "\\u003c")
+    stylesheet = assets.joinpath("viewer.css").read_text(encoding="utf-8")
     injection = (
         f"{INJECTION_MARKER}\n<style>{stylesheet}</style>\n<script>\n"
         f"const PF2E_MAP_TRACKER_BUILD = {build_info};\n"
         f"const PF2E_MAP_TRACKER_DEFAULT_VIEW = {view_info};\n"
-        f"const PF2E_MAP_TRACKER_PREVIOUS_OCCUPANTS = {occupant_info};\n"
+        f"const PF2E_MAP_TRACKER_NPC_GROUPS = {npc_group_info};\n"
         f"{javascript}\n</script>"
     )
     body_index = content.lower().rfind("</body>")

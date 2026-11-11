@@ -251,8 +251,17 @@ def create_app(input_path: Path, output_path: Path) -> FastAPI:
                 "output": str(output_path),
             }
 
+    assets = files("pf2e_map_tracker.resources")
+
+    @app.get("/shared/mapDetails.js", include_in_schema=False)
+    def shared_details_script():
+        return FileResponse(str(assets.joinpath("mapDetails.js")), media_type="text/javascript")
+
+    @app.get("/shared/viewer.css", include_in_schema=False)
+    def shared_details_styles():
+        return FileResponse(str(assets.joinpath("viewer.css")), media_type="text/css")
+
     vis_assets = files("pyvis").joinpath("templates/lib/vis-9.1.2")
     app.mount("/vendor", StaticFiles(directory=str(vis_assets)), name="vendor")
-    assets = files("pf2e_map_tracker.resources").joinpath("editor")
-    app.mount("/", StaticFiles(directory=str(assets), html=True), name="editor")
+    app.mount("/", StaticFiles(directory=str(assets.joinpath("editor")), html=True), name="editor")
     return app

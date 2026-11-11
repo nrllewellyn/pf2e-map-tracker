@@ -9,8 +9,8 @@ def room_tooltips(
     direct_character_names: list[str],
 ) -> tuple[str, str, str]:
     parts = [f"<b>{room.name}</b>"]
-    if room.notes:
-        parts.append(f"<br><br><b>Notes:</b><br>{_format_multiline(room.notes)}")
+    if room.short_description:
+        parts.append(f"<br><br>{_format_multiline(room.short_description)}")
     base = "".join(parts)
 
     hidden_parts = [base]
@@ -36,8 +36,8 @@ def character_group_tooltips(
     members: list[str],
 ) -> tuple[str, str]:
     base = f"<b>{group.name}</b><br><br><b>Location:</b> {location_name}"
-    if group.notes:
-        base += f"<br><br><b>Notes:</b><br>{_format_multiline(group.notes)}"
+    if group.short_description:
+        base += f"<br><br>{_format_multiline(group.short_description)}"
     member_list = "<br>".join(members) if members else "None"
     return base, f"{base}<br><br><b>Members:</b><br>{member_list}"
 
@@ -71,8 +71,8 @@ def connection_tooltip(
         "bidirectional": f"{source_name} 🡘 {target_name}",
     }[connection.direction]
     parts.append(f"<br>{direction_symbol}")
-    if connection.notes:
-        parts.append(f"<br><b>Notes:</b><br>{_format_multiline(connection.notes)}")
+    if connection.short_description:
+        parts.append(f"<br>{_format_multiline(connection.short_description)}")
     if connection.signs:
         count = len(connection.signs)
         parts.append(f"<br><b>Signs:</b> {count} present (click for details)")

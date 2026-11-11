@@ -1,30 +1,30 @@
 /* Viewer controls, trusted-HTML tooltips, and source-backed details. */
 (() => {
     'use strict';
+    const {hasContent, appendDetailField, createSignCard, renderRoomSigns} = window.MapDetails;
     const tooltip = document.createElement('div');
     tooltip.id = 'custom-vis-tooltip';
     document.body.appendChild(tooltip);
-    let dialog, additionalDialog, occupantDialog, imagePreview, appearanceNetwork, previousFocus, viewerKeyboard;
-    const previousOccupants = new Map(PF2E_MAP_TRACKER_PREVIOUS_OCCUPANTS.map(group => [group.id, group]));
+    let dialog, additionalDialog, npcGroupDialog, imagePreview, appearanceNetwork, previousFocus, viewerKeyboard;
+    const npcGroups = new Map(PF2E_MAP_TRACKER_NPC_GROUPS.map(group => [group.id, group]));
     const pictureTimers = new Map();
-    const occupantSummaryFields = ['language', 'language_visual_style', 'signage_physical_form', 'communication_quirks'];
-    const occupantDetailFields = ['language', 'language_visual_style', 'language_oddities',
+    const npcGroupSummaryFields = ['language', 'language_visual_style', 'signage_physical_form', 'communication_quirks'];
+    const npcGroupDetailFields = ['language', 'language_visual_style', 'language_oddities',
         'signage_physical_form', 'communication_quirks', 'known_ancestries', 'common_appearance', 'demeanor'];
     let tooltipPoint = {x: 0, y: 0};
-    const htmlFields = new Set(['name', 'ancestry', 'class', 'notes', 'details',
-        'physical_description', 'personality', 'other_details', 'description', 'translation',
-        ...occupantDetailFields]);
+    const htmlFields = new Set(['name', 'ancestry', 'class', 'short_description', 'details',
+        'physical_description', 'personality', 'other_details', ...npcGroupDetailFields]);
     const labels = {name: 'Name', ancestry: 'Ancestry', class: 'Class',
         physical_description: 'Physical description', personality: 'Personality',
-        other_details: 'Other details', notes: 'Notes', details: 'Details',
+        other_details: 'Other details', details: 'Details',
         location: 'Room', group: 'Group', from: 'From room', to: 'To room',
         status: 'Status', direction: 'Direction',
-        description: 'Description', translation: 'Translation', side: 'Side', line_style: 'Line style',
+        line_style: 'Line style',
         language: 'Language', language_visual_style: 'Lettering', language_oddities: 'Language Oddities',
         signage_physical_form: 'Signage Form',
         communication_quirks: 'Communication Quirks', known_ancestries: 'Known Ancestries',
         common_appearance: 'Common Appearance', demeanor: 'Demeanor'};
-    const fieldOrder = ['name', 'ancestry', 'class', 'notes', 'details', 'physical_description',
+    const fieldOrder = ['short_description', 'name', 'ancestry', 'class', 'details', 'physical_description',
         'personality', 'other_details', 'location', 'group', 'from', 'to', 'status', 'direction'];
     const hiddenFields = new Set(['images', 'color', 'shape', 'display_color',
         'id', 'position', 'defaultPosition', 'signs']);
@@ -49,7 +49,7 @@
         }, {once: true});
     }
     function showTooltip(html, event) {
-        if (!html || dialog?.open || additionalDialog?.open || occupantDialog?.open) { hideTooltip(); return; }
+        if (!html || dialog?.open || additionalDialog?.open || npcGroupDialog?.open) { hideTooltip(); return; }
         tooltip.innerHTML = html.replace(/\n/g, '<br>');
         tooltipPoint = {x: event.clientX ?? event.pageX, y: event.clientY ?? event.pageY};
         tooltip.querySelectorAll('img').forEach(img => {
@@ -99,7 +99,7 @@
     function trapDialogFocus(event, modal) {
         if (event.key !== 'Tab') return;
         const focusable = Array.from(modal.querySelectorAll(
-            'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+            'button:not([disabled]),summary,a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
         )).filter(element => element.getClientRects().length > 0);
         event.preventDefault();
         if (!focusable.length) return;
@@ -115,26 +115,38 @@
     }
     function restoreViewerKeyboard() {
         network.setOptions({interaction: {
-            keyboard: dialog.open || additionalDialog?.open || occupantDialog?.open ? false : viewerKeyboard
+            keyboard: dialog.open || additionalDialog?.open || npcGroupDialog?.open ? false : viewerKeyboard
         }});
     }
     function appendField(container, key, value, reference) {
         if (value == null || (typeof value === 'string' && !value.trim())) return;
-        const dl = document.createElement('dl');
-        dl.className = 'map-detail-field';
-        const dt = document.createElement('dt');
-        dt.textContent = labels[key] || key;
-        const dd = document.createElement('dd');
-        if (reference) {
-            const name = document.createElement('span');
-            name.innerHTML = reference;
-            dd.append(name);
-        } else if (htmlFields.has(key)) dd.innerHTML = String(value).replace(/\n/g, '<br>');
-        else if (typeof value === 'object') dd.textContent = JSON.stringify(value);
-        else dd.textContent = String(value);
-        if (!dd.textContent.trim() && !dd.querySelector('img,video,audio,iframe,svg,canvas,object,embed')) return;
-        dl.append(dt, dd);
-        container.append(dl);
+        const renderValue = dd => {
+            if (reference) {
+                const name = document.createElement('span');
+                name.innerHTML = reference;
+                dd.append(name);
+            } else if (htmlFields.has(key)) dd.innerHTML = String(value).replace(/\n/g, '<br>');
+            else if (typeof value === 'object') dd.textContent = JSON.stringify(value);
+            else dd.textContent = String(value);
+        };
+        if (key === 'short_description') {
+            const description = document.createElement('div');
+            description.className = 'map-short-description';
+            renderValue(description);
+            if (hasContent(description)) container.append(description);
+        } else appendDetailField(container, labels[key] || key, renderValue);
+    }
+    function appendRoomDetails(container, html) {
+        if (!/<map-sign[\s/>]/i.test(html)) {
+            appendField(container, 'details', html);
+            return;
+        }
+        appendDetailField(container, labels.details, dd => {
+            dd.innerHTML = html;
+            if (renderRoomSigns(dd, npcGroups, viewerSignCard) === null) {
+                dd.innerHTML = html.replace(/\n/g, '<br>');
+            }
+        });
     }
     function renderAppearance(appearance) {
         const container = document.getElementById('map-detail-appearance');
@@ -176,6 +188,7 @@
         const thumbnails = document.getElementById('map-gallery-thumbnails');
         thumbnails.hidden = images.length <= 1;
         thumbnails.replaceChildren();
+        document.getElementById('map-image-details').open = false;
         const metadata = document.getElementById('map-image-metadata');
         function selectImage(index) {
             const picture = images[index];
@@ -252,10 +265,17 @@
         button.className = className;
         button.innerHTML = group.name;
         button.setAttribute('aria-haspopup', 'dialog');
-        button.addEventListener('click', () => showOccupantDetails(group));
+        button.addEventListener('click', () => showNpcGroupDetails(group));
         return button;
     }
-    function renderSigns(signs, container, references) {
+    function viewerSignCard(sign, group, index) {
+        return createSignCard(document, sign, index, {
+            groupName: group && groupButton(group),
+            language: group?.language,
+            thumbnail: group && rotatingPicture(group.example_sign_images, dialog, 'Example sign'),
+        });
+    }
+    function renderConnectionSigns(signs, container, references) {
         if (!signs?.length) return;
         const section = document.createElement('section');
         section.className = 'map-signs';
@@ -263,34 +283,23 @@
         heading.textContent = 'Signs';
         section.append(heading);
         signs.forEach((sign, index) => {
-            const group = previousOccupants.get(sign.group);
-            const card = document.createElement('article');
-            card.className = 'map-sign-card';
-            card.setAttribute('aria-label', `Sign ${index + 1}`);
-            const content = document.createElement('div');
-            if (group) {
-                content.append(groupButton(group, 'map-sign-group'));
-                appendField(content, 'language', group.language);
-                const picture = rotatingPicture(group.example_sign_images, dialog, 'Example sign');
-                if (picture) card.append(picture);
-            }
             const endpoint = {source: 'from', destination: 'to'}[sign.side];
             const room = references[endpoint];
-            appendField(content, 'side', room, room);
-            appendField(content, 'description', sign.description);
-            appendField(content, 'translation', sign.translation);
-            card.append(content);
-            section.append(card);
+            section.append(viewerSignCard({
+                location: room ? `Entrance from ${room}` : '',
+                description: sign.description.replace(/\n/g, '<br>'),
+                translation: sign.translation.replace(/\n/g, '<br>'),
+            }, npcGroups.get(sign.group), index));
         });
         container.append(section);
     }
-    function renderOccupantPictures(container, title, images) {
+    function renderNpcGroupPictures(container, title, images) {
         if (!images.length) return;
         const section = document.createElement('section');
         const heading = document.createElement('h4');
         heading.textContent = title;
         const gallery = document.createElement('div');
-        gallery.className = 'map-occupant-gallery';
+        gallery.className = 'map-npc-group-gallery';
         images.forEach((picture, index) => {
             const figure = document.createElement('figure');
             const button = document.createElement('button');
@@ -311,51 +320,51 @@
         section.append(heading, gallery);
         container.append(section);
     }
-    function showOccupantDetails(group) {
+    function showNpcGroupDetails(group) {
         hideTooltip();
-        const container = document.getElementById('map-occupant-content');
+        const container = document.getElementById('map-npc-group-content');
         container.replaceChildren();
-        document.getElementById('map-occupant-title').innerHTML = group.name;
+        document.getElementById('map-npc-group-title').innerHTML = group.name;
         const fields = document.createElement('div');
-        fields.id = 'map-occupant-fields';
-        occupantDetailFields.forEach(key => appendField(fields, key,
+        fields.id = 'map-npc-group-fields';
+        npcGroupDetailFields.forEach(key => appendField(fields, key,
             Array.isArray(group[key]) ? group[key].join(', ') : group[key]));
         container.append(fields);
-        renderOccupantPictures(container, 'Example signs', group.example_sign_images);
-        renderOccupantPictures(container, 'Group members', group.example_member_images);
+        renderNpcGroupPictures(container, 'Example signs', group.example_sign_images);
+        renderNpcGroupPictures(container, 'Group members', group.example_member_images);
         network.setOptions({interaction: {keyboard: false}});
-        if (!occupantDialog.open) occupantDialog.showModal();
-        occupantDialog.scrollTop = 0;
+        if (!npcGroupDialog.open) npcGroupDialog.showModal();
+        npcGroupDialog.scrollTop = 0;
     }
-    function setupOccupantDetails() {
-        occupantDialog = document.createElement('dialog');
-        occupantDialog.id = 'map-occupant-details';
-        occupantDialog.setAttribute('aria-labelledby', 'map-occupant-title');
-        occupantDialog.innerHTML = `<div class="map-dialog-header"><div class="map-dialog-heading">
-            <h2 id="map-occupant-title"></h2></div><div class="map-dialog-actions">
-            <button id="map-occupant-close" type="button" autofocus>Close details</button></div></div>
-            <div id="map-occupant-content" class="map-dialog-body"></div>`;
-        document.body.append(occupantDialog);
-        document.getElementById('map-occupant-close').addEventListener('click', () => occupantDialog.close());
-        occupantDialog.addEventListener('keydown', event => trapDialogFocus(event, occupantDialog));
-        occupantDialog.addEventListener('click', event => dismissOnBackdrop(event, occupantDialog));
-        occupantDialog.addEventListener('close', () => {
+    function setupNpcGroupDetails() {
+        npcGroupDialog = document.createElement('dialog');
+        npcGroupDialog.id = 'map-npc-group-details';
+        npcGroupDialog.setAttribute('aria-labelledby', 'map-npc-group-title');
+        npcGroupDialog.innerHTML = `<div class="map-dialog-header"><div class="map-dialog-heading">
+            <h2 id="map-npc-group-title"></h2></div><div class="map-dialog-actions">
+            <button id="map-npc-group-close" type="button" autofocus>Close details</button></div></div>
+            <div id="map-npc-group-content" class="map-dialog-body"></div>`;
+        document.body.append(npcGroupDialog);
+        document.getElementById('map-npc-group-close').addEventListener('click', () => npcGroupDialog.close());
+        npcGroupDialog.addEventListener('keydown', event => trapDialogFocus(event, npcGroupDialog));
+        npcGroupDialog.addEventListener('click', event => dismissOnBackdrop(event, npcGroupDialog));
+        npcGroupDialog.addEventListener('close', () => {
             if (imagePreview.open) imagePreview.close();
             restoreViewerKeyboard();
         });
     }
-    function renderOccupantList() {
+    function renderNpcGroupList() {
         clearPictureTimers(additionalDialog);
         const container = document.getElementById('map-additional-content');
-        container.innerHTML = '<h3 id="map-occupant-list-title">Previous Inhabitants</h3>';
-        if (!previousOccupants.size) {
+        container.innerHTML = '<h3 id="map-npc-group-list-title">NPC Groups</h3>';
+        if (!npcGroups.size) {
             const empty = document.createElement('p');
-            empty.textContent = 'No previous inhabitants have been recorded.';
+            empty.textContent = 'No NPC groups have been recorded.';
             container.append(empty);
         }
-        for (const group of previousOccupants.values()) {
+        for (const group of npcGroups.values()) {
             const card = document.createElement('article');
-            card.className = 'map-occupant-card';
+            card.className = 'map-npc-group-card';
             const picture = rotatingPicture([...group.example_sign_images, ...group.example_member_images],
                 additionalDialog, 'Group example');
             if (picture) card.append(picture);
@@ -363,23 +372,23 @@
             const title = document.createElement('h4');
             title.append(groupButton(group));
             content.append(title);
-            occupantSummaryFields.forEach(key => appendField(content, key, group[key]));
+            npcGroupSummaryFields.forEach(key => appendField(content, key, group[key]));
             const details = document.createElement('button');
             details.type = 'button';
             details.textContent = 'Details';
             details.setAttribute('aria-label', `Details for ${title.textContent}`);
             details.setAttribute('aria-haspopup', 'dialog');
-            details.addEventListener('click', () => showOccupantDetails(group));
+            details.addEventListener('click', () => showNpcGroupDetails(group));
             content.append(details);
             card.append(content);
             container.append(card);
         }
         additionalDialog.scrollTop = 0;
-        if (additionalDialog.open) document.getElementById('map-additional-inhabitants').focus();
+        if (additionalDialog.open) document.getElementById('map-additional-npc-groups').focus();
     }
     function showAdditionalInformation() {
         hideTooltip();
-        renderOccupantList();
+        renderNpcGroupList();
         network.setOptions({interaction: {keyboard: false}});
         if (!additionalDialog.open) additionalDialog.showModal();
     }
@@ -390,12 +399,12 @@
         additionalDialog.innerHTML = `<div class="map-dialog-header"><h2 id="map-additional-title">Additional Information</h2>
             <button id="map-additional-close" type="button" autofocus>Close</button></div>
             <nav class="map-additional-sections" aria-label="Additional information sections">
-                <button id="map-additional-inhabitants" type="button" aria-current="page">Previous Inhabitants</button></nav>
+                <button id="map-additional-npc-groups" type="button" aria-current="page">NPC Groups</button></nav>
             <div id="map-additional-content"></div>`;
         document.body.append(additionalDialog);
         document.getElementById('map-additional-open').addEventListener('click', () => showAdditionalInformation());
         document.getElementById('map-additional-close').addEventListener('click', () => additionalDialog.close());
-        document.getElementById('map-additional-inhabitants').addEventListener('click', renderOccupantList);
+        document.getElementById('map-additional-npc-groups').addEventListener('click', renderNpcGroupList);
         additionalDialog.addEventListener('keydown', event => trapDialogFocus(event, additionalDialog));
         additionalDialog.addEventListener('click', event => dismissOnBackdrop(event, additionalDialog));
         additionalDialog.addEventListener('close', () => {
@@ -439,13 +448,14 @@
         dialog.innerHTML = `<div class="map-dialog-header"><div class="map-dialog-heading"><div id="map-detail-kind"></div>
             <h2 id="map-detail-title"></h2></div><div class="map-dialog-actions"><div id="map-detail-appearance"></div>
             <button id="map-detail-close" type="button" autofocus>Close</button></div></div>
-            <div class="map-dialog-body"><section aria-label="Object information">
-            <div id="map-detail-fields"></div></section><section id="map-detail-gallery" aria-label="Pictures">
+            <div class="map-dialog-body"><section id="map-detail-gallery" aria-label="Pictures">
             <figure id="map-detail-figure"><button id="map-detail-image-open" type="button"
             aria-label="View image full screen" title="View image full screen"><img id="map-detail-image" alt=""></button>
             <div id="map-image-fallback" hidden>Image unavailable</div>
             <figcaption id="map-detail-caption"></figcaption></figure><div id="map-gallery-thumbnails"></div>
-            <div id="map-image-metadata" class="map-image-metadata"></div></section></div>`;
+            <details id="map-image-details" class="map-image-metadata"><summary>Image details</summary>
+            <div id="map-image-metadata"></div></details></section><section aria-label="Object information">
+            <div id="map-detail-fields"></div></section></div>`;
         document.body.append(dialog);
         setupImagePreview();
         document.getElementById('map-detail-close').addEventListener('click', () => dialog.close());
@@ -473,11 +483,13 @@
             const keys = [...fieldOrder.filter(key => key in detail.fields),
                 ...Object.keys(detail.fields).filter(key => !fieldOrder.includes(key))];
             for (const key of keys) {
-                if (!hiddenFields.has(key)) appendField(fields, key, detail.fields[key], detail.references[key]);
+                if (detail.kind === 'room' && key === 'name') continue;
+                if (detail.kind === 'room' && key === 'details') appendRoomDetails(fields, detail.fields.details);
+                else if (!hiddenFields.has(key)) appendField(fields, key, detail.fields[key], detail.references[key]);
             }
             if (detail.members?.length) appendField(fields, 'Members', detail.members.join(', '));
             if (detail.occupants?.length) appendField(fields, 'Occupants', detail.occupants.join(', '));
-            renderSigns(detail.fields.signs, fields, detail.references);
+            renderConnectionSigns(detail.fields.signs, fields, detail.references);
             renderGallery(detail.images);
             dialog.querySelector('.map-dialog-body').classList.toggle('has-images', detail.images.length > 0);
             previousFocus = document.activeElement;
@@ -499,7 +511,7 @@
         setupCharacterVisibility();
         setupDetails();
         setupAdditionalInformation();
-        setupOccupantDetails();
+        setupNpcGroupDetails();
         setupCustomTooltips();
         if (PF2E_MAP_TRACKER_DEFAULT_VIEW) network.moveTo({...PF2E_MAP_TRACKER_DEFAULT_VIEW, animation: false});
     }

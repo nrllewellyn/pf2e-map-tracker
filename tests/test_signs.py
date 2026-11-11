@@ -1,4 +1,4 @@
-"""Signs reference historical groups and share the existing image publishing rules."""
+"""Signs reference NPC groups and share the existing image publishing rules."""
 
 import json
 
@@ -8,14 +8,14 @@ from pydantic import ValidationError
 from pf2e_map_tracker.graph import build_network, write_graph
 from pf2e_map_tracker.images import local_image_files
 from pf2e_map_tracker.models import MapData, Sign
-from pf2e_map_tracker.presentation import previous_occupant_details
+from pf2e_map_tracker.presentation import npc_group_details
 
 
 @pytest.fixture
 def sign_data():
     return {
         "rooms": [{"id": "hall", "name": "Hall", "position": {"x": 0, "y": 0}}],
-        "previous_occupants": [
+        "npc_groups": [
             {
                 "id": "wardens",
                 "name": "Old Wardens",
@@ -54,19 +54,35 @@ def sign_data():
     }
 
 
-def test_signs_and_previous_occupants_are_optional_and_round_trip(sign_data):
+def test_signs_and_npc_groups_are_optional_and_round_trip(sign_data):
     data = MapData.model_validate(sign_data)
     assert MapData.model_validate_json(data.model_dump_json(by_alias=True)) == data
-    assert data.previous_occupants[0].example_sign_images == []
-    assert data.previous_occupants[0].example_member_images == []
-    del sign_data["previous_occupants"][0]["language_oddities"]
-    assert MapData.model_validate(sign_data).previous_occupants[0].language_oddities == ""
+    assert data.npc_groups[0].example_sign_images == []
+    assert data.npc_groups[0].example_member_images == []
+    del sign_data["npc_groups"][0]["language_oddities"]
+    assert MapData.model_validate(sign_data).npc_groups[0].language_oddities == ""
     del sign_data["connections"][0]["signs"]
-    del sign_data["previous_occupants"]
+    del sign_data["npc_groups"]
     data = MapData.model_validate(sign_data)
     assert data.connections[0].signs == []
-    assert data.previous_occupants == []
+    assert data.npc_groups == []
     assert "Signs:" not in build_network(data).edges[0]["title"]
+
+
+@pytest.mark.parametrize("keep_npc_groups", [False, True])
+@pytest.mark.parametrize("legacy_groups", [[], [{"id": "legacy", "name": "Legacy"}]])
+def test_legacy_group_field_is_rejected(sign_data, keep_npc_groups, legacy_groups):
+    sign_data["previous_occupants"] = legacy_groups
+    if not keep_npc_groups:
+        del sign_data["npc_groups"]
+
+    with pytest.raises(ValidationError) as caught:
+        MapData.model_validate_json(json.dumps(sign_data))
+
+    assert any(
+        error["loc"] == ("previous_occupants",) and error["type"] == "extra_forbidden"
+        for error in caught.value.errors()
+    )
 
 
 @pytest.mark.parametrize("side", ["source", "destination"])
@@ -107,32 +123,32 @@ def test_sign_fields_reject_empty_whitespace_and_null_values(sign_data, field, v
 
 
 def test_signs_validate_references_in_separate_namespace(sign_data):
-    sign_data["previous_occupants"][0]["id"] = "hall"
+    sign_data["npc_groups"][0]["id"] = "hall"
     for sign in sign_data["connections"][0]["signs"]:
         sign["group"] = "hall"
     assert MapData.model_validate(sign_data)
     sign_data["connections"][0]["signs"][1]["group"] = "missing"
-    with pytest.raises(ValidationError, match="unknown previous occupant 'missing'.*sign #2"):
+    with pytest.raises(ValidationError, match="unknown NPC group 'missing'.*sign #2"):
         MapData.model_validate(sign_data)
     sign_data["connections"][0]["signs"][1]["group"] = "hall"
-    sign_data["previous_occupants"].append(sign_data["previous_occupants"][0].copy())
-    with pytest.raises(ValidationError, match="duplicate previous occupant id 'hall'"):
+    sign_data["npc_groups"].append(sign_data["npc_groups"][0].copy())
+    with pytest.raises(ValidationError, match="duplicate NPC group id 'hall'"):
         MapData.model_validate(sign_data)
 
 
-@pytest.mark.parametrize("field", ["signs", "previous_occupants"])
+@pytest.mark.parametrize("field", ["signs", "npc_groups"])
 def test_sign_collections_must_be_arrays(sign_data, field):
-    target = sign_data if field == "previous_occupants" else sign_data["connections"][0]
+    target = sign_data if field == "npc_groups" else sign_data["connections"][0]
     target[field] = None
     with pytest.raises(ValidationError, match=field):
         MapData.model_validate(sign_data)
 
 
-@pytest.mark.parametrize("collection", ["signs", "previous_occupants"])
+@pytest.mark.parametrize("collection", ["signs", "npc_groups"])
 def test_new_records_reject_unknown_fields(sign_data, collection):
     records = (
         sign_data[collection]
-        if collection == "previous_occupants"
+        if collection == "npc_groups"
         else sign_data["connections"][0][collection]
     )
     records[0]["typo"] = "bad field"
@@ -151,19 +167,19 @@ def test_hover_only_reports_sign_presence_and_details_preserve_all_signs(sign_da
 
 
 @pytest.mark.parametrize("field", ["example_sign_images", "example_member_images"])
-def test_inhabitant_images_publish_with_original_metadata_and_validate_paths(
+def test_npc_group_images_publish_with_original_metadata_and_validate_paths(
     sign_data, field, tmp_path
 ):
     svg = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"></svg>'
     (tmp_path / "sample sign.svg").write_text(svg, encoding="utf-8")
-    group = sign_data["previous_occupants"][0]
+    group = sign_data["npc_groups"][0]
     group[field] = [
         {"src": "sample sign.svg", "alt": "Example", "caption": "<b>Plain caption</b>"},
         {"src": "https://invalid.example/photo.png"},
     ]
     data = MapData.model_validate(sign_data)
     assert local_image_files(data, tmp_path) == {"sample sign.svg": tmp_path / "sample sign.svg"}
-    details = previous_occupant_details(data, lambda source: "resolved/" + source)
+    details = npc_group_details(data, lambda source: "resolved/" + source)
     assert details[0][field][0]["url"] == "resolved/sample sign.svg"
     assert details[0][field][0]["src"] == "sample sign.svg"
     output = tmp_path / "dist/map.html"
@@ -173,19 +189,19 @@ def test_inhabitant_images_publish_with_original_metadata_and_validate_paths(
     html = output.read_text(encoding="utf-8")
     assert f"assets/images/{assets[0].name}" in html
     assert "https://invalid.example/photo.png" in html
-    assert getattr(data.previous_occupants[0], field)[0].src == "sample sign.svg"
+    assert getattr(data.npc_groups[0], field)[0].src == "sample sign.svg"
     previous = output.read_bytes()
     for source, message in [("missing.svg", "not found"), ("../outside.svg", "escapes")]:
         group[field][0]["src"] = source
-        with pytest.raises(ValueError, match=rf"previous_occupants\[0\].{field}\[0\].*{message}"):
+        with pytest.raises(ValueError, match=rf"npc_groups\[0\].{field}\[0\].*{message}"):
             write_graph(MapData.model_validate(sign_data), output, image_root=tmp_path)
         assert output.read_bytes() == previous
 
 
-def test_inhabitant_html_is_encoded_safely_inside_generated_script(sign_data, tmp_path):
-    sign_data["previous_occupants"][0]["demeanor"] = "</script><p>Unusual 🛡️</p>"
+def test_npc_group_html_is_encoded_safely_inside_generated_script(sign_data, tmp_path):
+    sign_data["npc_groups"][0]["demeanor"] = "</script><p>Unusual 🛡️</p>"
     output = write_graph(MapData.model_validate(sign_data), tmp_path / "map.html")
     html = output.read_text(encoding="utf-8")
-    payload = html.split("const PF2E_MAP_TRACKER_PREVIOUS_OCCUPANTS = ", 1)[1].split(";\n", 1)[0]
+    payload = html.split("const PF2E_MAP_TRACKER_NPC_GROUPS = ", 1)[1].split(";\n", 1)[0]
     assert "</script>" not in payload
     assert json.loads(payload)[0]["demeanor"] == "</script><p>Unusual 🛡️</p>"

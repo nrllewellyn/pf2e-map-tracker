@@ -15,7 +15,8 @@
         "y": -500.0
       },
       "color": "#ff8800",
-      "notes": "Arrival area",
+      "short_description": "Arrival area",
+      "details": "<p>The teleporter room is a large, circular chamber of dark metal, its curved walls illuminated by soft, recessed lighting. The room is mostly empty, apart from a few cargo crates scattered along the walls and a broad, circular platform embedded in the center of the floor.</p>\n<p>Dominating the far wall are enormous panoramic windows, revealing a breathtaking view of space. Countless stars glitter against the darkness, while the immense blue-and-white curve of Orthos fills much of the view to the right. Swirling clouds drift over vast oceans and continents, with the planet's atmosphere glowing faintly along its horizon.</p>\n<p>At the center of the chamber, the circular platform emits a soft blue glow. Its surface is covered in intricate geometric patterns, surrounded by a ring of luminous symbols in an unfamiliar script. Several sections of the platform appear to have been recently repaired, with newer metal panels, fresh welds, and replacement components contrasting with the older, scuffed machinery. A few exposed conduits pulse faintly with light.</p>\n<p>A heavy, airtight door is set into one wall, its reinforced frame showing signs of frequent use. Small signs bearing strange symbols are mounted nearby, some engraved into metal and others formed from thin strands of glowing wire.</p>\n<p>The room is otherwise quiet, save for the low hum of the central platform and the faint vibration of the station's machinery.</p>\n<p>Several signs are mounted on and around the window.</p>\n<map-sign group=\"binary-7-maintenance-cult\">\n  <div data-location>On the wall beside the window</div>\n  <div data-description>An octagonal sheet of scorched hull-plating is welded directly onto the wall, featuring raw binary code and circuit paths deeply gouged into the metal with a plasma cutter.</div>\n  <div data-translation>STRUCTURAL INTEGRITY: MANDATORY. VACUUM: LETHAL. IMPACT: 0% TOLERANCE.</div>\n</map-sign>\n<map-sign group=\"h-0rs3-riders\">\n  <div data-location>On the center of the glass pane</div>\n  <div data-description>A neon-orange triangular sticker is slapped haphazardly onto the center of the glass pane, featuring a crude hand-drawn pictogram of a stick figure exploding next to a \"thumbs-up\" icon.</div>\n  <div data-translation>DO NOT YEET THE SEPARATING-THINGS. SPACE IS COLD AF. VIBE CHECK = FAILED.</div>\n</map-sign>\n<map-sign group=\"chronos-glitchers\">\n  <div data-location>To the left of the window</div>\n  <div data-description>A humming acrylic box is mounted crookedly to the left of the window, housing flickering blue neon tubes that occasionally show the phantom image of a cracked pane before resetting.</div>\n  <div data-translation>CAUTION: GLASS (CURRENTLY) INTACT. AVOID BLUNT FORCE AT 12:42 PM YESTERDAY.</div>\n</map-sign>\n<map-sign group=\"hierophants-hand\">\n  <div data-location>Hanging from the ceiling over the window</div>\n  <div data-description>A shimmering silk banner with gold-tasseled fringes hangs from the ceiling over the window, featuring elegant, sweeping golden calligraphy that glows softly in the starlight.</div>\n  <div data-translation>Gaze upon the infinite void, but do not invite it within, for the breath of the faithful is a gift to be guarded. By the will of the Hierophant.</div>\n</map-sign>\n<map-sign group=\"gravity-drunks\">\n  <div data-location>Across the bottom corner of the window frame</div>\n  <div data-description>A metal slinky is stretched across the bottom corner of the window frame, with individual colorful letters dangling from the metal coils that bounce whenever anyone walks past.</div>\n  <div data-translation>If the glass breaks, we all get a free trip to the moon! Downside: It's a one-way trip and you'll be a human popsicle. Don't tap the fishbowl!</div>\n</map-sign>",
       "images": [
         {
           "src": "images/rooms/TeleportRoom.png"
@@ -30,7 +31,7 @@
         "y": -500.0
       },
       "color": "#757575",
-      "notes": "Corridor that appears to run the length of the ship",
+      "short_description": "Corridor that appears to run the length of the ship",
       "images": [
         {
           "src": "images/rooms/Corridor.png"
@@ -44,7 +45,7 @@
         "x": -500.0,
         "y": -750.0
       },
-      "notes": "Well-equipped workshop",
+      "short_description": "Well-equipped workshop",
       "images": [
         {
           "src": "images/rooms/Workshop.png"
@@ -58,7 +59,7 @@
         "x": -500.0,
         "y": 0.0
       },
-      "notes": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>",
+      "short_description": "<p>Massive forest area. Contains many strange plants and animals, some of which may be edible. There is also a small river that is a source of drinkable water.</p><p>An artificial tree projects an illusory dryad that seems to have information about the ship.</p>",
       "details": "A flock of house drakes have moved into this room, relocated from The Lighthouse.",
       "images": [
         {
@@ -77,7 +78,7 @@
         "y": 500.0
       },
       "color": "#4CAF50",
-      "notes": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here.",
+      "short_description": "A small greenhouse containing medicinal herbs. Once the lair of a basilisk, several petrified victims are present here.",
       "images": [
         {
           "src": "images/rooms/SmallGreenhouse.png"
@@ -91,7 +92,7 @@
         "x": 500.0,
         "y": 500.0
       },
-      "notes": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
+      "short_description": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
     },
     {
       "id": "hallway-forest",
@@ -101,7 +102,7 @@
         "y": 0.0
       },
       "color": "#757575",
-      "notes": "A small east/west hallway"
+      "short_description": "A small east/west hallway"
     },
     {
       "id": "memory-theater",
@@ -110,7 +111,7 @@
         "x": -750.0,
         "y": 250.0
       },
-      "notes": "Theater that reads the audience's memories and displays them on a screen.",
+      "short_description": "Theater that reads the audience's memories and displays them on a screen.",
       "images": [
         {
           "src": "images/rooms/MemoryTheater-ScreenOff.png",
@@ -129,7 +130,7 @@
         "x": -500.0,
         "y": 250.0
       },
-      "notes": "An orrery of a strange, alien solar system."
+      "short_description": "An orrery of a strange, alien solar system."
     },
     {
       "id": "hallway-orrery",
@@ -139,7 +140,7 @@
         "y": 250.0
       },
       "color": "#757575",
-      "notes": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
+      "short_description": "A short hallway with a heavy metal door at one end and a spiral staircase down at the other end. A smaller metal door is on each of side of the hallway."
     },
     {
       "id": "restoration-engine",
@@ -148,7 +149,7 @@
         "x": -500.0,
         "y": 500.0
       },
-      "notes": "A massive arcane device submerged in a pool of liquid.",
+      "short_description": "A massive arcane device submerged in a pool of liquid.",
       "images": [
         {
           "src": "images/rooms/RestorationEngine.png"
@@ -162,7 +163,7 @@
         "x": 0.0,
         "y": 250.0
       },
-      "notes": "Memories of those left behind",
+      "short_description": "Memories of those left behind",
       "images": [
         {
           "src": "images/rooms/TheHangingRegistry.png"
@@ -176,7 +177,7 @@
         "x": 0.0,
         "y": 0.0
       },
-      "notes": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls.",
+      "short_description": "Sprawling halls of tiles and tubs. Strange fluids flow from faucets in the walls.",
       "images": [
         {
           "src": "images/rooms/ThePorcelainPassages2.png"
@@ -193,7 +194,7 @@
         "x": 250.0,
         "y": 0.0
       },
-      "notes": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point.",
+      "short_description": "T-shaped hallway filled with dozens of vending machines. A shrine to Kleb Rosh-Nak sits at the intersection point.",
       "images": [
         {
           "src": "images/rooms/TheQuartermastersBazaar1.png"
@@ -217,7 +218,7 @@
         "x": -250.0,
         "y": 500.0
       },
-      "notes": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.",
+      "short_description": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.",
       "images": [
         {
           "src": "images/rooms/TheCrystalMug.png",
@@ -244,7 +245,7 @@
         "x": 250.0,
         "y": 250.0
       },
-      "notes": "A lighthouse floating above the clouds.<br>Connected to The Gryphon Roost Inn by a beam of arcane energy.",
+      "short_description": "A lighthouse floating above the clouds.<br>Connected to The Gryphon Roost Inn by a beam of arcane energy.",
       "images": [
         {
           "src": "images/rooms/Lighthouse.png"
@@ -259,7 +260,7 @@
         "y": 250.0
       },
       "color": "#5cc0ff",
-      "notes": "Blue sky and clouds, but no ground in sight."
+      "short_description": "Blue sky and clouds, but no ground in sight."
     },
     {
       "id": "gryphon-roost-inn",
@@ -268,7 +269,7 @@
         "x": 500.0,
         "y": 0.0
       },
-      "notes": "A cozy inn floating above the clouds.<br>Connected to the Lighthouse by a beam of arcane energy.",
+      "short_description": "A cozy inn floating above the clouds.<br>Connected to the Lighthouse by a beam of arcane energy.",
       "images": [
         {
           "src": "images/rooms/GryphonRoostInn.jpg"
@@ -282,7 +283,7 @@
         "x": -500.0,
         "y": 750.0
       },
-      "notes": "A crypt containing statues of unknown gods and a tomb protected by celestials."
+      "short_description": "A crypt containing statues of unknown gods and a tomb protected by celestials."
     },
     {
       "id": "teleporter-room-crystal-mug",
@@ -292,7 +293,7 @@
         "y": 500.0
       },
       "color": "#ff8800",
-      "notes": "A small teleporter room, just off the Crystal Mug.",
+      "short_description": "A small teleporter room, just off the Crystal Mug.",
       "images": [
         {
           "src": "images/rooms/CrystalMugTeleportRoom.png"
@@ -340,7 +341,7 @@
         "y": -500.0
       },
       "color": "#757575",
-      "notes": "Corridor that appears to run the length of the ship.",
+      "short_description": "Corridor that appears to run the length of the ship.",
       "images": [
         {
           "src": "images/rooms/Corridor.png"
@@ -354,7 +355,7 @@
         "x": -250.0,
         "y": -750.0
       },
-      "notes": "A high-ceilinged hangar containing crystal-powered hovering passenger and cargo carriages, energized parking berths, maintenance workstations, and an enormous reinforced bulkhead door.",
+      "short_description": "A high-ceilinged hangar containing crystal-powered hovering passenger and cargo carriages, energized parking berths, maintenance workstations, and an enormous reinforced bulkhead door.",
       "details": "<p>The Aetherlift Hangar is a broad, high-ceilinged chamber of dark metal. Its ribbed ceiling is lined with recessed panels of soft white light. The room resembles a large vehicle garage, with orderly rows of small, open-sided carriages, each roughly the size of a golf cart. Some have multiple rows of bench seating for passengers, while others have a single driver's seat and a flat cargo bed.</p><p>Rather than wheels, each vehicle rests a few inches above the floor, suspended by glowing crystals and slowly rotating metal rings beneath its chassis. Faintly luminous sigils spiral across the floor of each parking berth, feeding energy into the vehicles with a gentle, musical hum. Occasionally, a carriage drifts slightly before correcting itself with a soft chime.</p><p>Along one wall, maintenance benches are stocked with specialized tools, crystal components, mechanical parts, and a mixture of arcane instruments and advanced diagnostic equipment. Small, strangely shaped signs bearing unfamiliar runes and alien symbols hang above the workstations and vehicle bays.</p><p>Dominating the far wall is an enormous reinforced bulkhead door, wide enough for several vehicles to pass through side by side. Its heavy segmented panels are set into the station's metal structure, and the floor leading toward it bears the polished scuffs of frequent traffic.</p><p>The room is clean and well-maintained, though its machinery and fittings show years of use. The air carries a faint scent of ozone and warm metal, accompanied by the constant, quiet resonance of the hovering vehicles.</p>",
       "images": [
         {
@@ -369,7 +370,7 @@
         "x": 250.0,
         "y": -250.0
       },
-      "notes": "Room not yet explored."
+      "short_description": "Room not yet explored."
     },
     {
       "id": "space-dock",
@@ -378,7 +379,7 @@
         "x": -250.0,
         "y": -250.0
       },
-      "notes": "Room not yet explored."
+      "short_description": "Room not yet explored."
     },
     {
       "id": "celestial-threshold",
@@ -387,7 +388,7 @@
         "x": 0.0,
         "y": -250.0
       },
-      "notes": "A star-filled chamber with a dark, glasslike floor, two enormous luminous dragon figures, and a swirling portal.",
+      "short_description": "A star-filled chamber with a dark, glasslike floor, two enormous luminous dragon figures, and a swirling portal.",
       "details": "<p>The station seems to vanish around visitors as they step through the doorway.</p><p>Beyond the doorway stretches an immense, star-filled void. The floor appears to be perfectly smooth black glass, or perhaps something entirely transparent, revealing countless stars glittering in the darkness below. Thin lines of pale light connect some of these stars into strange, unfamiliar constellations.</p><p>Flanking the chamber are two enormous dragons, their serpentine bodies curving along the left and right sides of the room. They appear to be statues made entirely of pale blue-white light, their scales, claws, and elaborate horns traced in luminous strands like constellations given form. Their massive heads turn towards the entrance, as if inspecting visitors.</p><p>At the far end of the chamber, a swirling portal hangs suspended in the darkness, its shifting radiance casting faint ripples of light across the floor.</p><p>The air is cool and unnaturally still. Sound seems strangely muted, and a faint, almost imperceptible hum fills the space. Nothing moves except the occasional drifting mote of starlight and the slow, hypnotic swirling of the distant portal.</p>",
       "images": [
         {
@@ -403,7 +404,7 @@
         "x": 139.4137395215449,
         "y": -124.0
       },
-      "notes": "A circular platform suspended in a star-filled void, surrounded by eight luminous statues, with the Astravindicta hovering at its center.",
+      "short_description": "A circular platform suspended in a star-filled void, surrounded by eight luminous statues, with the Astravindicta hovering at its center.",
       "details": "<p>Visitors emerge from the portal at the top of a short flight of stairs, looking out across a vast circular platform suspended in an endless, star-filled void. There are no visible walls, ceiling, or planets—only the distant shimmer of countless stars. Thin lines of pale blue light connect some of them into unfamiliar constellations, stretching across the darkness in every direction.</p><p>The platform itself appears to be made of dark, polished material, almost indistinguishable from the surrounding void. Its surface glitters with tiny points of light, giving the unsettling impression that visitors are standing directly upon the stars.</p><p>Arranged evenly around the platform are eight enormous statues, each resting on a circular pedestal. Their forms depict strange, unfamiliar beings, rendered in stylized, almost abstract shapes. Some resemble humanoids, while others have distinctly alien features, including elongated limbs, elaborate crests, and unusual facial structures. Rather than solid stone, the statues appear to be formed from translucent blue crystal or condensed starlight, their features traced in faintly glowing lines. Small points of brighter light shine from their eyes.</p><p>At the exact center of the chamber, a brilliant ring of pale blue runes surrounds a mysterious object suspended just above the floor. The artifact is roughly the size of a basketball, a perfect sphere of pale crystal held within an intricate golden framework. Its polished bands are covered in impossibly fine runic inscriptions, surrounding a central golden seal.</p><p>Within the crystal, an entire galaxy appears to swirl in miniature. Countless stars spiral slowly around a luminous center, casting shifting patterns of blue, white, and gold across the surrounding floor.</p><p>The chamber is utterly silent, save for a deep, almost imperceptible vibration that seems to come from the artifact itself. Despite the impossible expanse surrounding the platform, the air is still and breathable, and the distant stars provide a soft, ethereal illumination.</p><h3>Astravindicta - The Vengeance of the Stars</h3><p>Suspended silently in the air is an exquisite spherical artifact, roughly the size of a basketball. Its surface is made of flawless, transparent crystal, enclosed within an intricate lattice of interwoven golden filaments. The delicate framework forms elaborate geometric patterns, with intersecting curves and diamond-shaped ornaments that seem as much a work of art as a feat of impossible engineering.</p><p>At the sphere's apex sits a circular golden seal, engraved with a ring of impossibly fine runes surrounding a raised, diamond-shaped emblem. The inscriptions emit a faint blue-white glow, their shapes unfamiliar and their meaning inscrutable.</p><p>Within the crystal sphere, an entire spiral galaxy appears to exist in miniature. Countless stars swirl around a brilliant golden-white center, their luminous arms stretching outward in shimmering shades of violet, blue, and silver. The galaxy turns almost imperceptibly, with tiny points of light occasionally flaring and fading among its countless stars. Upon close inspection, the depth within the sphere seems impossible, as though its crystal surface were a window into an actual expanse of space rather than a container for an illusion.</p><p>The artifact slowly spins, radiating a gentle blue and golden light. A faint, rhythmic vibration can be felt in the air around it, more like a distant heartbeat than the hum of machinery. Despite its delicate appearance, the sphere conveys an unsettling sense of permanence and immense, carefully contained power.</p><p>Despite its incredible power, the object seems to invite observers to reach out and touch it.</p>",
       "images": [
         {
@@ -423,7 +424,7 @@
         "x": 250.0,
         "y": -750.0
       },
-      "notes": "A circular chamber resembling an ancient temple, with murals and shrines depicting flourishing worlds descending into divine war and destruction.",
+      "short_description": "A circular chamber resembling an ancient temple, with murals and shrines depicting flourishing worlds descending into divine war and destruction.",
       "details": "<p>The Hall of Fallen Worlds is a vast, circular chamber, its walls lined with towering stone pillars and intricate carvings. Unlike the rest of the station, the room resembles an ancient temple, its weathered stone illuminated by soft, golden light.</p><p>At the center stands a massive, freestanding wall bearing an elaborate mural divided into five horizontal scenes. The uppermost depicts a prosperous civilization, with bustling cities, fertile fields, and peaceful settlements. Below it, the scenes grow progressively darker: gods and celestial beings gathering above opposing armies, a terrible war between divine forces, and the devastation left in its wake. The final panel shows the world consumed by an enormous, fiery cataclysm, leaving nothing but ruin.</p><p>Around the chamber's outer wall, dozens of shallow alcoves contain smaller shrines, each displaying its own variation of the central mural. The inhabitants differ wildly between them: insect-like humanoids, amorphous beings of living slime, crystalline creatures, and countless other unfamiliar species. Their cities, landscapes, and gods are equally diverse, yet every mural follows the same progression—from flourishing civilization to divine war, and finally, utter destruction.</p><p>The chamber is unnaturally quiet. The air carries a faint scent of ancient stone and incense, and the countless shrines stand in solemn silence, each seemingly commemorating an entire world lost to the same terrible fate.</p>",
       "images": [
         {
@@ -443,7 +444,7 @@
         "x": 0.0,
         "y": -750.0
       },
-      "notes": "A circular magitech chamber containing a ringed central apparatus and four pedestal machines, each holding a compact runic metal disk.",
+      "short_description": "A circular magitech chamber containing a ringed central apparatus and four pedestal machines, each holding a compact runic metal disk.",
       "details": "<p>Portable Portal Nexus is a large, circular chamber of dark metal, illuminated by soft white lights recessed into the walls and ceiling. The room is remarkably clean, with a broad, open floor surrounding an imposing magitech apparatus at its center.</p><p>The central device is a towering construction of dark steel, polished brass, and faintly glowing crystal. Several concentric metal rings encircle a raised circular platform, their surfaces densely engraved with intricate runes, geometric patterns, and unfamiliar symbols. Thick cables and crystalline conduits run from the base into the floor, while small points of blue-violet light pulse slowly across its surface. A low, resonant hum fills the chamber, occasionally accompanied by a faint crackle of arcane energy.</p><p>Equally spaced around the central apparatus stand four identical machines, each resembling a sturdy metal pedestal fitted with articulated clamps and delicate mechanical instruments. Suspended within each machine is a strange, compact object: a thick, circular disk of dark metal, roughly the size of a dinner plate, its surface covered in tightly interlocking geometric segments and tiny, luminous runes. Each disk rests motionless within its housing, connected by several fine, glowing contacts.</p><p>The floor between the central apparatus and the four surrounding machines is marked by thin lines of inlaid metal, forming a precise, symmetrical pattern. Along the walls, small signs of varying shapes and materials display indecipherable symbols in several unfamiliar scripts. Some glow faintly, while others are simply engraved into metal plates.</p><p>Despite the complexity of the machinery, the room is strangely still. Nothing appears to be moving beyond the slow pulse of the lights, and the steady hum of the central device seems almost to reverberate through the floor beneath visitors' feet.</p>",
       "images": [
         {
@@ -459,7 +460,7 @@
         "y": -500.0
       },
       "color": "#757575",
-      "notes": "Corridor that appears to run the length of the ship.",
+      "short_description": "Corridor that appears to run the length of the ship.",
       "images": [
         {
           "src": "images/rooms/Corridor.png"
@@ -850,6 +851,7 @@
   "character_groups": [
     {
       "id": "researchers",
+      "short_description": "A small group of NPCs researching the mysteries of the ship.",
       "name": "Researchers",
       "location": "small-greenhouse",
       "defaultPosition": {
@@ -879,7 +881,7 @@
       ]
     }
   ],
-  "previous_occupants": [
+  "npc_groups": [
     {
       "id": "void-threaders",
       "name": "The Void-Threaders (The Spiders)",
@@ -895,10 +897,10 @@
       "demeanor": "Highly formal and polite with one another; to outsiders, overly deferential and elaborate in speech, often using circumlocutions.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/void-threaders/sign-example-1.png"
+          "src": "images/npc-groups/void-threaders/sign-example-1.png"
         },
         {
-          "src": "images/previous-inhabitants/void-threaders/sign-example-2.png"
+          "src": "images/npc-groups/void-threaders/sign-example-2.png"
         }
       ],
       "example_member_images": []
@@ -918,10 +920,10 @@
       "demeanor": "Extremely practical and matter‑of‑fact internally; brusque and blunt with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/binary-7-maintenance-cult/sign-example-1.png"
+          "src": "images/npc-groups/binary-7-maintenance-cult/sign-example-1.png"
         },
         {
-          "src": "images/previous-inhabitants/binary-7-maintenance-cult/sign-example-2.png"
+          "src": "images/npc-groups/binary-7-maintenance-cult/sign-example-2.png"
         }
       ],
       "example_member_images": []
@@ -941,7 +943,7 @@
       "demeanor": "Cheerful and relaxed toward each other and strangers; often overly friendly.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/jelly-kin-of-ooze-9/sign-example-1.png"
+          "src": "images/npc-groups/jelly-kin-of-ooze-9/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -962,7 +964,7 @@
       "demeanor": "Paranoid and suspicious among themselves; distrustful of outsiders, often speaking in riddles.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/fragmented/sign-example-1.png"
+          "src": "images/npc-groups/fragmented/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -984,10 +986,10 @@
       "demeanor": "Competitive and playful in‑group; sarcastic and irreverent to outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/h-0rs3-riders/sign-example-1.png"
+          "src": "images/npc-groups/h-0rs3-riders/sign-example-1.png"
         },
         {
-          "src": "images/previous-inhabitants/h-0rs3-riders/sign-example-2.png"
+          "src": "images/npc-groups/h-0rs3-riders/sign-example-2.png"
         }
       ],
       "example_member_images": []
@@ -1007,7 +1009,7 @@
       "demeanor": "Serious and traditional internally; brusque and rigid with strangers.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/lithos-architects/sign-example-1.png"
+          "src": "images/npc-groups/lithos-architects/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1027,7 +1029,7 @@
       "demeanor": "Energetic and flighty with each other and others; easily distracted.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/glimmer-flys/sign-example-1.png"
+          "src": "images/npc-groups/glimmer-flys/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1047,7 +1049,7 @@
       "demeanor": "Obsessively precise with one another; irritatingly meticulous with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/bureau-kraken/sign-example-1.png"
+          "src": "images/npc-groups/bureau-kraken/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1069,7 +1071,7 @@
       "demeanor": "Fatalistic and quiet together; darkly humorous and resigned with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/rust-walkers/sign-example-1.png"
+          "src": "images/npc-groups/rust-walkers/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1089,7 +1091,7 @@
       "demeanor": "Dramatic and cooperative with each other; expressive and lyrical toward others.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/star-singers/sign-example-1.png"
+          "src": "images/npc-groups/star-singers/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1109,7 +1111,7 @@
       "demeanor": "Highly communal and consensus‑driven internally; disinterested or alien to outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/hive-mind-of-sector-4/sign-example-1.png"
+          "src": "images/npc-groups/hive-mind-of-sector-4/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1129,7 +1131,7 @@
       "demeanor": "Confused and nonlinear with each other; oddly polite or oddly ahead of schedule with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/chronos-glitchers/sign-example-1.png"
+          "src": "images/npc-groups/chronos-glitchers/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1150,7 +1152,7 @@
       "demeanor": "Territorial and mischievous inside the group; defensive and opportunistic outside it.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/trash-goblins/sign-example-1.png"
+          "src": "images/npc-groups/trash-goblins/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1170,7 +1172,7 @@
       "demeanor": "Secretive and solemn with each other; dismissive and cool to outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/order-of-the-void-eye/sign-example-1.png"
+          "src": "images/npc-groups/order-of-the-void-eye/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1191,7 +1193,7 @@
       "demeanor": "Highly enthusiastic internally; overly friendly and chaotic externally.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/party-bot-renegades/sign-example-1.png"
+          "src": "images/npc-groups/party-bot-renegades/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1211,7 +1213,7 @@
       "demeanor": "Reverent and orderly among themselves; formal and solemn toward others.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/hierophants-hand/sign-example-1.png"
+          "src": "images/npc-groups/hierophants-hand/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1231,7 +1233,7 @@
       "demeanor": "Cooperative and polite both internally and with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/station-normals/sign-example-1.png"
+          "src": "images/npc-groups/station-normals/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1253,7 +1255,7 @@
       "demeanor": "Reserved and introspective within the group; quiet and data‑oriented with others.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/vacuum-born/sign-example-1.png"
+          "src": "images/npc-groups/vacuum-born/sign-example-1.png"
         }
       ],
       "example_member_images": []
@@ -1276,24 +1278,24 @@
       "demeanor": "Exceptionally cold and analytical with one another; interactions with outsiders are matter‑of‑fact and detached. They prioritize procedure and protocol over emotion, often speaking in clinical terms and evaluating situations with scientific rigor.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/re-animators/sign-example-1.png"
+          "src": "images/npc-groups/re-animators/sign-example-1.png"
         }
       ],
       "example_member_images": [
         {
-          "src": "images/previous-inhabitants/re-animators/Re-Animators_Scientist.png",
+          "src": "images/npc-groups/re-animators/Re-Animators_Scientist.png",
           "caption": "Re-Animators Scientist"
         },
         {
-          "src": "images/previous-inhabitants/re-animators/Re-Animators_Officer.png",
+          "src": "images/npc-groups/re-animators/Re-Animators_Officer.png",
           "caption": "Re-Animators Officer"
         },
         {
-          "src": "images/previous-inhabitants/re-animators/Re-Animators_Security.png",
+          "src": "images/npc-groups/re-animators/Re-Animators_Security.png",
           "caption": "Re-Animators Security"
         },
         {
-          "src": "images/previous-inhabitants/re-animators/Re-Animators_Security_WithLaser.png",
+          "src": "images/npc-groups/re-animators/Re-Animators_Security_WithLaser.png",
           "caption": "Re-Animators Security with Laser"
         }
       ]
@@ -1317,10 +1319,10 @@
       "demeanor": "Jovial and joking together; playful and unpredictable with outsiders.",
       "example_sign_images": [
         {
-          "src": "images/previous-inhabitants/gravity-drunks/sign-example-1.png"
+          "src": "images/npc-groups/gravity-drunks/sign-example-1.png"
         },
         {
-          "src": "images/previous-inhabitants/gravity-drunks/sign-example-2.png"
+          "src": "images/npc-groups/gravity-drunks/sign-example-2.png"
         }
       ],
       "example_member_images": []
@@ -1458,7 +1460,7 @@
       "to": "porcelain-passageways",
       "status": "open",
       "name": "Heavy metal door",
-      "notes": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
+      "short_description": "Heavy metal door, can be barred a control panel in the Porcelain Passageways"
     },
     {
       "from": "forest",
@@ -1509,7 +1511,7 @@
       "to": "orrery",
       "status": "open",
       "name": "Plexiglass Door",
-      "notes": "A spiral staircase down, behind a plexiglass door",
+      "short_description": "A spiral staircase down, behind a plexiglass door",
       "signs": [
         {
           "group": "chronos-glitchers",
@@ -1549,14 +1551,14 @@
       "status": "open",
       "direction": "forward_only",
       "name": "Spiral hallway",
-      "notes": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
+      "short_description": "A circular hallway that seems to travel in an infinite circle. Going backwards leads to a solid wall"
     },
     {
       "from": "orrery",
       "to": "hallway-orrery",
       "status": "open",
       "name": "Spiral Staircase",
-      "notes": "A spiral staircase up, ending behind a plexiglass door"
+      "short_description": "A spiral staircase up, ending behind a plexiglass door"
     },
     {
       "from": "hallway-orrery",
@@ -1643,14 +1645,14 @@
       "to": "unknown",
       "status": "locked",
       "name": "Heavy metal door",
-      "notes": "Heavy metal door, sealed due to security lockdown"
+      "short_description": "Heavy metal door, sealed due to security lockdown"
     },
     {
       "from": "restoration-engine",
       "to": "the-crystal-mug",
       "status": "open",
       "name": "Underwater door",
-      "notes": "See note on The Crystal Mug about arrival/departure.",
+      "short_description": "See note on The Crystal Mug about arrival/departure.",
       "signs": [
         {
           "group": "jelly-kin-of-ooze-9",
@@ -1785,51 +1787,50 @@
       "to": "sky-void",
       "status": "open",
       "name": "Airship path",
-      "notes": "Requires flight or an airship to move between islands"
+      "short_description": "Requires flight or an airship to move between islands"
     },
     {
       "from": "gryphon-roost-inn",
       "to": "sky-void",
       "status": "open",
       "name": "Airship path",
-      "notes": "Requires flight or an airship to move between islands"
+      "short_description": "Requires flight or an airship to move between islands"
     },
     {
       "from": "the-crystal-mug",
       "to": "the-webbed-dungeon",
       "status": "open",
-      "notes": "See note on The Crystal Mug about arrival/departure."
+      "short_description": "See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
       "to": "teleporter-room-crystal-mug",
       "status": "open",
-      "notes": "See note on The Crystal Mug about arrival/departure."
+      "short_description": "See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
       "to": "unknown",
       "status": "blocked",
-      "notes": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+      "short_description": "Torren says this door leads to \"those Hierophant guys\".<br/>Door barred with iron bars and a sheet of glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "the-crystal-mug",
       "to": "unknown",
       "status": "blocked",
-      "notes": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
+      "short_description": "Keyhole covered by glowing crystal.<br/>See note on The Crystal Mug about arrival/departure."
     },
     {
       "from": "main-corridor-1",
       "to": "main-corridor-2",
       "status": "open",
-      "notes": "Originally sealed by a blast door."
+      "short_description": "Originally sealed by a blast door."
     },
     {
       "from": "main-corridor-2",
       "to": "aetherlift-hangar",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Aetherlift Hangar entrance",
       "signs": [
         {
           "group": "binary-7-maintenance-cult",
@@ -1868,7 +1869,6 @@
       "to": "cryosleep-repository",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Cryosleep Repository entrance",
       "signs": [
         {
           "group": "vacuum-born",
@@ -1907,8 +1907,7 @@
       "to": "space-dock",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Space Dock entrance",
-      "notes": "A sign over the door auto-translates to \"Atmosphere: Good\" with a color that the viewer interprets as \"good\" (often green).",
+      "short_description": "A sign over the door auto-translates to \"Atmosphere: Good\" with a color that the viewer interprets as \"good\" (often green).",
       "signs": [
         {
           "group": "vacuum-born",
@@ -1953,7 +1952,6 @@
       "to": "celestial-threshold",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Celestial Threshold entrance",
       "signs": [
         {
           "group": "vacuum-born",
@@ -2006,8 +2004,7 @@
       "to": "hall-of-fallen-worlds",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Hall of Fallen Worlds entrance",
-      "notes": "An ornate door that appears to be made from carved stone. A sign over the door automatically translates to “Hall of Fallen Worlds”.",
+      "short_description": "An ornate door that appears to be made from carved stone. A sign over the door automatically translates to “Hall of Fallen Worlds”.",
       "signs": []
     },
     {
@@ -2015,7 +2012,6 @@
       "to": "portable-portal-nexus",
       "status": "open",
       "direction": "bidirectional",
-      "name": "Portable Portal Nexus entrance",
       "signs": [
         {
           "group": "lithos-architects",
@@ -2053,7 +2049,7 @@
       "from": "main-corridor-2",
       "to": "main-corridor-3",
       "status": "locked",
-      "notes": "Sealed by an airtight, reinforced blast door."
+      "short_description": "Sealed by an airtight, reinforced blast door."
     }
   ],
   "connectionStatus": [

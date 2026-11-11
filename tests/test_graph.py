@@ -337,7 +337,9 @@ def test_trusted_html_is_preserved_in_tooltips() -> None:
         location="kitchen",
         other_details="<b>trusted</b>",
     )
-    room = Room(id="kitchen", name="Kitchen", position={"x": 0, "y": 0}, notes="<p>trusted</p>")
+    room = Room(
+        id="kitchen", name="Kitchen", position={"x": 0, "y": 0}, short_description="<p>trusted</p>"
+    )
 
     assert "<b>trusted</b>" not in character_tooltip(character, "Kitchen")
     data = MapData(rooms=[room], characters=[character])
@@ -395,7 +397,7 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
                 "id": "room-castle",
                 "name": "Room 🏰",
                 "position": {"x": 0, "y": 0},
-                "notes": "Notes 📝",
+                "short_description": "Notes 📝",
             },
             {"id": "other-room", "name": "Other Room 🚪", "position": {"x": 1200, "y": 0}},
         ],
@@ -417,7 +419,7 @@ def test_generate_graph_preserves_emojis_in_displayed_text_and_references(tmp_pa
                 "to": "other-room",
                 "status": "open",
                 "name": "Passage ↗️",
-                "notes": "Connection notes 🧭",
+                "short_description": "Connection notes 🧭",
             }
         ],
         "connectionStatus": [{"id": "open", "description": "Open door 🚶"}],

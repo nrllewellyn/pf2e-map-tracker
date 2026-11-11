@@ -12,7 +12,7 @@ from pf2e_map_tracker.io import load_graph_options, load_map_data
 from pf2e_map_tracker.models import UNKNOWN_ROOM_ID, ConnectionDirection, MapData
 from pf2e_map_tracker.presentation import (
     enrich_network,
-    previous_occupant_details,
+    npc_group_details,
     resolve_network_images,
 )
 from pf2e_map_tracker.tooltips import (
@@ -65,7 +65,7 @@ def write_graph(data: MapData, output_path: Path, *, image_root: Path | None = N
     inject_enhancements(
         output_path,
         data.default_view,
-        previous_occupant_details(data, lambda source: image_urls.get(source, source)),
+        npc_group_details(data, lambda source: image_urls.get(source, source)),
     )
     return output_path
 

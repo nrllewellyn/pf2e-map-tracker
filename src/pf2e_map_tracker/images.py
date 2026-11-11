@@ -61,10 +61,10 @@ def local_image_files(data: "MapData", image_root: Path) -> dict[str, Path]:
     for kind in ("rooms", "characters", "character_groups", "connections"):
         for index, item in enumerate(getattr(data, kind)):
             _collect_local_images(result, item.images, f"{kind}[{index}].images", image_root)
-    for index, occupant in enumerate(data.previous_occupants):
+    for index, group in enumerate(data.npc_groups):
         for field in ("example_sign_images", "example_member_images"):
             _collect_local_images(
-                result, getattr(occupant, field), f"previous_occupants[{index}].{field}", image_root
+                result, getattr(group, field), f"npc_groups[{index}].{field}", image_root
             )
     return result
 

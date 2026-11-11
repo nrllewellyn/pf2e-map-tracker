@@ -52,7 +52,7 @@ def viewer(browser, tmp_path, monkeypatch, request):
                 "id": "hall",
                 "name": "Hall",
                 "position": {"x": 0, "y": 0},
-                "notes": "Public note",
+                "short_description": "Public note",
                 "details": "<b>Hidden room detail</b>",
                 "color": "#3175cf",
                 "shape": "diamond",
@@ -62,7 +62,7 @@ def viewer(browser, tmp_path, monkeypatch, request):
                 "id": "study",
                 "name": "Study",
                 "position": {"x": 500, "y": 0},
-                "notes": " \n ",
+                "short_description": " \n ",
                 "details": "<p><br>&nbsp;</p>",
             },
         ],
@@ -71,13 +71,13 @@ def viewer(browser, tmp_path, monkeypatch, request):
                 "id": "party",
                 "name": "Party",
                 "location": "hall",
-                "notes": "Group note",
+                "short_description": "Group note",
                 "details": "Private group detail",
                 "images": images,
                 "defaultPosition": {"x": 0, "y": 350},
             }
         ],
-        "previous_occupants": [
+        "npc_groups": [
             {
                 "id": "wardens",
                 "name": "Old Wardens",
@@ -120,7 +120,7 @@ def viewer(browser, tmp_path, monkeypatch, request):
                 "to": "study",
                 "status": "open",
                 "name": "Passage",
-                "notes": "Public route",
+                "short_description": "Public route",
                 "details": "Secret route",
                 "images": images,
                 "signs": [
@@ -156,9 +156,23 @@ def viewer(browser, tmp_path, monkeypatch, request):
         ],
     }
     if getattr(request, "param", None) == "legacy":
-        del data["previous_occupants"]
+        del data["npc_groups"]
         for connection in data["connections"]:
             connection.pop("signs", None)
+    if getattr(request, "param", None) == "descriptions":
+        for collection in ("rooms", "character_groups", "connections"):
+            data[collection][0]["short_description"] = "<em>Brief description 🧭</em>\nSecond line"
+    if getattr(request, "param", None) == "wrapping":
+        text = "The hall opens into a quiet chamber lit by soft blue crystals. " * 80
+        for collection in ("rooms", "connections"):
+            data[collection][0]["details"] = f'<p id="wrapping-copy">{text}</p>'
+    if getattr(request, "param", None) == "room-signs":
+        data["rooms"][0]["details"] = (
+            '<p>A plaque hangs beside the door.</p><map-sign group="wardens">'
+            "<div data-description>Carved plaque</div>"
+            "<div data-translation>Keep the door closed.</div></map-sign>"
+            "<p>More information follows the sign.</p>"
+        )
     source = tmp_path / "map.json"
     source.write_text(json.dumps(data), encoding="utf-8")
     output = generate_graph(source, tmp_path / "dist/index.html")
@@ -218,6 +232,36 @@ def click_connection(page, index=0):
     page.wait_for_selector("#map-details[open]")
 
 
+@pytest.mark.parametrize("viewer", ["descriptions"], indirect=True)
+@pytest.mark.parametrize("kind", ["room", "character_group", "connection"])
+def test_short_description_html_and_line_breaks_in_tooltip_and_details(viewer, kind):
+    page = viewer
+    if kind == "connection":
+        page.evaluate("""() => network.emit('hoverEdge', {edge: '__connection-0',
+            event: {clientX: 400, clientY: 300}})""")
+    else:
+        node_id = "party" if kind == "character_group" else "hall"
+        page.evaluate(
+            """id => network.emit('hoverNode', {node: id,
+            event: {clientX: 400, clientY: 300}})""",
+            node_id,
+        )
+    tooltip = page.locator("#custom-vis-tooltip")
+    assert tooltip.locator("em").inner_text() == "Brief description 🧭"
+    assert "Second line" in tooltip.inner_text()
+    assert "Notes:" not in tooltip.inner_text()
+
+    if kind == "connection":
+        click_connection(page)
+    else:
+        click_node(page, node_id)
+    description = page.locator("#map-detail-fields > .map-short-description")
+    assert description.locator("em").inner_text() == "Brief description 🧭"
+    assert description.locator("br").count() == 1
+    assert "Second line" in description.inner_text()
+    assert description.evaluate("element => element === element.parentElement.firstElementChild")
+
+
 def test_sign_hover_details_and_group_link_return_to_connection(viewer):
     page = viewer
     page.evaluate("""() => network.emit('hoverEdge', {edge: '__connection-0',
@@ -233,25 +277,25 @@ def test_sign_hover_details_and_group_link_return_to_connection(viewer):
     assert signs.count() == 2
     assert signs.nth(0).locator("b").inner_text() == "Chipped plaque"
     assert "Dwarven" in signs.nth(0).inner_text()
-    assert signs.nth(0).get_by_text("Hall", exact=True).count() == 1
+    assert signs.nth(0).get_by_text("Entrance from Hall", exact=True).count() == 1
     assert "Archive. Keep closed." in signs.nth(0).inner_text()
     assert signs.nth(0).locator("img").count() == 1
     assert signs.nth(1).locator("img").count() == 0
     assert "Common" in signs.nth(1).inner_text()
-    assert signs.nth(1).get_by_text("Study", exact=True).count() == 1
+    assert signs.nth(1).get_by_text("Entrance from Study", exact=True).count() == 1
     group = signs.nth(0).get_by_role("button", name="Old Wardens", exact=True)
     group.click()
-    assert page.locator("#map-occupant-details").is_visible()
+    assert page.locator("#map-npc-group-details").is_visible()
     assert not page.locator("#map-additional-info").is_visible()
-    assert page.locator("#map-occupant-title").inner_text() == "Old Wardens"
-    assert "Dwarf, Human" in page.locator("#map-occupant-fields").inner_text()
-    assert "Stern but helpful" in page.locator("#map-occupant-fields").inner_text()
+    assert page.locator("#map-npc-group-title").inner_text() == "Old Wardens"
+    assert "Dwarf, Human" in page.locator("#map-npc-group-fields").inner_text()
+    assert "Stern but helpful" in page.locator("#map-npc-group-fields").inner_text()
     page.get_by_role("button", name="View example signs image 1 full screen", exact=True).click()
     assert page.locator("#map-image-preview").is_visible()
     page.keyboard.press("Escape")
-    assert page.locator("#map-occupant-details").is_visible()
+    assert page.locator("#map-npc-group-details").is_visible()
     page.keyboard.press("Escape")
-    assert not page.locator("#map-occupant-details").is_visible()
+    assert not page.locator("#map-npc-group-details").is_visible()
     assert page.locator("#map-details").is_visible()
     assert page.locator("#map-detail-title").inner_text() == "Passage"
     assert group.evaluate("button => button === document.activeElement")
@@ -268,8 +312,10 @@ def test_additional_information_listing_details_photos_and_rotating_thumbnails(v
     trigger = page.get_by_role("button", name="Additional Information", exact=True)
     trigger.click()
     listing = page.locator("#map-additional-info")
-    assert page.locator(".map-occupant-card").count() == 2
-    card = page.locator(".map-occupant-card").nth(0)
+    assert listing.get_by_role("button", name="NPC Groups", exact=True).is_visible()
+    assert listing.get_by_role("heading", name="NPC Groups", exact=True).is_visible()
+    assert page.locator(".map-npc-group-card").count() == 2
+    card = page.locator(".map-npc-group-card").nth(0)
     assert all(
         text in card.inner_text()
         for text in ["Old Wardens", "Dwarven", "Angular runes", "Carved stone", "Warnings first"]
@@ -285,9 +331,9 @@ def test_additional_information_listing_details_photos_and_rotating_thumbnails(v
     details = page.get_by_role("dialog", name="Old Wardens", exact=True)
     assert details.is_visible()
     assert listing.is_visible()
-    assert listing.locator(".map-occupant-card").count() == 2
-    assert "Brass badges" in page.locator("#map-occupant-fields").inner_text()
-    fields = page.locator("#map-occupant-fields")
+    assert listing.locator(".map-npc-group-card").count() == 2
+    assert "Brass badges" in page.locator("#map-npc-group-fields").inner_text()
+    fields = page.locator("#map-npc-group-fields")
     assert fields.locator("dt").all_text_contents()[:4] == [
         "Language",
         "Lettering",
@@ -297,10 +343,10 @@ def test_additional_information_listing_details_photos_and_rotating_thumbnails(v
     oddities = fields.locator(".map-detail-field").nth(2).locator("dd")
     assert oddities.inner_text() == "Runes feel warm.\nOnly warnings glow."
     assert oddities.locator("em").inner_text() == "Runes feel warm"
-    assert page.locator(".map-occupant-gallery").count() == 2
-    assert page.locator(".map-occupant-gallery button").count() == 4
+    assert page.locator(".map-npc-group-gallery").count() == 2
+    assert page.locator(".map-npc-group-gallery button").count() == 4
     assert (
-        page.locator(".map-occupant-gallery figcaption").first.inner_text()
+        page.locator(".map-npc-group-gallery figcaption").first.inner_text()
         == "<b>Plain caption</b>"
     )
     picture = details.get_by_role(
@@ -321,11 +367,11 @@ def test_additional_information_listing_details_photos_and_rotating_thumbnails(v
     assert listing.is_visible()
     assert trigger_details.evaluate("button => button === document.activeElement")
     page.get_by_role("button", name="Scribes", exact=True).click()
-    assert page.locator("#map-occupant-title").inner_text() == "Scribes"
-    assert "Language Oddities" not in page.locator("#map-occupant-fields").inner_text()
-    assert page.locator(".map-occupant-gallery").count() == 0
+    assert page.locator("#map-npc-group-title").inner_text() == "Scribes"
+    assert "Language Oddities" not in page.locator("#map-npc-group-fields").inner_text()
+    assert page.locator(".map-npc-group-gallery").count() == 0
     page.keyboard.press("Escape")
-    assert not page.locator("#map-occupant-details").is_visible()
+    assert not page.locator("#map-npc-group-details").is_visible()
     assert listing.is_visible()
     for _ in range(8):
         page.keyboard.press("Tab")
@@ -343,7 +389,7 @@ def test_additional_information_listing_details_photos_and_rotating_thumbnails(v
 
 
 @pytest.mark.parametrize("method", ["button", "escape", "backdrop"])
-def test_inhabitant_details_close_preserves_listing_and_focus(viewer, method):
+def test_npc_group_details_close_preserves_listing_and_focus(viewer, method):
     page = viewer
     page.set_viewport_size({"width": 1400, "height": 500})
     page.get_by_role("button", name="Additional Information", exact=True).click()
@@ -390,7 +436,7 @@ def test_additional_information_small_screen_and_reduced_motion(viewer):
     page.clock.fast_forward(10000)
     assert thumbnail.get_attribute("src") == first
     page.get_by_role("button", name="Details for Old Wardens", exact=True).click()
-    details = page.locator("#map-occupant-details")
+    details = page.locator("#map-npc-group-details")
     bounds = details.bounding_box()
     assert bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= 390
     assert bounds["height"] <= 700
@@ -403,13 +449,10 @@ def test_additional_information_small_screen_and_reduced_motion(viewer):
 
 
 @pytest.mark.parametrize("viewer", ["legacy"], indirect=True)
-def test_existing_maps_without_signs_or_inhabitants_still_open(viewer):
+def test_existing_maps_without_signs_or_npc_groups_still_open(viewer):
     page = viewer
     page.get_by_role("button", name="Additional Information", exact=True).click()
-    assert (
-        "No previous inhabitants have been recorded."
-        in page.locator("#map-additional-info").inner_text()
-    )
+    assert "No NPC groups have been recorded." in page.locator("#map-additional-info").inner_text()
     page.keyboard.press("Escape")
     click_connection(page)
     assert page.locator("#map-detail-title").inner_text() == "Passage"
@@ -477,6 +520,8 @@ def test_click_details_replaces_highlighting_and_gallery_is_contained(viewer):
     assert page.locator("#map-detail-caption b").count() == 0
     page.get_by_role("button", name="Show image 2", exact=True).click()
     assert page.locator("#map-detail-caption").inner_text() == "Second picture"
+    assert page.locator("#map-image-metadata").is_hidden()
+    page.locator("#map-image-details > summary").click()
     assert page.locator("#map-image-metadata").inner_text().find("second.svg") >= 0
     page.get_by_role("button", name="Show image 3", exact=True).click()
     assert page.locator("#map-image-metadata dt").all_text_contents() == ["Source"]
@@ -489,11 +534,75 @@ def test_click_details_replaces_highlighting_and_gallery_is_contained(viewer):
     page.keyboard.press("Escape")
     assert not page.locator("#map-details").is_visible()
     click_node(page, "study")
+    assert page.locator("#map-detail-title").inner_text() == "Study"
     assert page.locator("#map-detail-gallery").is_hidden()
-    assert fields.locator("dt").all_text_contents() == ["Name"]
+    assert fields.locator("dt").all_text_contents() == []
+    assert fields.locator(".map-short-description").count() == 0
     assert "Not set" not in page.locator("#map-details").inner_text()
     page.get_by_role("button", name="Close", exact=True).click()
     assert not page.locator("#map-details").is_visible()
+
+
+@pytest.mark.parametrize("viewer", ["wrapping"], indirect=True)
+@pytest.mark.parametrize("kind", ["room", "connection"])
+@pytest.mark.parametrize("viewport", [(1400, 1000), (390, 700)])
+def test_text_wraps_beside_right_gallery_and_below_it(viewer, kind, viewport, tmp_path):
+    page = viewer
+    width, height = viewport
+    page.set_viewport_size({"width": width, "height": height})
+    page.evaluate("network.moveTo({position: {x: 0, y: 0}, scale: 0.5, animation: false})")
+    if kind == "room":
+        click_node(page, "hall")
+    else:
+        click_connection(page)
+    page.wait_for_function("document.getElementById('map-detail-image').naturalWidth > 0")
+    geometry = page.evaluate("""() => {
+        const body = document.querySelector('#map-details .map-dialog-body');
+        const bounds = body.getBoundingClientRect();
+        const style = getComputedStyle(body);
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('wrapping-copy'));
+        const dialog = document.getElementById('map-details');
+        return {
+            left: bounds.left + parseFloat(style.paddingLeft),
+            right: bounds.right - parseFloat(style.paddingRight),
+            gallery: document.getElementById('map-detail-gallery').getBoundingClientRect().toJSON(),
+            lines: Array.from(range.getClientRects(), rect => rect.toJSON()),
+            overflow: dialog.scrollWidth > dialog.clientWidth,
+        };
+    }""")
+    gallery = geometry["gallery"]
+    assert not geometry["overflow"]
+    assert gallery["right"] == pytest.approx(geometry["right"], abs=1)
+    if width > 700:
+        assert gallery["left"] > (geometry["left"] + geometry["right"]) / 2
+        beside = [line for line in geometry["lines"] if line["top"] < gallery["bottom"]]
+        below = [line for line in geometry["lines"] if line["top"] >= gallery["bottom"] + 20]
+        assert beside and below
+        assert all(line["right"] <= gallery["left"] - 23 for line in beside)
+        assert any(line["right"] > gallery["left"] + gallery["width"] / 2 for line in below)
+        assert all(line["left"] == pytest.approx(geometry["left"], abs=1) for line in below)
+    else:
+        assert gallery["left"] == pytest.approx(geometry["left"], abs=1)
+        assert geometry["lines"][0]["top"] >= gallery["bottom"]
+        assert all(line["right"] <= geometry["right"] + 1 for line in geometry["lines"])
+    page.screenshot(path=str(tmp_path / f"gallery-{kind}-{width}.png"))
+
+
+@pytest.mark.parametrize("viewer", ["room-signs"], indirect=True)
+@pytest.mark.parametrize("kind", ["room", "connection"])
+def test_sign_cards_span_full_width_below_gallery(viewer, kind):
+    page = viewer
+    if kind == "room":
+        click_node(page, "hall")
+    else:
+        click_connection(page)
+    gallery = page.locator("#map-detail-gallery").bounding_box()
+    fields = page.locator("#map-detail-fields").bounding_box()
+    card = page.locator("#map-details .map-sign-card").first.bounding_box()
+    assert card["y"] >= gallery["y"] + gallery["height"]
+    assert card["x"] == pytest.approx(fields["x"], abs=1)
+    assert card["width"] == pytest.approx(fields["width"], abs=1)
 
 
 @pytest.mark.parametrize("shape", [None, *NodeShape], ids=["default", *NodeShape])

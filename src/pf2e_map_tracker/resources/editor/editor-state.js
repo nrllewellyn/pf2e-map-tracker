@@ -1,8 +1,9 @@
 /* Source relationships operate on the draft, never on graph-generated IDs. */
 window.MapEditorState = (() => {
-    const kinds = ['rooms', 'character_groups', 'characters', 'connections', 'previous_occupants', 'connectionStatus'];
+    const {parseHtml, roomSignTags, signGroup} = window.MapDetails;
+    const kinds = ['rooms', 'character_groups', 'characters', 'connections', 'npc_groups', 'connectionStatus'];
     const labels = {rooms: 'Room', character_groups: 'Group', characters: 'Character',
-        connections: 'Connection', previous_occupants: 'Previous inhabitant', connectionStatus: 'Connection status'};
+        connections: 'Connection', npc_groups: 'NPC group', connectionStatus: 'Connection status'};
     const clone = value => JSON.parse(JSON.stringify(value));
     function label(kind, object, index) {
         return object.name || object.description || (kind === 'connections'
@@ -21,9 +22,17 @@ window.MapEditorState = (() => {
             for (const character of data.characters || []) if (character.group === previous) character.group = next;
         } else if (kind === 'connectionStatus') {
             for (const connection of data.connections || []) if (connection.status === previous) connection.status = next;
-        } else if (kind === 'previous_occupants') {
+        } else if (kind === 'npc_groups') {
             for (const connection of data.connections || []) {
                 for (const sign of connection.signs || []) if (sign.group === previous) sign.group = next;
+            }
+            for (const room of data.rooms || []) {
+                if (!room.details) continue;
+                const template = parseHtml(room.details);
+                const tags = roomSignTags(template.content).filter(tag => signGroup(tag) === previous);
+                if (!tags.length) continue;
+                for (const tag of tags) tag.setAttribute('group', next);
+                room.details = template.innerHTML;
             }
         }
     }
@@ -40,14 +49,16 @@ window.MapEditorState = (() => {
             collect('characters', item => item.group === id);
         } else if (kind === 'connectionStatus') {
             collect('connections', item => item.status === id);
-        } else if (kind === 'previous_occupants') {
+        } else if (kind === 'npc_groups') {
             collect('connections', item => (item.signs || []).some(sign => sign.group === id));
+            collect('rooms', item => item.details && roomSignTags(parseHtml(item.details).content)
+                .some(tag => signGroup(tag) === id));
         }
         return matches;
     }
     function suggestId(data, kind, name) {
         const base = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'new-object';
-        const used = new Set((['connectionStatus', 'previous_occupants'].includes(kind) ? data[kind] || []
+        const used = new Set((['connectionStatus', 'npc_groups'].includes(kind) ? data[kind] || []
             : [...data.rooms || [], ...data.character_groups || []]).map(item => item.id));
         if (kind === 'rooms') used.add('unknown');
         let id = base, suffix = 2;
