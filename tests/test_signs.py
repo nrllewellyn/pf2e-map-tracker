@@ -20,7 +20,7 @@ def sign_data():
                 "id": "wardens",
                 "name": "Old Wardens",
                 "language": "Dwarven",
-                "language_visual_style": "Angular runes",
+                "lettering": "Angular runes",
                 "language_oddities": "Runes feel warm to the touch",
                 "signage_physical_form": "Stone plaques",
                 "communication_quirks": "Warnings first",

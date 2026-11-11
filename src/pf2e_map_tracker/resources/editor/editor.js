@@ -21,7 +21,7 @@
         characters: ['name', 'ancestry', 'class', 'placement', 'defaultPosition', 'color', 'shape',
             'physical_description', 'personality', 'other_details', 'images'],
         connections: ['from', 'to', 'status', 'direction', 'name', 'short_description', 'details', 'signs', 'images'],
-        npc_groups: ['id', 'name', 'language', 'language_visual_style', 'language_oddities', 'signage_physical_form',
+        npc_groups: ['id', 'name', 'language', 'lettering', 'language_oddities', 'signage_physical_form',
             'communication_quirks', 'known_ancestries', 'common_appearance', 'demeanor',
             'example_sign_images', 'example_member_images'],
         connectionStatus: ['id', 'description', 'display_color', 'line_style']
@@ -32,12 +32,12 @@
         to: 'To room', status: 'Connection status', direction: 'Direction', description: 'Description',
         display_color: 'Line color', line_style: 'Line style', physical_description: 'Physical description (HTML)',
         personality: 'Personality (HTML)', other_details: 'Other details (HTML)', details: 'Details (HTML, detailed view only)',
-        language: 'Language', language_visual_style: 'Lettering (HTML)', language_oddities: 'Language oddities (HTML)',
+        language: 'Language', lettering: 'Lettering (HTML)', language_oddities: 'Language oddities (HTML)',
         signage_physical_form: 'Signage physical form (HTML)', communication_quirks: 'Communication quirks (HTML)',
         known_ancestries: 'Known ancestries (one per line)', common_appearance: 'Common appearance (HTML)',
         demeanor: 'Demeanor (HTML)', example_sign_images: 'Example sign images', example_member_images: 'Example group member photos'};
     const htmlFields = new Set(['short_description', 'details', 'physical_description', 'personality', 'other_details',
-        'language_visual_style', 'language_oddities', 'signage_physical_form', 'communication_quirks', 'common_appearance', 'demeanor']);
+        'lettering', 'language_oddities', 'signage_physical_form', 'communication_quirks', 'common_appearance', 'demeanor']);
     const draggableKinds = new Set(['rooms', 'character_groups', 'characters']);
     const sentenceLabel = kind => kind === 'npc_groups' ? labels[kind] : labels[kind].toLowerCase();
 

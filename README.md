@@ -335,7 +335,7 @@ are stored under `data/images/npc-groups/` in this repository.
 | `id` | Yes | Unique lowercase, hyphen-separated ID used by signs, in a separate namespace from rooms and character groups. |
 | `name` | Yes | Group name. |
 | `language` | No | Language name. |
-| `language_visual_style` | No | Appearance of the writing, displayed as Lettering. |
+| `lettering` | No | Appearance of the writing, displayed as Lettering. |
 | `language_oddities` | No | Unusual language traits, displayed below Lettering in group details. |
 | `signage_physical_form` | No | Sign materials and construction. |
 | `communication_quirks` | No | Distinctive wording or communication habits. |
@@ -363,7 +363,7 @@ Descriptions and translations support trusted HTML and appear only in details.
     "id": "old-wardens",
     "name": "Old Wardens",
     "language": "Dwarven",
-    "language_visual_style": "Angular runes",
+    "lettering": "Angular runes",
     "language_oddities": "The most important words feel warm to the touch",
     "signage_physical_form": "Carved stone plaques",
     "communication_quirks": "Every instruction starts with a warning",

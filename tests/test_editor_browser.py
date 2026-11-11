@@ -619,7 +619,7 @@ def test_edit_npc_groups_signs_rename_protection_and_image_collections(page, edi
     page.get_by_role("button", name="Rebuild graph", exact=True).click()
     wait_idle(page)
     saved = json.loads(editor_server["source"].read_text(encoding="utf-8"))
-    assert saved["npc_groups"][0]["language_visual_style"] == "Angular runes"
+    assert saved["npc_groups"][0]["lettering"] == "Angular runes"
     assert saved["npc_groups"][0]["language_oddities"] == "<b>Runes feel warm</b>"
     assert saved["npc_groups"][0]["known_ancestries"] == ["Dwarf", "Human"]
     assert saved["connections"][0]["signs"][0] == {

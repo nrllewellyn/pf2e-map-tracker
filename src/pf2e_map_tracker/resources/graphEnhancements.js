@@ -8,8 +8,8 @@
     let dialog, additionalDialog, npcGroupDialog, imagePreview, appearanceNetwork, previousFocus, viewerKeyboard;
     const npcGroups = new Map(PF2E_MAP_TRACKER_NPC_GROUPS.map(group => [group.id, group]));
     const pictureTimers = new Map();
-    const npcGroupSummaryFields = ['language', 'language_visual_style', 'signage_physical_form', 'communication_quirks'];
-    const npcGroupDetailFields = ['language', 'language_visual_style', 'language_oddities',
+    const npcGroupSummaryFields = ['language', 'lettering', 'signage_physical_form', 'communication_quirks'];
+    const npcGroupDetailFields = ['language', 'lettering', 'language_oddities',
         'signage_physical_form', 'communication_quirks', 'known_ancestries', 'common_appearance', 'demeanor'];
     let tooltipPoint = {x: 0, y: 0};
     const htmlFields = new Set(['name', 'ancestry', 'class', 'short_description', 'details',
@@ -20,7 +20,7 @@
         location: 'Room', group: 'Group', from: 'From room', to: 'To room',
         status: 'Status', direction: 'Direction',
         line_style: 'Line style',
-        language: 'Language', language_visual_style: 'Lettering', language_oddities: 'Language Oddities',
+        language: 'Language', lettering: 'Lettering', language_oddities: 'Language Oddities',
         signage_physical_form: 'Signage Form',
         communication_quirks: 'Communication Quirks', known_ancestries: 'Known Ancestries',
         common_appearance: 'Common Appearance', demeanor: 'Demeanor'};

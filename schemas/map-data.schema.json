@@ -345,7 +345,7 @@
           "title": "Language",
           "type": "string"
         },
-        "language_visual_style": {
+        "lettering": {
           "default": "",
           "title": "Lettering",
           "type": "string"

@@ -82,7 +82,7 @@ def viewer(browser, tmp_path, monkeypatch, request):
                 "id": "wardens",
                 "name": "Old Wardens",
                 "language": "Dwarven",
-                "language_visual_style": "Angular runes",
+                "lettering": "Angular runes",
                 "language_oddities": "<em>Runes feel warm</em>.\nOnly warnings glow.",
                 "signage_physical_form": "Carved stone",
                 "communication_quirks": "Warnings first",

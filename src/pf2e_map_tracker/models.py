@@ -127,7 +127,7 @@ class NPCGroup(StrictModel):
     id: MapId
     name: NonEmptyString
     language: str = ""
-    language_visual_style: str = Field(default="", title="Lettering")
+    lettering: str = Field(default="", title="Lettering")
     language_oddities: str = ""
     signage_physical_form: str = ""
     communication_quirks: str = ""

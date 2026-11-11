@@ -2,6 +2,11 @@
 
 This changelog will only be updated for software changes, and does not track changes to map data or image files.
 
+## 0.6.0
+
+## Changed
+- `language_visual_style` changed to `lettering`
+
 ## 0.5.0
 
 ### Added

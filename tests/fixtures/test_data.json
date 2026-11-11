@@ -4,7 +4,7 @@
       "id": "household-scribes",
       "name": "Household Scribes",
       "language": "Common",
-      "language_visual_style": "Neat block letters with a small house symbol",
+      "lettering": "Neat block letters with a small house symbol",
       "signage_physical_form": "Painted wooden plaques",
       "communication_quirks": "Room names are followed by a polite request",
       "known_ancestries": ["Human", "Halfling"],
