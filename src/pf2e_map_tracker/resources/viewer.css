@@ -27,6 +27,8 @@ body > .card { position: fixed; inset: 0; display: flex; flex-direction: column;
 .map-detail-field dd > :first-child { margin-top: 0; }
 #map-details img, #map-additional-info img, #map-npc-group-details img { max-width: 100%; }
 #map-details a, #map-additional-info a, #map-npc-group-details a { color: #a8cfff; }
+#map-details table, #map-additional-info table, #map-npc-group-details table, #custom-vis-tooltip table { color: inherit; }
+#map-details table + h4 { margin-top: 32px; }
 #map-detail-appearance { display: flex; align-items: center; justify-content: center; }
 .map-shape-preview { width: 64px; height: 44px; flex: 0 0 64px; }
 .map-line-preview { width: 64px; height: 44px; display: flex; align-items: center; gap: 3px; }

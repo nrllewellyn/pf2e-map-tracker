@@ -2,6 +2,11 @@
 
 This changelog will only be updated for software changes, and does not track changes to map data or image files.
 
+## 0.6.1
+
+## Fixed
+- Formatting for tables now matches surrounding text
+
 ## 0.6.0
 
 ## Changed
