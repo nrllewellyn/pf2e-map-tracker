@@ -95,7 +95,8 @@
         "x": 500.0,
         "y": 500.0
       },
-      "short_description": "A laboratory where crystalline keys are grown. Overseen by a brain floating in a machine"
+      "short_description": "A brightly lit laboratory for growing crystalline keys, with suspended crystals, arcane instruments, and heavy cylindrical machinery. A preserved brain floats in a wired transparent vessel in the northeast.",
+      "details": "<p>The Crystal Growth Lab is a large, brightly illuminated chamber of dark metal and pale, polished panels, used to grow crystalline keys. Cool blue-white light spills from rows of glowing instruments and crystalline machinery, giving the chamber an unusually sterile appearance. Thick cables and flexible conduits snake across the walls and ceiling, connecting an assortment of advanced technological devices and arcane apparatuses.</p><p>Dominating the northern end of the room is a large, circular machine surrounded by heavy containment equipment. Within its central chamber, a crystalline formation hangs suspended in a shimmering field of blue energy. Delicate mechanical arms and glowing conduits surround the crystal, while faint pulses of magical energy travel through its translucent structure. Several nearby control stations display shifting geometric patterns, unfamiliar symbols, and complex arrangements of illuminated indicators.</p><p>Around the laboratory, workstations contain sophisticated instruments, including holographic displays, crystalline focusing arrays, and panels covered in glowing runes. Everything appears carefully maintained, though some equipment shows signs of extensive use.</p><p>In the southeastern corner, a smaller crystal floats within a concentrated magical field, surrounded by four identical cylindrical machines. Two more of these machines stand elsewhere in the laboratory. Each features a circular metal housing, intricate mechanical components, and a softly glowing central chamber. Their purpose is unclear, though their heavy construction and extensive power connections suggest something more substantial than ordinary laboratory equipment.</p><p>In the northeastern section, another machine contains a preserved organic brain, suspended within a transparent vessel and connected to a network of delicate wires and luminous conduits. Its surrounding displays flicker continuously, as though the strange apparatus is actively monitoring the laboratory.</p><p>The air carries a faint smell of ozone and antiseptic chemicals. A steady electrical hum fills the chamber, punctuated by occasional mechanical clicks and the soft chime of arcane instruments. Despite the laboratory's complexity, everything operates with an eerie, almost effortless precision.</p>"
     },
     {
       "id": "hallway-forest",
@@ -151,7 +152,7 @@
       "id": "restoration-engine",
       "name": "Restoration Engine",
       "position": {
-        "x": -500.0,
+        "x": -250.0,
         "y": 500.0
       },
       "short_description": "A massive repair engine lies beneath twenty feet of cooling water, surrounded by grated catwalks leading to a glowing central pad. Four shielded vortices rise through ceiling openings, bathing the metal chamber in pulsing pale-blue light.",
@@ -221,13 +222,30 @@
       ]
     },
     {
+      "id": "the-crystal-mug-lobby",
+      "name": "The Crystal Mug's Lobby",
+      "position": {
+        "x": -500.0,
+        "y": 500.0
+      },
+      "short_description": "A warm wooden lobby lit by violet and sapphire crystals, with benches, magical cleaning, and an automated coat and weapon check. Double doors lead into the tavern’s antimagic field; a bell requests accommodations for assistive magic.",
+      "details": "<p>The Crystal Mug’s Lobby is a warmly lit wooden room approximately twenty feet wide and thirty feet long. Glowing violet and sapphire crystals sprout from the polished wooden walls and heavy support beams, casting soft, shifting light across the spotless floorboards. Comfortable benches line the left wall.</p><p>Beside the benches stands a curious contraption marked “Magical Cleaning.” Resembling an elaborate brass showerhead, the device hangs above an X inscribed on the floor, with a handprint mounted on the wall beside it. Placing a hand against the print activates a brief shower of cleansing magic, removing dirt, grime, and unpleasant odors from travelers and their belongings.</p><p>Opposite the cleaning station, a crystalline and brass automaton stands patiently behind a service window marked “Coat/Weapon Check,” ready to secure guests’ equipment.</p><p>Straight ahead, a pair of sturdy wooden double doors leads into the tavern proper. Above them, a neatly lettered sign reads: “Antimagic field beyond this point. Please check all weapons before entering. If you need to use assistive magics, please ring the bell.” A brass bell pullcord hangs to the right of the doors, offering guests a discreet way to request accommodations before entering.</p><p>Travelers entering The Crystal Mug always arrive in this lobby before proceeding into the tavern.</p>",
+      "images": [
+        {
+          "src": "images/rooms/TheCrystalMug-Lobby.png",
+          "caption": "The Lobby"
+        }
+      ]
+    },
+    {
       "id": "the-crystal-mug",
       "name": "The Crystal Mug",
       "position": {
-        "x": -250.0,
-        "y": 500.0
+        "x": -500.0,
+        "y": 750.0
       },
-      "short_description": "A crystal-themed tavern with a mysterious keeper.<br/>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.",
+      "short_description": "A welcoming two-story tavern of warm wood and glowing blue and violet crystals, with a balcony, Torren Alderforge’s bar, and a circular bar tended by a crystal golem. Weapons and active magic are prohibited.",
+      "details": "<p>The Crystal Mug is a spacious, two-story tavern where rustic craftsmanship and crystalline enchantment exist in remarkable harmony. Rich wooden floors, walls, and towering support beams give the establishment a welcoming warmth, while brilliant clusters of blue and violet crystals grow naturally from the timbers and hang like enchanted stalactites from the high ceiling.</p><p>A second-floor balcony wraps around the main hall, overlooking neatly arranged tables illuminated by small lanterns containing softly glowing crystals. At one end of the room stands a long, polished wooden bar, tended by Torren Alderforge, a burly, bald, bearded bartender whose muscular arm bears an intricate magical tattoo.</p><p>An enormous formation of luminous amethyst and sapphire crystals dominates the center of the room, rising toward the rafters and surrounded by a circular wooden bar. Within the spacious ring between the counter and the crystalline centerpiece, a humanoid golem fashioned from living crystal quietly prepares drinks, retrieves bottles, and tends to guests with precise, deliberate movements. Drinks are served in beautifully faceted mugs of glowing crystal, their gentle radiance adding to the tavern’s otherworldly atmosphere.</p><p>Despite its magical splendor, the Crystal Mug is a comfortable, meticulously maintained establishment. Its subdued lighting, spotless furnishings, and carefully enforced prohibition on weapons and active magic provide a peaceful refuge for travelers seeking good company, fine drinks, and a respite from the dangers outside.</p><h3>Arrival and Departure</h3><p>Travelers entering The Crystal Mug always arrive in the lobby. Visitors can exit via doors in the back of the tavern.</p>",
       "images": [
         {
           "src": "images/rooms/TheCrystalMug.png",
@@ -240,10 +258,6 @@
         {
           "src": "images/rooms/TheCrystalMug-Centerpiece.png",
           "caption": "The Bar's Centerpiece"
-        },
-        {
-          "src": "images/rooms/TheCrystalMug-Lobby.png",
-          "caption": "The Lobby"
         }
       ]
     },
@@ -254,7 +268,8 @@
         "x": 250.0,
         "y": 250.0
       },
-      "short_description": "A lighthouse floating above the clouds.<br>Connected to The Gryphon Roost Inn by a beam of arcane energy.",
+      "short_description": "A weathered stone lighthouse on a floating island amid an aerial reef. Its arcane beacon is rumored to reveal the unseen; a compass and bell announce approaching islands, and a stone bridge leads to an airship dock.",
+      "details": "<p>The Lighthouse rises from a rugged island suspended above the clouds, surrounded by floating rocks that form a strange aerial reef. Wisps of cloud drift between the stones, while seabirds and other winged creatures circle in the cool, open sky.</p><p>A paved courtyard and low stone parapets surround the pale, weathered tower. Narrow stairs lead to elevated platforms and observation points, and carved house drakes perch near the summit with wings outspread.</p><p>An enormous arcane gemstone replaces the usual beacon lamp. Held within a framework of metal and stone, it glows with shifting blue-white light, its depths filled with slowly moving patterns. Its radiance pulses rather than sweeping the horizon, sending faint shimmers through the clouds. The gemstone is rumored to reveal things ordinarily hidden from sight.</p><p>In the northeastern courtyard, an ornate brass compass stands on a stone pedestal beside a heavy bronze bell suspended from a carved arch. When another floating island approaches, the bell rings of its own accord and the compass needle turns toward it.</p><p>A narrow wooden pier projects from the island's northern edge, where fishing rods, coiled lines, and weathered tackle boxes mark Elias Windhook's fishing spot for creatures that swim through the clouds. A broad stone bridge links the lighthouse to a smaller island with a wooden airship dock, mooring equipment, stacked cargo, and a shelter for arriving travelers.</p><p>Inside the tower, spiral stairs pass storage chambers, workrooms, and observation windows. The sparse, carefully maintained interior holds brass instruments, old maps, and unfamiliar navigational devices. Signs in alien scripts mark doorways and stairwells. Outside, the breeze carries scents of damp stone and distant rain, accompanied by sky creatures' calls and creaking dock timbers.</p><p>A beam of arcane energy connects the lighthouse to the Gryphon Roost Inn.</p>",
       "images": [
         {
           "src": "images/rooms/Lighthouse.png"
@@ -269,7 +284,13 @@
         "y": 250.0
       },
       "color": "#5cc0ff",
-      "short_description": "Blue sky and clouds, but no ground in sight."
+      "short_description": "A seemingly endless expanse of blue sky and clouds, with no visible ground. Rare floating islands lie far apart, and airships sail between them without any visible crew.",
+      "details": "<p>The Sky Void is a seemingly infinite expanse of brilliant blue sky, filled with towering white clouds and bathed in warm sunlight. There is no visible ground, no distant horizon of land or sea—only sky extending in every direction, above and below. Vast banks of clouds drift lazily through the open air, occasionally parting to reveal dizzying depths of uninterrupted blue.</p><p>Scattered across this immense emptiness are rare floating islands, separated by enormous distances. Often, only a single island is visible on the horizon, and sometimes none at all. They vary wildly in size and appearance, from small, barren fragments of rock to sprawling landmasses covered in lush forests, unusual vegetation, and unfamiliar wildlife. Some bear the ruins of ancient structures, abandoned gardens, or crumbling towers, but these places appear entirely uninhabited. The occasional bird or strange flying creature moves among the clouds.</p><p>Airships occasionally drift through the open sky, their wooden hulls suspended beneath enormous canvas balloons, billowing sails, or elaborate arrangements of magical machinery. Some resemble traditional sailing vessels, while others are intricate constructions of brass, timber, and unfamiliar technology. Their decks are conspicuously empty. No crew tends the rigging, no captain stands at the helm, and no passengers are visible aboard. Nevertheless, the ships glide steadily through the clouds, adjusting their sails, changing course, and navigating around obstacles as though guided by invisible hands.</p><p>The air is fresh and cool, carrying the faint scent of rain and distant vegetation. Gentle breezes occasionally give way to stronger currents, and the distant cries of unfamiliar flying creatures echo through the open sky.</p><p>Despite its beauty and tranquility, the sheer emptiness of the Sky Void is unsettling. With so few landmarks, no visible ground, and unmanned vessels silently sailing between distant islands, the entire expanse resembles an endless ocean whose travelers have long since vanished.</p>",
+      "images": [
+        {
+          "src": "images/rooms/SkyVoid.png"
+        }
+      ]
     },
     {
       "id": "gryphon-roost-inn",
@@ -278,7 +299,8 @@
         "x": 500.0,
         "y": 0.0
       },
-      "short_description": "A cozy inn floating above the clouds.<br>Connected to the Lighthouse by a beam of arcane energy.",
+      "short_description": "A cozy inn on a grassy island above the clouds, with windmills, gardens, and an airship dock. Tilly and Gideon offer free hospitality, while Torren Alderforge tends bar.<br/>Connected to the Lighthouse by a beam of arcane energy.",
+      "details": "<p>The Gryphon Roost Inn stands on a small, grassy island floating above an endless sea of brilliant white clouds. Warm sunlight and a gentle breeze carry the scents of wildflowers, fresh bread, and woodsmoke. Other islands drift in the distance, crowned with trees, buildings, and towers.</p><p>The large, two-story inn is built from reddish timber and stone, with steep green-tiled roofs, flower-filled window boxes, and a windmill above. Smaller windmills turn around the island's edges. Garden paths pass a busy chicken coop and a stone well marked with faintly glowing runes. A broad wooden airship dock extends over the clouds.</p><p>Inside, polished floors, exposed beams, woven rugs, and a crackling stone fireplace create a welcoming dining hall. Tables hold mismatched ceramic dishes, herbs and plants hang from the rafters, and large windows frame the sky. Upstairs, individually furnished guest rooms offer soft beds and colorful quilts; outside, a terrace provides seating among flowers and climbing vines.</p><p>Tilly, a welcoming poppet, provides food, lodging, and hospitality entirely free of charge. Gideon, a toy wizard poppet, designs and maintains the inn's magical and mechanical servants. Tiny clockwork figures and animated kitchen implements busily prepare meals, carry trays, and tend bubbling pots in the well-stocked kitchen.</p><p>Behind the long wooden bar, an enormous jagged purple crystal surrounds a shimmering portal large enough to walk through. Its rippling surface reveals glimpses of The Crystal Mug, allowing Torren Alderforge to travel between the two establishments.</p><p>The rustic cellar holds barrels, crates, grain sacks, and preserved foods. Its supplies mysteriously replenish themselves, ensuring that the kitchen and bar never run short. A beam of arcane energy connects the inn to the Lighthouse.</p><p>Clockwork ticking, clattering dishes, and turning windmills provide a gentle background to the inn's peaceful activity. Small signs in unfamiliar scripts hang from doorframes or appear embroidered on decorative cloth.</p>",
       "images": [
         {
           "src": "images/rooms/GryphonRoostInn.jpg"
@@ -289,17 +311,18 @@
       "id": "the-webbed-dungeon",
       "name": "The Webbed Dungeon",
       "position": {
-        "x": -500.0,
+        "x": -750.0,
         "y": 750.0
       },
-      "short_description": "A crypt containing statues of unknown gods and a tomb protected by celestials."
+      "short_description": "An ornate, recently cleaned crypt of unfamiliar shrines, sealed portals, and a great tomb protected by celestials. A deep northern pool and a southern river with a whirlpool occupy its natural caverns.",
+      "details": "<p>The Webbed Dungeon is an ancient underground complex of expertly fitted stone bricks, vaulted ceilings, and beautifully preserved floor mosaics. The architecture is strikingly ornate, with carved pillars, elaborate archways, and intricate patterns of gold, green, and crimson stone. Although faint stains and pale remnants of ancient cobwebs remain in the corners, the dungeon has clearly been cleaned recently, revealing much of its original splendor.</p><p>Throughout the complex, chambers contain shrines and monuments dedicated to unfamiliar deities. Their symbols vary wildly, from angelic figures and celestial patterns to monstrous faces and abstract geometric designs. Statues stand in solemn alcoves, while small altars and ceremonial objects suggest centuries of religious significance. Several rooms resemble burial chambers, though their occupants and the traditions surrounding them remain mysterious.</p><p>In the southwestern portion of the dungeon lies an enormous tomb protected by celestials, its floor decorated with a magnificent mosaic of outstretched wings. A massive sarcophagus occupies the center, surrounded by ceremonial fixtures and statues of angelic beings. The chamber's proportions suggest that whoever rests here was far larger than an ordinary humanoid.</p><p>Elsewhere, several sealed portals stand within ornate stone frames. Their surfaces are dark and motionless, though faint residual magic lingers around their edges.</p><p>The northernmost chamber is a natural cavern containing a surprisingly deep pool of dark, greenish water. Five pillars topped with luminous magical braziers surround its edge, their golden light reflecting across the still surface.</p><p>To the south, the carefully worked masonry gives way to rough natural stone, where an underground river flows through a cavernous passage. Its dark waters swirl toward a powerful whirlpool, disappearing into a seemingly bottomless opening. At a small stone dock, a long, narrow boat rests motionless in the current. Its weathered hull bears elaborate funerary carvings, giving it the appearance of a vessel intended to carry the dead.</p><p>The air is cool and slightly damp, carrying the scent of ancient stone and flowing water. Beyond the gentle crackle of magical braziers and the distant rush of the river, the dungeon is eerily silent—a place of forgotten worship, elaborate burial rites, and mysteries that have endured far longer than their creators.</p>"
     },
     {
       "id": "teleporter-room-crystal-mug",
       "name": "🌀 Teleporter Room 🌀",
       "position": {
-        "x": 0.0,
-        "y": 500.0
+        "x": -250.0,
+        "y": 750.0
       },
       "color": "#ff8800",
       "short_description": "A small teleporter room, just off the Crystal Mug.",
@@ -313,33 +336,35 @@
       "id": "orthos",
       "name": "🌍 Orthos 🌍",
       "position": {
-        "x": 750.0,
-        "y": 1000.0
+        "x": 1000.0,
+        "y": 500.0
       }
     },
     {
       "id": "security",
       "name": "🛡️🛏️ Security 🛏️🛡️",
       "position": {
-        "x": -750.0,
-        "y": 750.0
+        "x": -1000.0,
+        "y": 500.0
       },
-      "color": "#4CAF50"
+      "color": "#4CAF50",
+      "short_description": "An orderly security complex of reinforced metal corridors, guard quarters, a brig, and a command center. A sensor station, teleporter, shuttle bay, and escape pod support station operations.",
+      "details": "<p>Security is an extensive network of corridors and chambers constructed from reinforced gray metal, noticeably more utilitarian than much of the station. Thick bulkheads separate the various sections, while recessed white and blue lighting illuminates the smooth, well-maintained floors. Small security panels and clusters of signs in unfamiliar alien scripts mark the numerous doorways.</p><p>The complex contains an assortment of facilities supporting what appears to be the station's security force. Along the western corridors are rows of guard quarters, with neatly arranged bunks, storage lockers, and personal belongings. Nearby are communal showers and bathrooms, as well as more spacious private quarters furnished with desks, seating areas, and other comforts. A large cafeteria occupies the southwestern section, its central serving counter surrounded by tables and automated food preparation equipment.</p><p>To the north, a heavily reinforced section contains a brig. Several cells are arranged around a central monitoring station, their entrances secured behind glowing blue energy barriers. Nearby, a specialized sensor station houses a large cylindrical machine surrounded by monitoring consoles and diagnostic equipment. Farther east, another chamber contains a circular platform surrounded by illuminated rings and unfamiliar teleportation machinery.</p><p>The eastern portion of the complex is dominated by a large command center. Curved banks of sophisticated consoles surround a central command station, their displays showing shifting diagrams, surveillance feeds, and streams of unfamiliar symbols. An adjoining ready room provides comfortable seating and additional equipment for security personnel.</p><p>To the southeast lies a spacious shuttle bay, its floor marked with bright red and orange guidance lines. Several small spacecraft rest in individual berths, surrounded by maintenance equipment and storage compartments. An enormous exterior opening occupies one wall, its reinforced doors capable of sealing the hangar from space. When open, a shimmering forcefield maintains the atmosphere while providing an unobstructed view of the stars beyond.</p><p>At the southern end of the complex, a small emergency escape pod sits within its own launch chamber.</p><p>The entire facility is remarkably orderly, with a faint hum of electronics and ventilation echoing through its corridors.</p>"
     },
     {
       "id": "cryogenic-prison",
       "name": "🧊 Cryo Prison 🧊",
       "position": {
-        "x": 0.0,
-        "y": 1000.0
+        "x": 1000.0,
+        "y": -250.0
       }
     },
     {
       "id": "current-location-unknown",
       "name": "❓ Current Location Unknown ❓",
       "position": {
-        "x": 500.0,
-        "y": 1000.0
+        "x": 1000.0,
+        "y": 250.0
       }
     },
     {
@@ -862,13 +887,13 @@
   "character_groups": [
     {
       "id": "researchers",
-      "short_description": "A small group of NPCs researching the mysteries of the ship.",
       "name": "Researchers",
       "location": "small-greenhouse",
       "defaultPosition": {
         "x": 225.0,
         "y": 754.0
-      }
+      },
+      "short_description": "A small group of NPCs researching the mysteries of the ship."
     },
     {
       "id": "base-camp",
@@ -1660,10 +1685,11 @@
     },
     {
       "from": "restoration-engine",
-      "to": "the-crystal-mug",
+      "to": "the-crystal-mug-lobby",
       "status": "open",
+      "direction": "forward_only",
       "name": "Underwater door",
-      "short_description": "See note on The Crystal Mug about arrival/departure.",
+      "short_description": "A one-way underwater entrance to The Crystal Mug's Lobby.",
       "signs": [
         {
           "group": "jelly-kin-of-ooze-9",
@@ -1696,6 +1722,14 @@
           "translation": "Reserved Chamber for Quiet Reflection, Discreet Meetings, and Those Worthy of Fine Vintage Spirits."
         }
       ]
+    },
+    {
+      "from": "the-crystal-mug-lobby",
+      "to": "the-crystal-mug",
+      "status": "open",
+      "direction": "forward_only",
+      "name": "Wooden double doors",
+      "short_description": "Double doors into the tavern’s antimagic field. A bell beside the doors requests accommodations for assistive magic."
     },
     {
       "from": "hanging-registry",
