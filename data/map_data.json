@@ -520,7 +520,7 @@
       "ancestry": "Ratfolk",
       "class": "Inventor",
       "physical_description": "This small Ratfolk has light brown fur and a white patch around his pink nose. He wears clothing with many pockets stuffed with small tools.",
-      "location": "security",
+      "location": "workshop",
       "images": [
         {
           "src": "images/pcs/ArvieAndConstruct.png",
